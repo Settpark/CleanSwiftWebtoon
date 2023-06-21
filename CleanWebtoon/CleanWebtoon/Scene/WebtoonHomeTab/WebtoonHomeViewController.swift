@@ -70,11 +70,18 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic
   {
     super.viewDidLoad()
     doSomething()
+      setupViews()
   }
   
   // MARK: Do something
   
   //@IBOutlet weak var nameTextField: UITextField!
+    
+    private func setupViews() {
+        title = "홈"
+        tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
+        view.backgroundColor = .white
+    }
   
   func doSomething()
   {
