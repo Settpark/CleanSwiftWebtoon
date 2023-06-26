@@ -12,85 +12,100 @@
 
 import UIKit
 
-protocol WebtoonHomeDisplayLogic: class
+protocol WebtoonHomeDisplayLogic: AnyObject
 {
-  func displaySomething(viewModel: WebtoonHome.Something.ViewModel)
+    func displaySomething(viewModel: WebtoonHome.Something.ViewModel)
 }
 
-class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic
-{
-  var interactor: WebtoonHomeBusinessLogic?
-  var router: (NSObjectProtocol & WebtoonHomeRoutingLogic & WebtoonHomeDataPassing)?
-
-  // MARK: Object lifecycle
-  
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-  {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    setup()
-      setupViews()
-  }
-  
-  required init?(coder aDecoder: NSCoder)
-  {
-    super.init(coder: aDecoder)
-    setup()
-  }
-  
-  // MARK: Setup
-  
-  private func setup()
-  {
-    let viewController = self
-    let interactor = WebtoonHomeInteractor()
-    let presenter = WebtoonHomePresenter()
-    let router = WebtoonHomeRouter()
-    viewController.interactor = interactor
-    viewController.router = router
-    interactor.presenter = presenter
-    presenter.viewController = viewController
-    router.viewController = viewController
-    router.dataStore = interactor
-  }
-  
-  // MARK: Routing
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-  {
-    if let scene = segue.identifier {
-      let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-      if let router = router, router.responds(to: selector) {
-        router.perform(selector, with: segue)
-      }
+class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
+    var interactor: WebtoonHomeBusinessLogic?
+    var router: (NSObjectProtocol & WebtoonHomeRoutingLogic & WebtoonHomeDataPassing)?
+    
+    private let topEventScrollView: UIScrollView
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        topEventScrollView = {
+            let scrollView = UIScrollView()
+            return scrollView
+        }()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+        setupViews()
     }
-  }
-  
-  // MARK: View lifecycle
-  
-  override func viewDidLoad()
-  {
-    super.viewDidLoad()
-    doSomething()
-  }
-  
-  // MARK: Do something
-  
-  //@IBOutlet weak var nameTextField: UITextField!
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
+    // MARK: Setup
+    
+    private func setup() {
+        let viewController = self
+        let interactor = WebtoonHomeInteractor()
+        let presenter = WebtoonHomePresenter()
+        let router = WebtoonHomeRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
+    }
+    
+    // MARK: Routing
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        doSomething()
+    }
+    
+    // MARK: Do something
+    
+    //@IBOutlet weak var nameTextField: UITextField!
     
     private func setupViews() {
         title = "웹툰"
         tabBarItem = UITabBarItem(title: "웹툰", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         view.backgroundColor = .white
+        
+        let scrollInnerView: UIView = UIView()
+        scrollInnerView.backgroundColor = .red
+        
+        view.addSubview(topEventScrollView)
+        topEventScrollView.addSubview(scrollInnerView)
+        
+        NSLayoutConstraint.activate([
+            topEventScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            topEventScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            topEventScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            topEventScrollView.heightAnchor.constraint(equalToConstant: 300),
+            
+            scrollInnerView.topAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.topAnchor),
+            scrollInnerView.leadingAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.leadingAnchor),
+            scrollInnerView.trailingAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.trailingAnchor),
+            scrollInnerView.bottomAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.bottomAnchor),
+
+            scrollInnerView.heightAnchor.constraint(equalTo: topEventScrollView.frameLayoutGuide.heightAnchor)
+        ])
     }
-  
-  func doSomething()
-  {
-    let request = WebtoonHome.Something.Request()
-    interactor?.doSomething(request: request)
-  }
-  
-  func displaySomething(viewModel: WebtoonHome.Something.ViewModel)
-  {
-    //nameTextField.text = viewModel.name
-  }
+    
+    func doSomething() {
+        let request = WebtoonHome.Something.Request()
+        interactor?.doSomething(request: request)
+    }
+    
+    func displaySomething(viewModel: WebtoonHome.Something.ViewModel) {
+        //nameTextField.text = viewModel.name
+    }
 }
