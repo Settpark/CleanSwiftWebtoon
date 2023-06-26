@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB14F7402A44401D002984B3 /* RecommandedCompletionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73A2A44401D002984B3 /* RecommandedCompletionPresenter.swift */; };
+		AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73B2A44401D002984B3 /* RecommandedCompletionWorker.swift */; };
+		AB14F7422A44401D002984B3 /* RecommandedCompletionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73C2A44401D002984B3 /* RecommandedCompletionRouter.swift */; };
+		AB14F7432A44401D002984B3 /* RecommandedCompletionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73D2A44401D002984B3 /* RecommandedCompletionModels.swift */; };
+		AB14F7442A44401D002984B3 /* RecommandedCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73E2A44401D002984B3 /* RecommandedCompletionViewController.swift */; };
+		AB14F7452A44401D002984B3 /* RecommandedCompletionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73F2A44401D002984B3 /* RecommandedCompletionInteractor.swift */; };
 		AB6C58EF2A4290A3003BBEAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C58EE2A4290A3003BBEAD /* AppDelegate.swift */; };
 		AB6C58F12A4290A3003BBEAD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C58F02A4290A3003BBEAD /* SceneDelegate.swift */; };
 		AB6C58F82A4290A4003BBEAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6C58F72A4290A4003BBEAD /* Assets.xcassets */; };
@@ -45,6 +51,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB14F73A2A44401D002984B3 /* RecommandedCompletionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionPresenter.swift; sourceTree = "<group>"; };
+		AB14F73B2A44401D002984B3 /* RecommandedCompletionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionWorker.swift; sourceTree = "<group>"; };
+		AB14F73C2A44401D002984B3 /* RecommandedCompletionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionRouter.swift; sourceTree = "<group>"; };
+		AB14F73D2A44401D002984B3 /* RecommandedCompletionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionModels.swift; sourceTree = "<group>"; };
+		AB14F73E2A44401D002984B3 /* RecommandedCompletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionViewController.swift; sourceTree = "<group>"; };
+		AB14F73F2A44401D002984B3 /* RecommandedCompletionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionInteractor.swift; sourceTree = "<group>"; };
 		AB6C58EB2A4290A3003BBEAD /* CleanWebtoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanWebtoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6C58EE2A4290A3003BBEAD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB6C58F02A4290A3003BBEAD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +106,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB14F7392A44400B002984B3 /* RecommandedCompletion */ = {
+			isa = PBXGroup;
+			children = (
+				AB14F73A2A44401D002984B3 /* RecommandedCompletionPresenter.swift */,
+				AB14F73B2A44401D002984B3 /* RecommandedCompletionWorker.swift */,
+				AB14F73C2A44401D002984B3 /* RecommandedCompletionRouter.swift */,
+				AB14F73D2A44401D002984B3 /* RecommandedCompletionModels.swift */,
+				AB14F73E2A44401D002984B3 /* RecommandedCompletionViewController.swift */,
+				AB14F73F2A44401D002984B3 /* RecommandedCompletionInteractor.swift */,
+			);
+			path = RecommandedCompletion;
+			sourceTree = "<group>";
+		};
 		AB6C58E22A4290A3003BBEAD = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +198,7 @@
 			children = (
 				AB6C59232A42AADA003BBEAD /* AppRoot */,
 				AB6C59242A42AAE5003BBEAD /* WebtoonHomeTab */,
+				AB14F7392A44400B002984B3 /* RecommandedCompletion */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -315,9 +341,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB14F7402A44401D002984B3 /* RecommandedCompletionPresenter.swift in Sources */,
 				AB6C592E2A42AB5D003BBEAD /* WebtoonHomePresenter.swift in Sources */,
 				AB6C59412A42B844003BBEAD /* AppRootViewController.swift in Sources */,
+				AB14F7422A44401D002984B3 /* RecommandedCompletionRouter.swift in Sources */,
+				AB14F7452A44401D002984B3 /* RecommandedCompletionInteractor.swift in Sources */,
 				AB6C593E2A42B844003BBEAD /* AppRootWorker.swift in Sources */,
+				AB14F7432A44401D002984B3 /* RecommandedCompletionModels.swift in Sources */,
 				AB6C592F2A42AB5D003BBEAD /* WebtoonHomeWorker.swift in Sources */,
 				AB6C59322A42AB5D003BBEAD /* WebtoonHomeViewController.swift in Sources */,
 				AB6C59332A42AB5D003BBEAD /* WebtoonHomeInteractor.swift in Sources */,
@@ -326,7 +356,9 @@
 				AB6C59402A42B844003BBEAD /* AppRootModels.swift in Sources */,
 				AB6C59312A42AB5D003BBEAD /* WebtoonHomeModels.swift in Sources */,
 				AB6C59422A42B844003BBEAD /* AppRootInteractor.swift in Sources */,
+				AB14F7442A44401D002984B3 /* RecommandedCompletionViewController.swift in Sources */,
 				AB6C58EF2A4290A3003BBEAD /* AppDelegate.swift in Sources */,
+				AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */,
 				AB6C593D2A42B844003BBEAD /* AppRootPresenter.swift in Sources */,
 				AB6C58F12A4290A3003BBEAD /* SceneDelegate.swift in Sources */,
 			);
@@ -486,7 +518,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TA9B4FGCP9;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanWebtoon/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -516,7 +548,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TA9B4FGCP9;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanWebtoon/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
