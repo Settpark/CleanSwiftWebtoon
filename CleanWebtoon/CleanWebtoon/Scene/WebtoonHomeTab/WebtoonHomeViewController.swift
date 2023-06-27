@@ -26,6 +26,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         topEventScrollView = {
             let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
             return scrollView
         }()
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -79,24 +80,13 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         tabBarItem = UITabBarItem(title: "웹툰", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         view.backgroundColor = .white
         
-        let scrollInnerView: UIView = UIView()
-        scrollInnerView.backgroundColor = .red
-        
         view.addSubview(topEventScrollView)
-        topEventScrollView.addSubview(scrollInnerView)
         
         NSLayoutConstraint.activate([
             topEventScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
             topEventScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             topEventScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             topEventScrollView.heightAnchor.constraint(equalToConstant: 300),
-            
-            scrollInnerView.topAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.topAnchor),
-            scrollInnerView.leadingAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.leadingAnchor),
-            scrollInnerView.trailingAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.trailingAnchor),
-            scrollInnerView.bottomAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.bottomAnchor),
-
-            scrollInnerView.heightAnchor.constraint(equalTo: topEventScrollView.frameLayoutGuide.heightAnchor)
         ])
     }
     
