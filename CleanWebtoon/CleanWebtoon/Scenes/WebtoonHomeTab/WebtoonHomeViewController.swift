@@ -21,6 +21,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     var interactor: WebtoonHomeBusinessLogic?
     var router: (NSObjectProtocol & WebtoonHomeRoutingLogic & WebtoonHomeDataPassing)?
     
+    private let mainScrollView: UIScrollView
+    private let mainScrollStackView: UIStackView
     private let topEventScrollView: UIScrollView
     private let webtoonListScrollView: UIScrollView
     private let webtoonListStackView: UIStackView
@@ -32,6 +34,17 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private let tuesdayDataSource: WebtoonListDataSource
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        mainScrollView = {
+            let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            return scrollView
+        }()
+        mainScrollStackView = {
+            let stackView = UIStackView()
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.axis = .vertical
+            return stackView
+        }()
         topEventScrollView = {
             let scrollView = UIScrollView()
             scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,8 +116,10 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         tabBarItem = UITabBarItem(title: "웹툰", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         view.backgroundColor = .white
         
-        view.addSubview(topEventScrollView)
-        view.addSubview(webtoonListScrollView)
+        view.addSubview(mainScrollView)
+        mainScrollView.addSubview(mainScrollStackView)
+        mainScrollStackView.addArrangedSubview(topEventScrollView)
+        mainScrollStackView.addArrangedSubview(webtoonListScrollView)
         webtoonListScrollView.addSubview(webtoonListStackView)
         
         let mondayStackView: UIStackView = {
@@ -125,14 +140,21 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         tuesdayStackView.addArrangedSubview(tuesdayWebtoonCollection)
         
         NSLayoutConstraint.activate([
-            topEventScrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            topEventScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            topEventScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            mainScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            mainScrollStackView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
+            mainScrollStackView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor),
+            mainScrollStackView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
+            mainScrollStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
+            mainScrollStackView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor),
+            
+            topEventScrollView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             topEventScrollView.heightAnchor.constraint(equalToConstant: 150),
             
-            webtoonListScrollView.topAnchor.constraint(equalTo: topEventScrollView.bottomAnchor, constant: 25),
-            webtoonListScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            webtoonListScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            webtoonListScrollView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
             webtoonListScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             webtoonListStackView.topAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.topAnchor),
@@ -140,7 +162,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             webtoonListStackView.trailingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.trailingAnchor),
             webtoonListStackView.bottomAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.bottomAnchor),
             webtoonListStackView.heightAnchor.constraint(equalTo: webtoonListScrollView.frameLayoutGuide.heightAnchor),
-            
+
             mondayWebtoonCollection.widthAnchor.constraint(equalTo: self.view.widthAnchor),
             tuesdayWebtoonCollection.widthAnchor.constraint(equalTo: self.view.widthAnchor)
         ])
@@ -153,6 +175,10 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         tuesdayWebtoonCollection.delegate = webtoonListLayout
         tuesdayWebtoonCollection.dataSource = mondayDataSource
         tuesdayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
+    }
+    
+    private func setupMainStackViewSpacing() {
+        mainScrollStackView.setCustomSpacing(5, after: topEventScrollView)
     }
     
     func fetchAllWebtoonCollection() {
