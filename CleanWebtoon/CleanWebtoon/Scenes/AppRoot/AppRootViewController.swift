@@ -12,7 +12,7 @@
 
 import UIKit
 
-protocol AppRootDisplayLogic: class
+protocol AppRootDisplayLogic: AnyObject
 {
   func displaySomething(viewModel: AppRoot.Something.ViewModel)
 }

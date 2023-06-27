@@ -14,7 +14,7 @@ import UIKit
 
 protocol WebtoonHomePresentationLogic
 {
-  func presentSomething(response: WebtoonHome.Something.Response)
+  func presentSomething(response: WebtoonHome.WebtoonList.Response)
 }
 
 class WebtoonHomePresenter: WebtoonHomePresentationLogic
@@ -23,9 +23,11 @@ class WebtoonHomePresenter: WebtoonHomePresentationLogic
   
   // MARK: Do something
   
-  func presentSomething(response: WebtoonHome.Something.Response)
+  func presentSomething(response: WebtoonHome.WebtoonList.Response)
   {
-    let viewModel = WebtoonHome.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
+      let viewModels = response.webtoons.map {
+          return WebtoonHome.WebtoonList.ViewModel(title: $0.title, author: $0.author)
+      }
+    viewController?.displayWebtoonList(viewModels: viewModels)
   }
 }

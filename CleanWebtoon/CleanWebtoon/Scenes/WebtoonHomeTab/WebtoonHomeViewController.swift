@@ -14,7 +14,7 @@ import UIKit
 
 protocol WebtoonHomeDisplayLogic: AnyObject
 {
-    func displaySomething(viewModel: WebtoonHome.Something.ViewModel)
+    func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel])
 }
 
 class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
@@ -68,7 +68,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        fetchAllWebtoonCollection()
     }
     
     // MARK: Do something
@@ -90,12 +90,11 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         ])
     }
     
-    func doSomething() {
-        let request = WebtoonHome.Something.Request()
-        interactor?.doSomething(request: request)
+    func fetchAllWebtoonCollection() {
+        interactor?.fetchWebtoons()
     }
     
-    func displaySomething(viewModel: WebtoonHome.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel]) {
+        viewModels.forEach { print($0.title) }
     }
 }

@@ -12,7 +12,7 @@
 
 import UIKit
 
-protocol RecommandedCompletionDisplayLogic: class
+protocol RecommandedCompletionDisplayLogic: AnyObject
 {
   func displaySomething(viewModel: RecommandedCompletion.Something.ViewModel)
 }
