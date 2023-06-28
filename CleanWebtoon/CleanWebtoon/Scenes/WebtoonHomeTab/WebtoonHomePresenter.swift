@@ -12,22 +12,40 @@
 
 import UIKit
 
-protocol WebtoonHomePresentationLogic
-{
-  func presentSomething(response: WebtoonHome.WebtoonList.Response)
+protocol WebtoonHomePresentationLogic {
+    func presentSomething(response: WebtoonHome.WebtoonList.Response, updateDay: UpdateDay)
 }
 
-class WebtoonHomePresenter: WebtoonHomePresentationLogic
-{
-  weak var viewController: WebtoonHomeDisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentSomething(response: WebtoonHome.WebtoonList.Response)
-  {
-      let viewModels = response.webtoons.map {
-          return WebtoonHome.WebtoonList.ViewModel(title: $0.title, author: $0.author)
-      }
-    viewController?.displayWebtoonList(viewModels: viewModels)
-  }
+class WebtoonHomePresenter: WebtoonHomePresentationLogic {
+    weak var viewController: WebtoonHomeDisplayLogic?
+    
+    // MARK: Do something
+    
+    func presentSomething(response: WebtoonHome.WebtoonList.Response, updateDay: UpdateDay) {
+        let viewModels = response.webtoons.map {
+            return WebtoonHome.WebtoonList.ViewModel(title: $0.title,
+                                                     author: $0.author,
+                                                     img: $0.img,
+                                                     isNew: $0.additional.new,
+                                                     isAdult: $0.additional.adult,
+                                                     isRest: $0.additional.rest,
+                                                     isUp: $0.additional.up,
+                                                     isOver15: isOver15(value: $0.additional.singularityList),
+                                                     isFree: isFree(value: $0.additional.singularityList),
+                                                     isWaitFree: isWaitFree(value: $0.additional.singularityList))
+        }
+        viewController?.displayWebtoonList(viewModels: viewModels, updateDay: updateDay)
+    }
+    
+    private func isOver15(value: [String]) -> Bool {
+        return value.contains("over15")
+    }
+    
+    private func isFree(value: [String]) -> Bool {
+        return value.contains("free")
+    }
+    
+    private func isWaitFree(value: [String]) -> Bool {
+        return value.contains("waitFree")
+    }
 }

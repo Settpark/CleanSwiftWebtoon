@@ -23,6 +23,20 @@ enum WebtoonHome
     struct Webtoon: Decodable {
         var title: String
         var author: String
+        var url: String
+        var img: String
+        var service: String
+        var updateDays: [String]
+        var fanCount: Int?
+        var searchKeyword: String
+        var additional: AdditionalInformation
+    }
+    struct AdditionalInformation: Decodable {
+        var new: Bool
+        var rest: Bool
+        var up: Bool
+        var adult: Bool
+        var singularityList: [String]
     }
     enum WebtoonList
     {
@@ -42,6 +56,14 @@ enum WebtoonHome
         struct ViewModel {
             var title: String
             var author: String
+            var img: String
+            var isNew: Bool
+            var isAdult: Bool
+            var isRest: Bool
+            var isUp: Bool
+            var isOver15: Bool
+            var isFree: Bool
+            var isWaitFree: Bool
         }
     }
 }

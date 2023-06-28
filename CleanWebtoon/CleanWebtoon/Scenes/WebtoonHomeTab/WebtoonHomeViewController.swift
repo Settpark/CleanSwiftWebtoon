@@ -14,7 +14,7 @@ import UIKit
 
 protocol WebtoonHomeDisplayLogic: AnyObject
 {
-    func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel])
+    func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel], updateDay: UpdateDay)
 }
 
 class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
@@ -168,7 +168,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchAllWebtoonCollection()
+        fetchTodayWebtoon()
     }
     
     private func setupViews() {
@@ -223,6 +223,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             return stackView
         }()
         
+        webtoonListStackView.addArrangedSubview(everydayPlusStackView)
         webtoonListStackView.addArrangedSubview(mondayStackView)
         webtoonListStackView.addArrangedSubview(tuesdayStackView)
         webtoonListStackView.addArrangedSubview(wednesdayStackView)
@@ -230,7 +231,6 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         webtoonListStackView.addArrangedSubview(fridayStackView)
         webtoonListStackView.addArrangedSubview(saturdayStackView)
         webtoonListStackView.addArrangedSubview(sundayStackView)
-        webtoonListStackView.addArrangedSubview(everydayPlusStackView)
         everydayPlusStackView.addArrangedSubview(everyDayPlusCollection)
         mondayStackView.addArrangedSubview(mondayWebtoonCollection)
         tuesdayStackView.addArrangedSubview(tuesdayWebtoonCollection)
@@ -276,58 +276,68 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     }
     
     private func setupDataSource() {
+        everyDayPlusCollection.delegate = webtoonListLayout
+        everyDayPlusCollection.dataSource = everyDayPlusDataSource
+        everyDayPlusCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         mondayWebtoonCollection.delegate = webtoonListLayout
         mondayWebtoonCollection.dataSource = mondayDataSource
         mondayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         tuesdayWebtoonCollection.delegate = webtoonListLayout
-        tuesdayWebtoonCollection.dataSource = mondayDataSource
+        tuesdayWebtoonCollection.dataSource = tuesdayDataSource
         tuesdayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         wednesdayWebtoonCollection.delegate = webtoonListLayout
-        wednesdayWebtoonCollection.dataSource = mondayDataSource
+        wednesdayWebtoonCollection.dataSource = wednesdayDataSource
         wednesdayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         thursdayWebtoonCollection.delegate = webtoonListLayout
-        thursdayWebtoonCollection.dataSource = mondayDataSource
+        thursdayWebtoonCollection.dataSource = thursdayDataSource
         thursdayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         fridayWebtoonCollection.delegate = webtoonListLayout
-        fridayWebtoonCollection.dataSource = mondayDataSource
+        fridayWebtoonCollection.dataSource = fridayDataSource
         fridayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         saturdayWebtoonCollection.delegate = webtoonListLayout
-        saturdayWebtoonCollection.dataSource = mondayDataSource
+        saturdayWebtoonCollection.dataSource = saturdayDataSource
         saturdayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         sundayWebtoonCollection.delegate = webtoonListLayout
-        sundayWebtoonCollection.dataSource = mondayDataSource
+        sundayWebtoonCollection.dataSource = sundayDataSource
         sundayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
-        everyDayPlusCollection.delegate = webtoonListLayout
-        everyDayPlusCollection.dataSource = mondayDataSource
-        everyDayPlusCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
     }
     
     private func setupMainStackViewSpacing() {
         mainScrollStackView.setCustomSpacing(5, after: topEventScrollView)
     }
     
-    func fetchAllWebtoonCollection() {
-        interactor?.fetchWebtoons()
+    func fetchTodayWebtoon() {
+        interactor?.fetchTodayWebtoons()
     }
     
-    func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel]) {
+    func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel], updateDay: UpdateDay) {
         DispatchQueue.main.async { [weak self] in
-            self?.everyDayPlusDataSource.update(dataSource: viewModels)
-            self?.everyDayPlusCollection.reloadData()
-            self?.mondayDataSource.update(dataSource: viewModels)
-            self?.mondayWebtoonCollection.reloadData()
-            self?.tuesdayDataSource.update(dataSource: viewModels)
-            self?.tuesdayWebtoonCollection.reloadData()
-            self?.wednesdayDataSource.update(dataSource: viewModels)
-            self?.wednesdayWebtoonCollection.reloadData()
-            self?.thursdayDataSource.update(dataSource: viewModels)
-            self?.thursdayWebtoonCollection.reloadData()
-            self?.fridayDataSource.update(dataSource: viewModels)
-            self?.fridayWebtoonCollection.reloadData()
-            self?.saturdayDataSource.update(dataSource: viewModels)
-            self?.saturdayWebtoonCollection.reloadData()
-            self?.sundayDataSource.update(dataSource: viewModels)
-            self?.sundayWebtoonCollection.reloadData()
+            switch updateDay {
+            case .mon:
+                self?.mondayDataSource.update(dataSource: viewModels)
+                self?.mondayWebtoonCollection.reloadData()
+            case .tue:
+                self?.tuesdayDataSource.update(dataSource: viewModels)
+                self?.tuesdayWebtoonCollection.reloadData()
+            case .wed:
+                self?.wednesdayDataSource.update(dataSource: viewModels)
+                self?.wednesdayWebtoonCollection.reloadData()
+            case .thu:
+                self?.thursdayDataSource.update(dataSource: viewModels)
+                self?.thursdayWebtoonCollection.reloadData()
+            case .fri:
+                self?.fridayDataSource.update(dataSource: viewModels)
+                self?.fridayWebtoonCollection.reloadData()
+            case .sat:
+                self?.saturdayDataSource.update(dataSource: viewModels)
+                self?.saturdayWebtoonCollection.reloadData()
+            case .sun:
+                self?.sundayDataSource.update(dataSource: viewModels)
+                self?.sundayWebtoonCollection.reloadData()
+            case .naverDaily:
+                self?.everyDayPlusDataSource.update(dataSource: viewModels)
+                self?.everyDayPlusCollection.reloadData()
+            }
         }
     }
 }

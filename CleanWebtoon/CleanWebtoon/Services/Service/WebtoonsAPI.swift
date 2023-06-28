@@ -8,8 +8,10 @@
 import Foundation
 
 struct WebtoonsAPI: ServiceLayer {
-    func fetchAllWebtoons(completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void) {
-        let endPoint: URLComponents = EndPoint().makeEndpoint(service: .naver)
+    func fetchSpecificDayWebtoons(updateDay: UpdateDay,
+                                  completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void) {
+        let endPoint: URLComponents = EndPoint().makeEndpoint(service: .naver,
+                                                              updateDay: updateDay)
         guard let validURL = endPoint.url else {
             completion(.failure(APIError.failMakeValidURL))
             return
@@ -17,12 +19,13 @@ struct WebtoonsAPI: ServiceLayer {
         let requestMaker = RequestMaker(url: validURL, method: .get)
         URLSession.shared.dataTask(with: requestMaker.request) { data, response, error in
             if let validData = data {
-                let decoded = try? JSONDecoder().decode(WebtoonHome.WebtoonList.Response.self, from: validData)
-                guard let decoded = decoded else {
-                    completion(.failure(APIError.failDecode))
-                    return
+                do {
+                    let decoded = try JSONDecoder().decode(WebtoonHome.WebtoonList.Response.self, from: validData)
+                    completion(.success(decoded))
+                } catch {
+                    print(error)
+                    completion(.failure(error))
                 }
-                completion(.success(decoded))
             } else {
                 completion(.failure(APIError.notValidData))
             }

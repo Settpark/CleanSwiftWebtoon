@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonHomeBusinessLogic {
-    func fetchWebtoons()
+    func fetchTodayWebtoons()
 }
 
 protocol WebtoonHomeDataStore {
@@ -23,14 +23,18 @@ protocol WebtoonHomeDataStore {
 class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore
 {
     var presenter: WebtoonHomePresentationLogic?
-    private var worker: WebtoonHomeWorker = WebtoonHomeWorker(service: WebtoonsAPI())
-    //var name: String = ""
+    private var worker: WebtoonHomeWorker
+    private var currentWeekday: UpdateDay
     
-    // MARK: Do something
+    init() {
+        worker = WebtoonHomeWorker(service: WebtoonsAPI())
+        currentWeekday = Date.makeTodayWeekday()
+    }
     
-    func fetchWebtoons() {
-        worker.fetchAllWebtoons { response in
-            self.presenter?.presentSomething(response: response)
+    func fetchTodayWebtoons() {
+        worker.fetchSpecificDayWebtoons(updateDay: currentWeekday) { [weak self] response in
+            guard let self = self else { return }
+            self.presenter?.presentSomething(response: response, updateDay: self.currentWeekday)
         }
     }
 }

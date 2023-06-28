@@ -37,6 +37,7 @@
 		ABCFCA742A4ABB920061F5EE /* WebtoonListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA732A4ABB920061F5EE /* WebtoonListDataSource.swift */; };
 		ABCFCA762A4ABDD70061F5EE /* WebtoonListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */; };
 		ABCFCA782A4ACCC50061F5EE /* WebtoonListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */; };
+		ABCFCA832A4BE9680061F5EE /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA822A4BE9680061F5EE /* Date+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		ABCFCA732A4ABB920061F5EE /* WebtoonListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListDataSource.swift; sourceTree = "<group>"; };
 		ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListCell.swift; sourceTree = "<group>"; };
 		ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListLayout.swift; sourceTree = "<group>"; };
+		ABCFCA822A4BE9680061F5EE /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 				ABE197832A4A6CEA00C50CB5 /* Services */,
 				AB6C59352A42B7A6003BBEAD /* App */,
 				AB6C59342A42B641003BBEAD /* Scenes */,
+				ABCFCA812A4BE9470061F5EE /* Extension */,
 				AB6C58F72A4290A4003BBEAD /* Assets.xcassets */,
 				AB6C58FC2A4290A4003BBEAD /* Info.plist */,
 			);
@@ -258,6 +261,14 @@
 				ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		ABCFCA812A4BE9470061F5EE /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				ABCFCA822A4BE9680061F5EE /* Date+.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		ABE197832A4A6CEA00C50CB5 /* Services */ = {
@@ -408,6 +419,7 @@
 				AB14F7432A44401D002984B3 /* RecommandedCompletionModels.swift in Sources */,
 				AB6C592F2A42AB5D003BBEAD /* WebtoonHomeWorker.swift in Sources */,
 				ABCFCA6B2A4A83970061F5EE /* RequestMaker.swift in Sources */,
+				ABCFCA832A4BE9680061F5EE /* Date+.swift in Sources */,
 				AB6C59322A42AB5D003BBEAD /* WebtoonHomeViewController.swift in Sources */,
 				AB6C59332A42AB5D003BBEAD /* WebtoonHomeInteractor.swift in Sources */,
 				ABCFCA742A4ABB920061F5EE /* WebtoonListDataSource.swift in Sources */,
