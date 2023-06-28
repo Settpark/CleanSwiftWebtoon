@@ -38,6 +38,7 @@
 		ABCFCA762A4ABDD70061F5EE /* WebtoonListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */; };
 		ABCFCA782A4ACCC50061F5EE /* WebtoonListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */; };
 		ABCFCA832A4BE9680061F5EE /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA822A4BE9680061F5EE /* Date+.swift */; };
+		ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListCell.swift; sourceTree = "<group>"; };
 		ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListLayout.swift; sourceTree = "<group>"; };
 		ABCFCA822A4BE9680061F5EE /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				ABCFCA822A4BE9680061F5EE /* Date+.swift */,
+				ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB14F7402A44401D002984B3 /* RecommandedCompletionPresenter.swift in Sources */,
+				ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */,
 				AB6C592E2A42AB5D003BBEAD /* WebtoonHomePresenter.swift in Sources */,
 				AB6C59412A42B844003BBEAD /* AppRootViewController.swift in Sources */,
 				AB14F7422A44401D002984B3 /* RecommandedCompletionRouter.swift in Sources */,

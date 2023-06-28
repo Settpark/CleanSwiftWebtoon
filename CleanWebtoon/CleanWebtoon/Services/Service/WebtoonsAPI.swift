@@ -10,13 +10,14 @@ import Foundation
 struct WebtoonsAPI: ServiceLayer {
     func fetchSpecificDayWebtoons(updateDay: UpdateDay,
                                   completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void) {
-        let endPoint: URLComponents = EndPoint().makeEndpoint(service: .naver,
+        let endPoint: URLComponents = EndPoint().makeEndpoint(service: .kakao,
                                                               updateDay: updateDay)
         guard let validURL = endPoint.url else {
             completion(.failure(APIError.failMakeValidURL))
             return
         }
         let requestMaker = RequestMaker(url: validURL, method: .get)
+        
         URLSession.shared.dataTask(with: requestMaker.request) { data, response, error in
             if let validData = data {
                 do {

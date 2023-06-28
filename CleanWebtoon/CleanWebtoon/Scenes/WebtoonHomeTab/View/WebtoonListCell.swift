@@ -9,6 +9,7 @@ import UIKit
 
 class WebtoonListCell: UICollectionViewCell {
     
+    private var imageLoadingTask: URLSessionDataTask?
     static var identifier = "webtoonListCell"
     
     private let mainImage: UIImageView
@@ -59,6 +60,16 @@ class WebtoonListCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageLoadingTask?.cancel()
+        imageLoadingTask = nil
+        self.mainImage.image = nil
+        self.author.text = nil
+        self.webtoonTitle.text = nil
+        self.ratingScore.text = nil
+    }
+    
     private func setupViews() {
         contentView.addSubview(mainImage)
         contentView.addSubview(webtoonTitle)
@@ -93,9 +104,20 @@ class WebtoonListCell: UICollectionViewCell {
         ])
     }
     
-    func configureCell(viewModel: WebtoonHome.WebtoonList.ViewModel) {
-        author.text = viewModel.author
-        webtoonTitle.text = viewModel.title
-        ratingScore.text = "8.56"
+    func configureCell(viewModel: WebtoonHome.WebtoonList.ViewModel) {        
+        DispatchQueue.main.async { [weak self] in
+            self?.author.text = viewModel.author
+            self?.webtoonTitle.text = viewModel.title
+            self?.ratingScore.text = "8.56"
+        }
+        imageLoadingTask = UIImage.loadImage(from: viewModel.img) { [weak self] image in
+            DispatchQueue.main.async { [weak self] in
+                self?.mainImage.image = image
+            }
+        }
+        guard let imageLoadingTask = imageLoadingTask else {
+            return
+        }
+        imageLoadingTask.resume()
     }
 }
