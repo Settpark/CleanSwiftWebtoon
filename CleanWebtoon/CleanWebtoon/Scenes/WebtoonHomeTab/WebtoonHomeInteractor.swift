@@ -14,6 +14,7 @@ import UIKit
 
 protocol WebtoonHomeBusinessLogic {
     func fetchTodayWebtoons()
+    func fetchRecommandWebtoons()
 }
 
 protocol WebtoonHomeDataStore {
@@ -34,7 +35,14 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore
     func fetchTodayWebtoons() {
         worker.fetchSpecificDayWebtoons(updateDay: currentWeekday) { [weak self] response in
             guard let self = self else { return }
-            self.presenter?.presentSomething(response: response, updateDay: self.currentWeekday)
+            self.presenter?.presentWebtoonList(response: response, updateDay: self.currentWeekday)
+        }
+    }
+    
+    func fetchRecommandWebtoons() {
+        worker.fetchRecommandWebtoons { [weak self] response in
+            guard let self = self else { return }
+            self.presenter?.presentRecommandWebtoons(response: response)
         }
     }
 }

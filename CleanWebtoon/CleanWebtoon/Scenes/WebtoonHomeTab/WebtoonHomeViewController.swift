@@ -12,9 +12,9 @@
 
 import UIKit
 
-protocol WebtoonHomeDisplayLogic: AnyObject
-{
+protocol WebtoonHomeDisplayLogic: AnyObject {
     func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel], updateDay: UpdateDay)
+    func displayRecommandWebtoon(viewModels: [WebtoonHome.WebtoonList.ViewModel])
 }
 
 class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
@@ -46,6 +46,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private let sundayWebtoonDataSource: WebtoonListDataSource
     
     private let scrollDelegate: ScrollDelegate
+    private let topEventStackView: UIStackView
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         mainScrollView = {
@@ -65,6 +66,12 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             scrollView.translatesAutoresizingMaskIntoConstraints = false
             scrollView.isPagingEnabled = true
             return scrollView
+        }()
+        topEventStackView = {
+            let stackView: UIStackView = UIStackView()
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.axis = .horizontal
+            return stackView
         }()
         webtoonListScrollView = {
             let scrollView = UIScrollView()
@@ -184,6 +191,11 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         fetchTodayWebtoon()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.applyTopEventGradient()
+    }
+    
     private func setupViews() {
         title = "웹툰"
         tabBarItem = UITabBarItem(title: "웹툰", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
@@ -192,25 +204,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(mainScrollStackView)
         mainScrollStackView.addArrangedSubview(topEventScrollView)
-        let topEventStackView: UIStackView = {
-            let stackView: UIStackView = UIStackView()
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.axis = .horizontal
-            return stackView
-        }()
-        let eventView1: UIView = {
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        let eventView2: UIView = {
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
+        
         topEventScrollView.addSubview(topEventStackView)
-        topEventStackView.addArrangedSubview(eventView1)
-        topEventStackView.addArrangedSubview(eventView2)
         
         mainScrollStackView.addArrangedSubview(webtoonListScrollView)
         webtoonListScrollView.addSubview(webtoonListStackView)
@@ -298,11 +293,6 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             topEventStackView.trailingAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.trailingAnchor),
             topEventStackView.bottomAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.bottomAnchor),
             topEventStackView.heightAnchor.constraint(equalTo: topEventScrollView.frameLayoutGuide.heightAnchor),
-
-            eventView1.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-            eventView1.heightAnchor.constraint(equalToConstant: 200),
-            eventView2.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-            eventView2.heightAnchor.constraint(equalToConstant: 200),
             
             webtoonListStackView.leadingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.leadingAnchor),
             webtoonListStackView.trailingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.trailingAnchor),
@@ -355,6 +345,64 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     func fetchTodayWebtoon() {
         interactor?.fetchTodayWebtoons()
+        interactor?.fetchRecommandWebtoons()
+    }
+    
+    func displayRecommandWebtoon(viewModels: [WebtoonHome.WebtoonList.ViewModel]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.insertRecommandView(models: viewModels)
+        }
+    }
+    
+    private func applyTopEventGradient() {
+        topEventStackView.subviews.forEach {
+            let gradient: CAGradientLayer = .makeGreenGradient()
+            gradient.frame = $0.bounds
+            $0.layer.insertSublayer(gradient, at: 0)
+        }
+    }
+    
+    private func insertRecommandView(models: [WebtoonHome.WebtoonList.ViewModel]) {
+        topEventStackView.subviews.forEach { $0.removeFromSuperview() }
+        models.forEach { model in
+            let frameView = {
+                let view = UIView()
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.backgroundColor = .green
+                view.layer.borderWidth = 3
+                view.layer.borderColor = UIColor.white.cgColor
+                return view
+            }()
+            topEventStackView.addArrangedSubview(frameView)
+            NSLayoutConstraint.activate([frameView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
+                                         frameView.heightAnchor.constraint(equalToConstant: 200)])
+            UIImage.loadImage(from: model.img) { image in
+                DispatchQueue.main.async {
+                    guard let image = image else { return }
+                    let resizedImage = UIImage.resizeImage(image: image, newSize: CGSize(width: 200, height: 200))
+                    let imageView = {
+                        let imageView = UIImageView(image: resizedImage)
+                        imageView.translatesAutoresizingMaskIntoConstraints = false
+                        return imageView
+                    }()
+                    frameView.addSubview(imageView)
+                    let title: UILabel = {
+                        let label = UILabel()
+                        label.translatesAutoresizingMaskIntoConstraints = false
+                        label.text = model.title
+                        label.font = .makeCrisisKRFont(size: 25)
+                        label.textColor = .white
+                        return label
+                    }()
+                    frameView.addSubview(title)
+                    NSLayoutConstraint.activate([imageView.leadingAnchor.constraint(equalTo: frameView.leadingAnchor, constant: 20),
+                                                 imageView.centerYAnchor.constraint(equalTo: frameView.centerYAnchor),
+                                                 title.trailingAnchor.constraint(equalTo: frameView.trailingAnchor, constant: -30),
+                                                 title.bottomAnchor.constraint(equalTo: frameView.bottomAnchor, constant: -10)])
+                }
+            }?.resume()
+        }
     }
     
     func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel], updateDay: UpdateDay) {

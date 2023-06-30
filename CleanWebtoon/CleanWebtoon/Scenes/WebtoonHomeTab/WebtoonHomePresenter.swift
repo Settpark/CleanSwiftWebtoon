@@ -13,7 +13,8 @@
 import UIKit
 
 protocol WebtoonHomePresentationLogic {
-    func presentSomething(response: WebtoonHome.WebtoonList.Response, updateDay: UpdateDay)
+    func presentWebtoonList(response: WebtoonHome.WebtoonList.Response, updateDay: UpdateDay)
+    func presentRecommandWebtoons(response: WebtoonHome.WebtoonList.Response)
 }
 
 class WebtoonHomePresenter: WebtoonHomePresentationLogic {
@@ -21,7 +22,7 @@ class WebtoonHomePresenter: WebtoonHomePresentationLogic {
     
     // MARK: Do something
     
-    func presentSomething(response: WebtoonHome.WebtoonList.Response, updateDay: UpdateDay) {
+    func presentWebtoonList(response: WebtoonHome.WebtoonList.Response, updateDay: UpdateDay) {
         let viewModels = response.webtoons.map {
             return WebtoonHome.WebtoonList.ViewModel(title: $0.title,
                                                      author: $0.author,
@@ -35,6 +36,22 @@ class WebtoonHomePresenter: WebtoonHomePresentationLogic {
                                                      isWaitFree: isWaitFree(value: $0.additional.singularityList))
         }
         viewController?.displayWebtoonList(viewModels: viewModels, updateDay: updateDay)
+    }
+    
+    func presentRecommandWebtoons(response: WebtoonHome.WebtoonList.Response) {
+        let viewModels = response.webtoons.map {
+            return WebtoonHome.WebtoonList.ViewModel(title: $0.title,
+                                                     author: $0.author,
+                                                     img: $0.img,
+                                                     isNew: $0.additional.new,
+                                                     isAdult: $0.additional.adult,
+                                                     isRest: $0.additional.rest,
+                                                     isUp: $0.additional.up,
+                                                     isOver15: isOver15(value: $0.additional.singularityList),
+                                                     isFree: isFree(value: $0.additional.singularityList),
+                                                     isWaitFree: isWaitFree(value: $0.additional.singularityList))
+        }
+        viewController?.displayRecommandWebtoon(viewModels: viewModels)
     }
     
     private func isOver15(value: [String]) -> Bool {
