@@ -280,7 +280,6 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchTodayWebtoon()
-        setupTodayScroll()
         setupButtonFeature()
     }
     
@@ -474,10 +473,6 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         mainScrollStackView.setCustomSpacing(5, after: topEventScrollView)
     }
     
-    private func setupTodayScroll() {
-        interactor?.moveToSpecificdayWebtoonlist(updateday: nil)
-    }
-    
     func setupTodayWebtoonlist(offset: CGFloat) {
         let scrollOffset = offset * self.view.frame.width
         DispatchQueue.main.async {
@@ -531,6 +526,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     func fetchTodayWebtoon() {
         interactor?.fetchTodayWebtoons()
         interactor?.fetchRecommandWebtoons()
+        interactor?.moveToSpecificdayWebtoonlist(updateday: nil)
     }
     
     func displayRecommandWebtoon(viewModels: [WebtoonHome.WebtoonList.ViewModel]) {
