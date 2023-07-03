@@ -493,38 +493,55 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     @objc
     private func moveToSpecificDay(sender: UIButton) {
+        var request = WebtoonHome.WebtoonList.Request(page: 0,
+                                                      perPage: 65536,
+                                                      service: .kakao,
+                                                      updateDay: nil)
         switch sender {
         case everydayPlusButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .naverDaily)
+            request.updateDay = .naverDaily
             break
         case mondayButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .mon)
+            request.updateDay = .mon
             break
         case tuesdayButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .tue)
+            request.updateDay = .tue
             break
         case wednesdayButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .wed)
+            request.updateDay = .wed
             break
         case thursdayButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .thu)
+            request.updateDay = .thu
             break
         case fridayButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .fri)
+            request.updateDay = .fri
             break
         case saturdayButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .sat)
+            request.updateDay = .sat
             break
         case sundayButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .sun)
+            request.updateDay = .sun
             break
         default:
             break
         }
+        interactor?.fetchSpecificDayWebtoons(option: request)
     }
     
     func fetchTodayWebtoon() {
-        interactor?.fetchTodayWebtoons()
+        let request = WebtoonHome.WebtoonList.Request(page: 0,
+                                                      perPage: 65536,
+                                                      service: .kakao,
+                                                      updateDay: nil)
+        interactor?.fetchSpecificDayWebtoons(option: request)
         interactor?.fetchRecommandWebtoons()
         interactor?.moveToSpecificdayWebtoonlist(updateday: nil)
     }

@@ -14,12 +14,6 @@ import UIKit
 
 enum WebtoonHome
 {
-    struct WetoonsFormField {
-        var page: Int
-        var perPage: Int
-        var service: WebtoonSupplier
-        var updateDay: UpdateDay
-    }
     struct Webtoon: Decodable {
         var title: String
         var author: String
@@ -42,11 +36,10 @@ enum WebtoonHome
     {
         struct Request
         {
-            var webtoonList: WetoonsFormField?
-            
-            init(webtoonList: WetoonsFormField? = nil) {
-                self.webtoonList = webtoonList
-            }
+            var page: Int
+            var perPage: Int
+            var service: WebtoonSupplier
+            var updateDay: UpdateDay?
         }
         struct Response: Decodable
         {

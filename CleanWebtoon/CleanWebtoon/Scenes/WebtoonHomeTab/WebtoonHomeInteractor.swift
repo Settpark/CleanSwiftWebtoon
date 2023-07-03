@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonHomeBusinessLogic {
-    func fetchTodayWebtoons()
+    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request)
     func fetchRecommandWebtoons()
     func moveToSpecificdayWebtoonlist(updateday: UpdateDay?)
 }
@@ -26,17 +26,21 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     
     var presenter: WebtoonHomePresentationLogic?
     private var worker: WebtoonHomeWorker
-    private var currentWeekday: UpdateDay
     
     init() {
         worker = WebtoonHomeWorker(service: WebtoonsAPI())
-        currentWeekday = Date.makeTodayWeekday()
     }
     
-    func fetchTodayWebtoons() {
-        worker.fetchSpecificDayWebtoons(updateDay: currentWeekday) { [weak self] response in
+    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request) {
+        var updateDay: UpdateDay = .naverDaily
+        if let validUpdateDay = option.updateDay {
+            updateDay = validUpdateDay
+        } else {
+            updateDay = Date.makeTodayWeekday()
+        }
+        worker.fetchSpecificDayWebtoons(updateDay: updateDay) { [weak self] response in
             guard let self = self else { return }
-            self.presenter?.presentWebtoonList(response: response, updateDay: self.currentWeekday)
+            self.presenter?.presentWebtoonList(response: response, updateDay: updateDay)
         }
     }
     
@@ -48,11 +52,8 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     }
     
     func moveToSpecificdayWebtoonlist(updateday: UpdateDay? = nil) {
-        if let updateday = updateday {
-            self.currentWeekday = updateday
-        }
         var updateDayToInt: CGFloat = -1
-        switch self.currentWeekday {
+        switch updateday {
         case .mon:
             updateDayToInt = 1
         case .tue:
@@ -69,6 +70,8 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
             updateDayToInt = 7
         case .naverDaily:
             updateDayToInt = 0
+        case .none:
+            break
         }
         if updateDayToInt == -1 {
             return
