@@ -15,9 +15,11 @@ import UIKit
 protocol WebtoonHomePresentationLogic {
     func presentWebtoonList(response: WebtoonHome.WebtoonList.Response, updateDay: UpdateDay)
     func presentRecommandWebtoons(response: WebtoonHome.WebtoonList.Response)
+    func presentSpecificDayWebtoons(offset: CGFloat)
 }
 
 class WebtoonHomePresenter: WebtoonHomePresentationLogic {
+    
     weak var viewController: WebtoonHomeDisplayLogic?
     
     // MARK: Do something
@@ -52,6 +54,10 @@ class WebtoonHomePresenter: WebtoonHomePresentationLogic {
                                                      isWaitFree: isWaitFree(value: $0.additional.singularityList))
         }
         viewController?.displayRecommandWebtoon(viewModels: viewModels)
+    }
+    
+    func presentSpecificDayWebtoons(offset: CGFloat) {
+        viewController?.setupTodayWebtoonlist(offset: offset)
     }
     
     private func isOver15(value: [String]) -> Bool {

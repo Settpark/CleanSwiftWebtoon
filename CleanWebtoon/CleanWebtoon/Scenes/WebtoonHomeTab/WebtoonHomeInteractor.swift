@@ -15,14 +15,15 @@ import UIKit
 protocol WebtoonHomeBusinessLogic {
     func fetchTodayWebtoons()
     func fetchRecommandWebtoons()
+    func moveToSpecificdayWebtoonlist(updateday: UpdateDay?)
 }
 
 protocol WebtoonHomeDataStore {
     //var name: String { get set }
 }
 
-class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore
-{
+class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
+    
     var presenter: WebtoonHomePresentationLogic?
     private var worker: WebtoonHomeWorker
     private var currentWeekday: UpdateDay
@@ -44,5 +45,34 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore
             guard let self = self else { return }
             self.presenter?.presentRecommandWebtoons(response: response)
         }
+    }
+    
+    func moveToSpecificdayWebtoonlist(updateday: UpdateDay? = nil) {
+        if let updateday = updateday {
+            self.currentWeekday = updateday
+        }
+        var updateDayToInt: CGFloat = -1
+        switch self.currentWeekday {
+        case .mon:
+            updateDayToInt = 1
+        case .tue:
+            updateDayToInt = 2
+        case .wed:
+            updateDayToInt = 3
+        case .thu:
+            updateDayToInt = 4
+        case .fri:
+            updateDayToInt = 5
+        case .sat:
+            updateDayToInt = 6
+        case .sun:
+            updateDayToInt = 7
+        case .naverDaily:
+            updateDayToInt = 0
+        }
+        if updateDayToInt == -1 {
+            return
+        }
+        presenter?.presentSpecificDayWebtoons(offset: updateDayToInt)
     }
 }

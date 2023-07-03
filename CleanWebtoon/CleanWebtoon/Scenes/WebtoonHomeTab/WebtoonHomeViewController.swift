@@ -15,15 +15,30 @@ import UIKit
 protocol WebtoonHomeDisplayLogic: AnyObject {
     func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel], updateDay: UpdateDay)
     func displayRecommandWebtoon(viewModels: [WebtoonHome.WebtoonList.ViewModel])
+    func setupTodayWebtoonlist(offset: CGFloat)
 }
 
 class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
+    
     var interactor: WebtoonHomeBusinessLogic?
     var router: (NSObjectProtocol & WebtoonHomeRoutingLogic & WebtoonHomeDataPassing)?
     
     private let mainScrollView: UIScrollView
     private let mainScrollStackView: UIStackView
     private let topEventScrollView: UIScrollView
+    
+    private let weekDayScrollView: UIScrollView
+    private let weekDayStackView: UIStackView
+    
+    private let everydayPlusButton: UIButton
+    private let mondayButton: UIButton
+    private let tuesdayButton: UIButton
+    private let wednesdayButton: UIButton
+    private let thursdayButton: UIButton
+    private let fridayButton: UIButton
+    private let saturdayButton: UIButton
+    private let sundayButton: UIButton
+    
     private let webtoonListScrollView: UIScrollView
     private let webtoonListStackView: UIStackView
     private let everyDayPlusWebtoonCollection: UICollectionView
@@ -59,6 +74,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             let stackView = UIStackView()
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.axis = .vertical
+            stackView.distribution = .equalSpacing
+            stackView.spacing = 10
             return stackView
         }()
         topEventScrollView = {
@@ -68,10 +85,85 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             return scrollView
         }()
         topEventStackView = {
-            let stackView: UIStackView = UIStackView()
+            let stackView = UIStackView()
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.axis = .horizontal
             return stackView
+        }()
+        weekDayScrollView = {
+            let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            return scrollView
+        }()
+        weekDayStackView = {
+            let stackView = UIStackView()
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.axis = .horizontal
+            return stackView
+        }()
+        everydayPlusButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("매일+", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
+        }()
+        mondayButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("월", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
+        }()
+        tuesdayButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("화", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
+        }()
+        wednesdayButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("수", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
+        }()
+        thursdayButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("목", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
+        }()
+        fridayButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("금", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
+        }()
+        saturdayButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("토", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
+        }()
+        sundayButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("일", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
         }()
         webtoonListScrollView = {
             let scrollView = UIScrollView()
@@ -172,7 +264,6 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     }
     
     // MARK: Setup
-    
     private func setup() {
         let viewController = self
         let interactor = WebtoonHomeInteractor()
@@ -189,6 +280,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchTodayWebtoon()
+        setupTodayScroll()
+        setupButtonFeature()
     }
     
     override func viewDidLayoutSubviews() {
@@ -206,6 +299,17 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         mainScrollStackView.addArrangedSubview(topEventScrollView)
         
         topEventScrollView.addSubview(topEventStackView)
+        
+        mainScrollStackView.addArrangedSubview(weekDayScrollView)
+        weekDayScrollView.addSubview(weekDayStackView)
+        weekDayStackView.addArrangedSubview(everydayPlusButton)
+        weekDayStackView.addArrangedSubview(mondayButton)
+        weekDayStackView.addArrangedSubview(tuesdayButton)
+        weekDayStackView.addArrangedSubview(wednesdayButton)
+        weekDayStackView.addArrangedSubview(thursdayButton)
+        weekDayStackView.addArrangedSubview(fridayButton)
+        weekDayStackView.addArrangedSubview(saturdayButton)
+        weekDayStackView.addArrangedSubview(sundayButton)
         
         mainScrollStackView.addArrangedSubview(webtoonListScrollView)
         webtoonListScrollView.addSubview(webtoonListStackView)
@@ -294,6 +398,33 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             topEventStackView.bottomAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.bottomAnchor),
             topEventStackView.heightAnchor.constraint(equalTo: topEventScrollView.frameLayoutGuide.heightAnchor),
             
+            weekDayScrollView.heightAnchor.constraint(equalToConstant: 50),
+            weekDayScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            weekDayScrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            
+            weekDayStackView.leadingAnchor.constraint(equalTo: weekDayScrollView.contentLayoutGuide.leadingAnchor),
+            weekDayStackView.trailingAnchor.constraint(equalTo: weekDayScrollView.contentLayoutGuide.trailingAnchor),
+            weekDayStackView.topAnchor.constraint(equalTo: weekDayScrollView.contentLayoutGuide.topAnchor),
+            weekDayStackView.bottomAnchor.constraint(equalTo: weekDayScrollView.contentLayoutGuide.bottomAnchor),
+            weekDayStackView.heightAnchor.constraint(equalTo: weekDayScrollView.frameLayoutGuide.heightAnchor),
+            
+            everydayPlusButton.widthAnchor.constraint(equalToConstant: 50),
+            everydayPlusButton.heightAnchor.constraint(equalToConstant: 50),
+            mondayButton.widthAnchor.constraint(equalToConstant: 50),
+            mondayButton.heightAnchor.constraint(equalToConstant: 50),
+            tuesdayButton.widthAnchor.constraint(equalToConstant: 50),
+            tuesdayButton.heightAnchor.constraint(equalToConstant: 50),
+            wednesdayButton.widthAnchor.constraint(equalToConstant: 50),
+            wednesdayButton.heightAnchor.constraint(equalToConstant: 50),
+            thursdayButton.widthAnchor.constraint(equalToConstant: 50),
+            thursdayButton.heightAnchor.constraint(equalToConstant: 50),
+            fridayButton.widthAnchor.constraint(equalToConstant: 50),
+            fridayButton.heightAnchor.constraint(equalToConstant: 50),
+            saturdayButton.widthAnchor.constraint(equalToConstant: 50),
+            saturdayButton.heightAnchor.constraint(equalToConstant: 50),
+            sundayButton.widthAnchor.constraint(equalToConstant: 50),
+            sundayButton.heightAnchor.constraint(equalToConstant: 50),
+            
             webtoonListStackView.leadingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.leadingAnchor),
             webtoonListStackView.trailingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.trailingAnchor),
             webtoonListStackView.topAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.topAnchor),
@@ -341,6 +472,60 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     private func setupMainStackViewSpacing() {
         mainScrollStackView.setCustomSpacing(5, after: topEventScrollView)
+    }
+    
+    private func setupTodayScroll() {
+        interactor?.moveToSpecificdayWebtoonlist(updateday: nil)
+    }
+    
+    func setupTodayWebtoonlist(offset: CGFloat) {
+        let scrollOffset = offset * self.view.frame.width
+        DispatchQueue.main.async {
+            self.webtoonListScrollView.setContentOffset(CGPoint(x: scrollOffset, y: 0), animated: true)
+        }
+    }
+    
+    private func setupButtonFeature() {
+        self.everydayPlusButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+        self.mondayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+        self.tuesdayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+        self.wednesdayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+        self.thursdayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+        self.fridayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+        self.saturdayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+        self.sundayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+    }
+    
+    @objc
+    private func moveToSpecificDay(sender: UIButton) {
+        switch sender {
+        case everydayPlusButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .naverDaily)
+            break
+        case mondayButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .mon)
+            break
+        case tuesdayButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .tue)
+            break
+        case wednesdayButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .wed)
+            break
+        case thursdayButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .thu)
+            break
+        case fridayButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .fri)
+            break
+        case saturdayButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .sat)
+            break
+        case sundayButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .sun)
+            break
+        default:
+            break
+        }
     }
     
     func fetchTodayWebtoon() {
