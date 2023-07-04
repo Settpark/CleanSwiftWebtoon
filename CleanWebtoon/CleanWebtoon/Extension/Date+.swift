@@ -21,7 +21,7 @@ extension Date {
         let currentWeekday = weekday - 1
         
         guard let weekdaySymbols = weekdaySymbols else {
-            return .naverDaily
+            return .everyDayPlus
         }
         
         switch weekdaySymbols[currentWeekday] {
@@ -40,7 +40,7 @@ extension Date {
         case "일요일":
             return .sun
         default:
-            return .naverDaily
+            return .everyDayPlus
         }
     }
 }

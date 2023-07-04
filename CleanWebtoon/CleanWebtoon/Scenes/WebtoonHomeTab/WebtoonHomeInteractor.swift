@@ -32,7 +32,7 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     }
     
     func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request) {
-        var updateDay: UpdateDay = .naverDaily
+        var updateDay: UpdateDay = .everyDayPlus
         if let validUpdateDay = option.updateDay {
             updateDay = validUpdateDay
         } else {
@@ -69,7 +69,7 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
         switch updateDay {
         case .new:
             return 0
-        case .naverDaily:
+        case .everyDayPlus:
             return 1
         case .mon:
             return 2

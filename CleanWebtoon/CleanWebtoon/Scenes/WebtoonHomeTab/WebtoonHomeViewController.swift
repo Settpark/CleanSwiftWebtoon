@@ -68,6 +68,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     private let scrollDelegate: ScrollDelegate
     private let topEventStackView: UIStackView
+    private var currentCollectionHeightConstraint: NSLayoutConstraint?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         mainScrollView = {
@@ -301,6 +302,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         
         scrollDelegate = ScrollDelegate(outerScrollView: self.mainScrollView)
         
+        currentCollectionHeightConstraint = nil
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
         setupViews()
@@ -519,7 +521,6 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             
             newWebtoonCollection.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
             everyDayPlusWebtoonCollection.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-            everyDayPlusWebtoonCollection.heightAnchor.constraint(equalToConstant: 10000), //MARK: 로드 된 후 재 지정 필요. StackView라면?
             mondayWebtoonCollection.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             tuesdayWebtoonCollection.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             wednesdayWebtoonCollection.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
@@ -604,8 +605,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             request.updateDay = .new
             break
         case everydayPlusButton:
-            interactor?.moveToSpecificdayWebtoonlist(updateday: .naverDaily)
-            request.updateDay = .naverDaily
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .everyDayPlus)
+            request.updateDay = .everyDayPlus
             break
         case mondayButton:
             interactor?.moveToSpecificdayWebtoonlist(updateday: .mon)
@@ -721,57 +722,86 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         }
     }
     
+    func resetCollectionView(heightConstraint: CGFloat?, targetView: UICollectionView?) {
+        if let heightConstraint = heightConstraint,
+           let targetView = targetView {
+            self.currentCollectionHeightConstraint?.isActive = false
+            self.currentCollectionHeightConstraint = targetView.heightAnchor.constraint(equalToConstant: heightConstraint)
+            self.currentCollectionHeightConstraint?.isActive = true
+        }
+    }
+    
     func displayWebtoonList(viewModels: [WebtoonHome.WebtoonList.ViewModel], updateDay: UpdateDay) {
         switch updateDay {
         case .new:
             self.newWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.newWebtoonCollection.reloadData()
+                let heightConstraint = self?.newWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.newWebtoonCollection)
             }
-        case .naverDaily:
+        case .everyDayPlus:
             self.everyDayPlusWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.everyDayPlusWebtoonCollection.reloadData()
+                let heightConstraint = self?.everyDayPlusWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.everyDayPlusWebtoonCollection)
             }
         case .mon:
             self.mondayWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.mondayWebtoonCollection.reloadData()
+                let heightConstraint = self?.mondayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.mondayWebtoonCollection)
             }
         case .tue:
             self.tuesdayWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.tuesdayWebtoonCollection.reloadData()
+                let heightConstraint = self?.tuesdayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.tuesdayWebtoonCollection)
             }
         case .wed:
             self.wednesdayWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.wednesdayWebtoonCollection.reloadData()
+                let heightConstraint = self?.wednesdayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.wednesdayWebtoonCollection)
             }
         case .thu:
             self.thursdayWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.thursdayWebtoonCollection.reloadData()
+                let heightConstraint = self?.thursdayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.thursdayWebtoonCollection)
             }
         case .fri:
             self.fridayWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.fridayWebtoonCollection.reloadData()
+                let heightConstraint = self?.tuesdayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.fridayWebtoonCollection)
             }
         case .sat:
             self.saturdayWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.saturdayWebtoonCollection.reloadData()
+                let heightConstraint = self?.saturdayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.saturdayWebtoonCollection)
             }
         case .sun:
             self.sundayWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.sundayWebtoonCollection.reloadData()
+                let heightConstraint = self?.sundayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.sundayWebtoonCollection)
             }
         case .finished:
             self.finishWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.finishWebtoonCollection.reloadData()
+                let heightConstraint = self?.finishWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.finishWebtoonCollection)
             }
         }
     }
