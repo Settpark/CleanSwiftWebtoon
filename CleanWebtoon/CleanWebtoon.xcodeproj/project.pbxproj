@@ -14,7 +14,6 @@
 		AB14F7442A44401D002984B3 /* RecommandedCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73E2A44401D002984B3 /* RecommandedCompletionViewController.swift */; };
 		AB14F7452A44401D002984B3 /* RecommandedCompletionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73F2A44401D002984B3 /* RecommandedCompletionInteractor.swift */; };
 		AB4DE8672A4EC0A500FE1EC2 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4DE8662A4EC0A500FE1EC2 /* Font+.swift */; };
-		AB4DE8692A4EC28E00FE1EC2 /* customFont1.otf in Resources */ = {isa = PBXBuildFile; fileRef = AB4DE8682A4EC28E00FE1EC2 /* customFont1.otf */; };
 		AB4DE86B2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf in Resources */ = {isa = PBXBuildFile; fileRef = AB4DE86A2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf */; };
 		AB4DE86D2A4EC7A600FE1EC2 /* CAGradientLayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4DE86C2A4EC7A600FE1EC2 /* CAGradientLayer+.swift */; };
 		AB6C58EF2A4290A3003BBEAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C58EE2A4290A3003BBEAD /* AppDelegate.swift */; };
@@ -71,7 +70,6 @@
 		AB14F73E2A44401D002984B3 /* RecommandedCompletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionViewController.swift; sourceTree = "<group>"; };
 		AB14F73F2A44401D002984B3 /* RecommandedCompletionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionInteractor.swift; sourceTree = "<group>"; };
 		AB4DE8662A4EC0A500FE1EC2 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
-		AB4DE8682A4EC28E00FE1EC2 /* customFont1.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = customFont1.otf; sourceTree = "<group>"; };
 		AB4DE86A2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ClimateCrisisKR-1979.otf"; sourceTree = "<group>"; };
 		AB4DE86C2A4EC7A600FE1EC2 /* CAGradientLayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+.swift"; sourceTree = "<group>"; };
 		AB6C58EB2A4290A3003BBEAD /* CleanWebtoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanWebtoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,7 +146,6 @@
 		AB4DE8632A4EC02F00FE1EC2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				AB4DE8682A4EC28E00FE1EC2 /* customFont1.otf */,
 				AB4DE86A2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf */,
 			);
 			path = Fonts;
@@ -413,7 +410,6 @@
 			files = (
 				AB6C58F82A4290A4003BBEAD /* Assets.xcassets in Resources */,
 				AB4DE86B2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf in Resources */,
-				AB4DE8692A4EC28E00FE1EC2 /* customFont1.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -53,29 +53,38 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     
     func moveToSpecificdayWebtoonlist(updateday: UpdateDay? = nil) {
         var updateDayToInt: CGFloat = -1
-        switch updateday {
-        case .mon:
-            updateDayToInt = 1
-        case .tue:
-            updateDayToInt = 2
-        case .wed:
-            updateDayToInt = 3
-        case .thu:
-            updateDayToInt = 4
-        case .fri:
-            updateDayToInt = 5
-        case .sat:
-            updateDayToInt = 6
-        case .sun:
-            updateDayToInt = 7
-        case .naverDaily:
-            updateDayToInt = 0
-        case .none:
-            break
-        }
-        if updateDayToInt == -1 {
-            return
+        let decisionValue: CGFloat = makeUpdatedayToInt(updateDay: updateday)
+        if decisionValue == -1 {
+            updateDayToInt = makeUpdatedayToInt(updateDay: Date.makeTodayWeekday())
+        } else {
+            updateDayToInt = decisionValue
         }
         presenter?.presentSpecificDayWebtoons(offset: updateDayToInt)
+    }
+    
+    private func makeUpdatedayToInt(updateDay: UpdateDay?) -> CGFloat {
+        guard let updateDay = updateDay else {
+            return -1
+        }
+        switch updateDay {
+        case .naverDaily:
+            return 0
+        case .mon:
+            return 1
+        case .tue:
+            return 2
+        case .wed:
+            return 3
+        case .thu:
+            return 4
+        case .fri:
+            return 5
+        case .sat:
+            return 6
+        case .sun:
+            return 7
+        case .finished:
+            return 8
+        }
     }
 }

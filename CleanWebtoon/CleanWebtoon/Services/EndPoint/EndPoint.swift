@@ -22,6 +22,7 @@ enum UpdateDay: String {
     case sat
     case sun
     case naverDaily
+    case finished
 }
 
 struct EndPoint {
@@ -54,7 +55,7 @@ struct EndPoint {
         var endPointComponent: URLComponents = URLComponents(string: self.baseURL) ?? URLComponents()
         endPointComponent.queryItems = [URLQueryItem(name: "service", value: String(describing: service)),
                                         URLQueryItem(name: "updateDay", value: String(describing: updateDay)),
-                                        URLQueryItem(name: "perPage", value: String(describing: Int8.max))]
+                                        URLQueryItem(name: "perPage", value: String(describing: Int16.max))]
         return endPointComponent
     }
 }

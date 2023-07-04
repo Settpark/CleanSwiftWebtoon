@@ -38,6 +38,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private let fridayButton: UIButton
     private let saturdayButton: UIButton
     private let sundayButton: UIButton
+    private let finishButton: UIButton
     
     private let webtoonListScrollView: UIScrollView
     private let webtoonListStackView: UIStackView
@@ -49,6 +50,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private let fridayWebtoonCollection: UICollectionView
     private let saturdayWebtoonCollection: UICollectionView
     private let sundayWebtoonCollection: UICollectionView
+    private let finishWebtoonCollection: UICollectionView
     
     private let webtoonListLayout: WebtoonListLayout
     private let everyDayPlusWebtoonDataSource: WebtoonListDataSource
@@ -59,6 +61,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private let fridayWebtoonDataSource: WebtoonListDataSource
     private let saturdayWebtoonDataSource: WebtoonListDataSource
     private let sundayWebtoonDataSource: WebtoonListDataSource
+    private let finishWebtoonDataSource: WebtoonListDataSource
     
     private let scrollDelegate: ScrollDelegate
     private let topEventStackView: UIStackView
@@ -165,6 +168,14 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             button.setTitleColor(.black, for: .normal)
             return button
         }()
+        finishButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("완결", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 13)
+            button.setTitleColor(.black, for: .normal)
+            return button
+        }()
         webtoonListScrollView = {
             let scrollView = UIScrollView()
             scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -241,6 +252,14 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             collectionView.translatesAutoresizingMaskIntoConstraints = false
             return collectionView
         }()
+        finishWebtoonCollection = {
+            let layout = UICollectionViewFlowLayout()
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+            collectionView.isUserInteractionEnabled = false
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            return collectionView
+        }()
         webtoonListLayout = WebtoonListLayout(inset: 20)
         everyDayPlusWebtoonDataSource = WebtoonListDataSource()
         mondayWebtoonDataSource = WebtoonListDataSource()
@@ -250,6 +269,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         fridayWebtoonDataSource = WebtoonListDataSource()
         saturdayWebtoonDataSource = WebtoonListDataSource()
         sundayWebtoonDataSource = WebtoonListDataSource()
+        finishWebtoonDataSource = WebtoonListDataSource()
         
         scrollDelegate = ScrollDelegate(outerScrollView: self.mainScrollView)
         
@@ -309,6 +329,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         weekDayStackView.addArrangedSubview(fridayButton)
         weekDayStackView.addArrangedSubview(saturdayButton)
         weekDayStackView.addArrangedSubview(sundayButton)
+        weekDayStackView.addArrangedSubview(finishButton)
         
         mainScrollStackView.addArrangedSubview(webtoonListScrollView)
         webtoonListScrollView.addSubview(webtoonListStackView)
@@ -361,6 +382,12 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             stackView.translatesAutoresizingMaskIntoConstraints = false
             return stackView
         }()
+        let finishStackView: UIStackView = {
+            let stackView = UIStackView()
+            stackView.axis = .vertical
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            return stackView
+        }()
         
         webtoonListStackView.addArrangedSubview(everyDayPlusStackView)
         everyDayPlusStackView.addArrangedSubview(everyDayPlusWebtoonCollection)
@@ -378,6 +405,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         saturdayStackView.addArrangedSubview(saturdayWebtoonCollection)
         webtoonListStackView.addArrangedSubview(sundayStackView)
         sundayStackView.addArrangedSubview(sundayWebtoonCollection)
+        webtoonListStackView.addArrangedSubview(finishStackView)
+        finishStackView.addArrangedSubview(finishWebtoonCollection)
         
         NSLayoutConstraint.activate([
             mainScrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -423,6 +452,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             saturdayButton.heightAnchor.constraint(equalToConstant: 50),
             sundayButton.widthAnchor.constraint(equalToConstant: 50),
             sundayButton.heightAnchor.constraint(equalToConstant: 50),
+            finishButton.widthAnchor.constraint(equalToConstant: 50),
+            finishButton.heightAnchor.constraint(equalToConstant: 50),
             
             webtoonListStackView.leadingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.leadingAnchor),
             webtoonListStackView.trailingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.trailingAnchor),
@@ -439,6 +470,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             fridayWebtoonCollection.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             saturdayWebtoonCollection.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             sundayWebtoonCollection.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            finishWebtoonCollection.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
         ])
     }
     
@@ -467,6 +499,9 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         sundayWebtoonCollection.delegate = webtoonListLayout
         sundayWebtoonCollection.dataSource = sundayWebtoonDataSource
         sundayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
+        finishWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
+        finishWebtoonCollection.delegate = webtoonListLayout
+        finishWebtoonCollection.dataSource = finishWebtoonDataSource
     }
     
     private func setupMainStackViewSpacing() {
@@ -489,12 +524,13 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         self.fridayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
         self.saturdayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
         self.sundayButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
+        self.finishButton.addTarget(self, action: #selector(moveToSpecificDay(sender: )), for: .touchUpInside)
     }
     
     @objc
     private func moveToSpecificDay(sender: UIButton) {
         var request = WebtoonHome.WebtoonList.Request(page: 0,
-                                                      perPage: 65536,
+                                                      perPage: Int(Int16.max),
                                                       service: .kakao,
                                                       updateDay: nil)
         switch sender {
@@ -530,6 +566,9 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             interactor?.moveToSpecificdayWebtoonlist(updateday: .sun)
             request.updateDay = .sun
             break
+        case finishButton:
+            interactor?.moveToSpecificdayWebtoonlist(updateday: .finished)
+            request.updateDay = .finished
         default:
             break
         }
@@ -607,6 +646,12 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             switch updateDay {
+            case .finished:
+                self.finishWebtoonDataSource.update(dataSource: viewModels)
+                self.finishWebtoonCollection.reloadData()
+            case .naverDaily:
+                self.everyDayPlusWebtoonDataSource.update(dataSource: viewModels)
+                self.everyDayPlusWebtoonCollection.reloadData()
             case .mon:
                 self.mondayWebtoonDataSource.update(dataSource: viewModels)
                 self.mondayWebtoonCollection.reloadData()
@@ -628,9 +673,6 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             case .sun:
                 self.sundayWebtoonDataSource.update(dataSource: viewModels)
                 self.sundayWebtoonCollection.reloadData()
-            case .naverDaily:
-                self.everyDayPlusWebtoonDataSource.update(dataSource: viewModels)
-                self.everyDayPlusWebtoonCollection.reloadData()
             }
         }
     }
