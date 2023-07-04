@@ -67,24 +67,26 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
             return -1
         }
         switch updateDay {
-        case .naverDaily:
+        case .new:
             return 0
-        case .mon:
+        case .naverDaily:
             return 1
-        case .tue:
+        case .mon:
             return 2
-        case .wed:
+        case .tue:
             return 3
-        case .thu:
+        case .wed:
             return 4
-        case .fri:
+        case .thu:
             return 5
-        case .sat:
+        case .fri:
             return 6
-        case .sun:
+        case .sat:
             return 7
-        case .finished:
+        case .sun:
             return 8
+        case .finished:
+            return 9
         }
     }
 }

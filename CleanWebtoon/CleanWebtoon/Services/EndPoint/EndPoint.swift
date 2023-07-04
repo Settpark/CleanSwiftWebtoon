@@ -14,6 +14,8 @@ enum WebtoonSupplier: String {
 }
 
 enum UpdateDay: String {
+    case new
+    case naverDaily
     case mon
     case tue
     case wed
@@ -21,7 +23,6 @@ enum UpdateDay: String {
     case fri
     case sat
     case sun
-    case naverDaily
     case finished
 }
 
