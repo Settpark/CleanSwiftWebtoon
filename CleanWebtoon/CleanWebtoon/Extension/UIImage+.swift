@@ -13,8 +13,11 @@ extension UIImage {
             completion(nil)
             return nil
         }
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
-            if let error = error {
+        var requestMaker = RequestMaker(url: url, method: .get)
+        requestMaker.request.addValue(requestMaker.agentHeaderValue,
+                                      forHTTPHeaderField: "User-Agent")
+        let task = URLSession.shared.dataTask(with: requestMaker.request) { data, _, error in
+            if let _ = error {
                 completion(nil)
                 return
             }

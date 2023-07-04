@@ -21,7 +21,7 @@ class WebtoonListLayout: NSObject, UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let itemWidth = (collectionViewWidth - (2 * minimumInteritemSpacing) - (CGFloat(leadingTrailingInset) * 2)) / 3
-        return CGSize(width: itemWidth, height: itemWidth / 100 * 150)
+        return CGSize(width: itemWidth, height: itemWidth / 100 * 170)
     }
     
     func collectionView(_ collectionView: UICollectionView,

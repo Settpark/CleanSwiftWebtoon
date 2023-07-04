@@ -101,6 +101,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         weekDayStackView = {
             let stackView = UIStackView()
             stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.spacing = 10
             stackView.axis = .horizontal
             return stackView
         }()
@@ -321,6 +322,16 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         
         mainScrollStackView.addArrangedSubview(weekDayScrollView)
         weekDayScrollView.addSubview(weekDayStackView)
+        let paddingView: UIView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                view.widthAnchor.constraint(equalToConstant: 10),
+                view.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 2)
+            ])
+            return view
+        }()
+        weekDayStackView.addArrangedSubview(paddingView)
         weekDayStackView.addArrangedSubview(everydayPlusButton)
         weekDayStackView.addArrangedSubview(mondayButton)
         weekDayStackView.addArrangedSubview(tuesdayButton)
@@ -330,6 +341,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         weekDayStackView.addArrangedSubview(saturdayButton)
         weekDayStackView.addArrangedSubview(sundayButton)
         weekDayStackView.addArrangedSubview(finishButton)
+        weekDayStackView.setCustomSpacing(20, after: finishButton)
         
         mainScrollStackView.addArrangedSubview(webtoonListScrollView)
         webtoonListScrollView.addSubview(webtoonListStackView)
@@ -426,7 +438,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             topEventStackView.bottomAnchor.constraint(equalTo: topEventScrollView.contentLayoutGuide.bottomAnchor),
             topEventStackView.heightAnchor.constraint(equalTo: topEventScrollView.frameLayoutGuide.heightAnchor),
             
-            weekDayScrollView.heightAnchor.constraint(equalToConstant: 50),
+            weekDayScrollView.heightAnchor.constraint(equalToConstant: 20),
             weekDayScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             weekDayScrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             
@@ -436,24 +448,24 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             weekDayStackView.bottomAnchor.constraint(equalTo: weekDayScrollView.contentLayoutGuide.bottomAnchor),
             weekDayStackView.heightAnchor.constraint(equalTo: weekDayScrollView.frameLayoutGuide.heightAnchor),
             
-            everydayPlusButton.widthAnchor.constraint(equalToConstant: 50),
-            everydayPlusButton.heightAnchor.constraint(equalToConstant: 50),
-            mondayButton.widthAnchor.constraint(equalToConstant: 50),
-            mondayButton.heightAnchor.constraint(equalToConstant: 50),
-            tuesdayButton.widthAnchor.constraint(equalToConstant: 50),
-            tuesdayButton.heightAnchor.constraint(equalToConstant: 50),
-            wednesdayButton.widthAnchor.constraint(equalToConstant: 50),
-            wednesdayButton.heightAnchor.constraint(equalToConstant: 50),
-            thursdayButton.widthAnchor.constraint(equalToConstant: 50),
-            thursdayButton.heightAnchor.constraint(equalToConstant: 50),
-            fridayButton.widthAnchor.constraint(equalToConstant: 50),
-            fridayButton.heightAnchor.constraint(equalToConstant: 50),
-            saturdayButton.widthAnchor.constraint(equalToConstant: 50),
-            saturdayButton.heightAnchor.constraint(equalToConstant: 50),
-            sundayButton.widthAnchor.constraint(equalToConstant: 50),
-            sundayButton.heightAnchor.constraint(equalToConstant: 50),
-            finishButton.widthAnchor.constraint(equalToConstant: 50),
-            finishButton.heightAnchor.constraint(equalToConstant: 50),
+            everydayPlusButton.widthAnchor.constraint(equalToConstant: 35),
+            everydayPlusButton.heightAnchor.constraint(equalToConstant: 20),
+            mondayButton.widthAnchor.constraint(equalToConstant: 30),
+            mondayButton.heightAnchor.constraint(equalToConstant: 20),
+            tuesdayButton.widthAnchor.constraint(equalToConstant: 30),
+            tuesdayButton.heightAnchor.constraint(equalToConstant: 20),
+            wednesdayButton.widthAnchor.constraint(equalToConstant: 30),
+            wednesdayButton.heightAnchor.constraint(equalToConstant: 20),
+            thursdayButton.widthAnchor.constraint(equalToConstant: 30),
+            thursdayButton.heightAnchor.constraint(equalToConstant: 20),
+            fridayButton.widthAnchor.constraint(equalToConstant: 30),
+            fridayButton.heightAnchor.constraint(equalToConstant: 20),
+            saturdayButton.widthAnchor.constraint(equalToConstant: 30),
+            saturdayButton.heightAnchor.constraint(equalToConstant: 20),
+            sundayButton.widthAnchor.constraint(equalToConstant: 30),
+            sundayButton.heightAnchor.constraint(equalToConstant: 20),
+            finishButton.widthAnchor.constraint(equalToConstant: 30),
+            finishButton.heightAnchor.constraint(equalToConstant: 20),
             
             webtoonListStackView.leadingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.leadingAnchor),
             webtoonListStackView.trailingAnchor.constraint(equalTo: webtoonListScrollView.contentLayoutGuide.trailingAnchor),
