@@ -39,7 +39,12 @@ enum WebtoonHome
             var page: Int
             var perPage: Int
             var service: WebtoonSupplier
-            var updateDay: UpdateDay?
+            var updateDay: UpdateDay
+            
+            static var defaultRequest = Request(page: 1,
+                                                perPage: Int(Int16.max),
+                                                service: .naver,
+                                                updateDay: Date.makeTodayWeekday())
         }
         struct Response: Decodable
         {

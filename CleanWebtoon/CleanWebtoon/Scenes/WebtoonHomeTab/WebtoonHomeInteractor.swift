@@ -13,9 +13,9 @@
 import UIKit
 
 protocol WebtoonHomeBusinessLogic {
-    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request)
+    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request, isButtonPress: Bool)
+    func updateCurrent(updateDay: UpdateDay)
     func fetchRecommandWebtoons()
-    func moveToSpecificdayWebtoonlist(updateday: UpdateDay?)
 }
 
 protocol WebtoonHomeDataStore {
@@ -26,67 +26,44 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     
     var presenter: WebtoonHomePresentationLogic?
     private var worker: WebtoonHomeWorker
+    private var lastUpdateDay: UpdateDay?
     
     init() {
         worker = WebtoonHomeWorker(service: WebtoonsAPI())
+        lastUpdateDay = nil
     }
     
-    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request) {
-        var updateDay: UpdateDay = .everyDayPlus
-        if let validUpdateDay = option.updateDay {
-            updateDay = validUpdateDay
-        } else {
-            updateDay = Date.makeTodayWeekday()
+    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request, isButtonPress: Bool) {
+        if lastUpdateDay == option.updateDay {
+            return
         }
-        worker.fetchSpecificDayWebtoons(updateDay: updateDay) { [weak self] response in
-            guard let self = self else { return }
-            self.presenter?.presentWebtoonList(response: response, updateDay: updateDay)
+        lastUpdateDay = option.updateDay
+        worker.fetchSpecificDayWebtoons(updateDay: option.updateDay) { [weak self] response in
+            guard let self = self else {
+                return
+            }
+            self.presenter?.presentWebtoonList(response: response, updateDay: option.updateDay)
         }
+        if isButtonPress {
+            moveToSpecificdayWebtoonlist(updateday: option.updateDay)
+        }
+    }
+    
+    func updateCurrent(updateDay: UpdateDay) {
+        self.lastUpdateDay = updateDay
     }
     
     func fetchRecommandWebtoons() {
         worker.fetchRecommandWebtoons { [weak self] response in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             self.presenter?.presentRecommandWebtoons(response: response)
         }
     }
     
-    func moveToSpecificdayWebtoonlist(updateday: UpdateDay? = nil) {
-        var updateDayToInt: CGFloat = -1
-        let decisionValue: CGFloat = makeUpdatedayToInt(updateDay: updateday)
-        if decisionValue == -1 {
-            updateDayToInt = makeUpdatedayToInt(updateDay: Date.makeTodayWeekday())
-        } else {
-            updateDayToInt = decisionValue
-        }
+    private func moveToSpecificdayWebtoonlist(updateday: UpdateDay) {
+        let updateDayToInt: CGFloat = UpdateDay.makeUpdatedayToInt(updateDay: updateday)
         presenter?.presentSpecificDayWebtoons(offset: updateDayToInt)
-    }
-    
-    private func makeUpdatedayToInt(updateDay: UpdateDay?) -> CGFloat {
-        guard let updateDay = updateDay else {
-            return -1
-        }
-        switch updateDay {
-        case .new:
-            return 0
-        case .everyDayPlus:
-            return 1
-        case .mon:
-            return 2
-        case .tue:
-            return 3
-        case .wed:
-            return 4
-        case .thu:
-            return 5
-        case .fri:
-            return 6
-        case .sat:
-            return 7
-        case .sun:
-            return 8
-        case .finished:
-            return 9
-        }
     }
 }
