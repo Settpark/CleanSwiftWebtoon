@@ -795,9 +795,14 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
 extension WebtoonHomeViewController: ScrollViewPositionChecker {
     func updateCurrentUpdateday(offset: CGFloat) {
         let fetchTargetIndex = floor(Double(offset/self.view.safeAreaLayoutGuide.layoutFrame.width))
-        print(fetchTargetIndex)
         let targetDay = UpdateDay.makeIntToUpdateDay(value: Int(fetchTargetIndex))
         interactor?.updateCurrent(updateDay: targetDay)
+        disableAllButton()
+        DispatchQueue.main.async { [weak self] in
+            if let button = self?.weekDayStackView.subviews[Int(fetchTargetIndex)+1] as? UIButton {
+                button.setTitleColor(.green, for: .normal)
+            }
+        }
     }
     
     func fetchWebtoons(nextPostion: CGFloat, scrollDirection: ScrollDirection) {
