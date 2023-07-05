@@ -43,6 +43,7 @@
 		ABCFCA832A4BE9680061F5EE /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA822A4BE9680061F5EE /* Date+.swift */; };
 		ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */; };
 		ABD0881A2A53F8C700A28006 /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD088192A53F8C700A28006 /* ScrollDelegate.swift */; };
+		ABD0885A2A5561D500A28006 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD088592A5561D500A28006 /* Cache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		ABCFCA822A4BE9680061F5EE /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		ABD088192A53F8C700A28006 /* ScrollDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDelegate.swift; sourceTree = "<group>"; };
+		ABD088592A5561D500A28006 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 		AB6C58ED2A4290A3003BBEAD /* CleanWebtoon */ = {
 			isa = PBXGroup;
 			children = (
+				ABD088582A5561CA00A28006 /* Cache */,
 				AB4DE8632A4EC02F00FE1EC2 /* Fonts */,
 				ABE197832A4A6CEA00C50CB5 /* Services */,
 				AB6C59352A42B7A6003BBEAD /* App */,
@@ -292,6 +295,14 @@
 				AB4DE86C2A4EC7A600FE1EC2 /* CAGradientLayer+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		ABD088582A5561CA00A28006 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				ABD088592A5561D500A28006 /* Cache.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		ABE197832A4A6CEA00C50CB5 /* Services */ = {
@@ -460,6 +471,7 @@
 				AB6C59422A42B844003BBEAD /* AppRootInteractor.swift in Sources */,
 				AB14F7442A44401D002984B3 /* RecommandedCompletionViewController.swift in Sources */,
 				AB6C58EF2A4290A3003BBEAD /* AppDelegate.swift in Sources */,
+				ABD0885A2A5561D500A28006 /* Cache.swift in Sources */,
 				AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */,
 				ABD0881A2A53F8C700A28006 /* ScrollDelegate.swift in Sources */,
 				AB6C593D2A42B844003BBEAD /* AppRootPresenter.swift in Sources */,

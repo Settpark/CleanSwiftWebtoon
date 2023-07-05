@@ -115,9 +115,19 @@ class WebtoonListCell: UICollectionViewCell {
             self?.ratingScore.text = "8.56"
         }
         imageLoadingTask = UIImage.loadImage(from: viewModel.img) { [weak self] image in
+            guard let image = image else {
+                return
+            }
             DispatchQueue.main.async { [weak self] in
                 self?.mainImage.image = image
+                ImageCacheManger.shared.cacheImage(forKey: viewModel.title, image: image)
             }
+        }
+        if let validCacheImage = ImageCacheManger.shared.loadCachedImage(forKey: viewModel.title) {
+            DispatchQueue.main.async { [weak self] in
+                self?.mainImage.image = validCacheImage
+            }
+            return
         }
         guard let imageLoadingTask = imageLoadingTask else {
             return

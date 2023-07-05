@@ -764,7 +764,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             self.fridayWebtoonDataSource.update(dataSource: viewModels)
             DispatchQueue.main.async { [weak self] in
                 self?.fridayWebtoonCollection.reloadData()
-                let heightConstraint = self?.tuesdayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
+                let heightConstraint = self?.fridayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
                 self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.fridayWebtoonCollection)
             }
         case .sat:
