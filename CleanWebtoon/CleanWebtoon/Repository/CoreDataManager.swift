@@ -25,10 +25,17 @@ class CoreDataManager {
         self.managedObjectContext = self.persistentContainer.viewContext
     }
 
-    func fetchData<T: NSManagedObject>(type: T.Type) {
+    func fetchData<T: NSManagedObject>(type: T.Type,
+                                       predicate: [UpdateDay]?) {
         guard let fetchRequest = T.fetchRequest() as? NSFetchRequest<T> else {
             return
         }
+        if let predicate = predicate {
+            let mappedUpdatedays = predicate.map { $0.rawValue }
+            //TODO: 잘 작동하는 지 확인
+            fetchRequest.predicate = NSPredicate(format: "ANY updatedays IN == %@", mappedUpdatedays)
+        }
+        
         do {
             let results = try managedObjectContext.fetch(fetchRequest)
             if let results = results as? [WebtoonEntity] {
@@ -47,7 +54,6 @@ class CoreDataManager {
         return T(entity: entity, insertInto: managedObjectContext)
     }
     
-    // Core Data에서 데이터 삭제하기
     func deleteData<T: NSManagedObject>(type: T.Type,
                                         targetTitle: String) {
         guard let fetchRequest = T.fetchRequest() as? NSFetchRequest<T> else {

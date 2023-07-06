@@ -16,6 +16,7 @@ protocol ServiceLayer {
     func fetchSpecificDayWebtoons(updateDay: UpdateDay,
                                   completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void)
     func fetchRecommandWebtoons(completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void)
+    func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHome.LastUpdate, Error>) -> Void)
 }
 
 class WebtoonHomeWorker {
@@ -34,6 +35,17 @@ class WebtoonHomeWorker {
                 completion(success)
             case .failure(let failure):
                 print(failure)
+            }
+        }
+    }
+    
+    func isAlreadyFetch(completion: @escaping (Bool) -> Void) {
+        service.fetchLastUpdateTime { result in
+            switch result {
+            case .success(let sucess):
+                completion(Date.isAlreadyFetch(serverDate: sucess.lastUpdate))
+            case .failure(_):
+                completion(false)
             }
         }
     }

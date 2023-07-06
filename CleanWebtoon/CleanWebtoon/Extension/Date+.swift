@@ -43,4 +43,25 @@ extension Date {
             return .everyDayPlus
         }
     }
+    
+    static func isAlreadyFetch(serverDate: String) -> Bool {
+        let inputDateFormatter: DateFormatter = DateFormatter()
+        inputDateFormatter.dateFormat = "yyyy.MM.dd-hh:mm"
+        inputDateFormatter.locale = Locale(identifier: "ko_KR")
+        let lastUpdateDate = inputDateFormatter.date(from: serverDate)
+        
+        let deviceLastUpdate = UserDefaults.standard.string(forKey: "lastUpdate")
+        
+        guard let lastUpdateDate = lastUpdateDate,
+              let deviceLastUpdateValue = deviceLastUpdate,
+              let deviceLastUpdateDate = inputDateFormatter.date(from: deviceLastUpdateValue) else {
+            UserDefaults.standard.setValue(serverDate, forKey: "lastUpdate")
+            return false
+        }
+        if deviceLastUpdateDate.timeIntervalSince(lastUpdateDate) > 0 {
+            return true
+        } else {
+            return false
+        }
+    }
 }

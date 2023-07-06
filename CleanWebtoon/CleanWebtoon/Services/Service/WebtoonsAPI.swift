@@ -8,6 +8,24 @@
 import Foundation
 
 struct WebtoonsAPI: ServiceLayer {
+    
+    func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHome.LastUpdate, Error>) -> Void) {
+        let url = Bundle.main.url(forResource: "LastUpdate", withExtension: "json")
+        guard let url = url else {
+            return
+        }
+        let data = try? Data(contentsOf: url)
+        guard let data = data else {
+            return
+        }
+        do {
+            let decoded = try JSONDecoder().decode(WebtoonHome.LastUpdate.self, from: data)
+            completion(.success(decoded))
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
     func fetchSpecificDayWebtoons(updateDay: UpdateDay,
                                   completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void) {
         let endPoint: URLComponents = EndPoint().makeEndpoint(service: .naver,

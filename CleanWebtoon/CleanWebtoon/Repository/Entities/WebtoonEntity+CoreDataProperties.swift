@@ -16,9 +16,11 @@ extension WebtoonEntity {
         return NSFetchRequest<WebtoonEntity>(entityName: "WebtoonEntity")
     }
 
-    @NSManaged public var author: String
-    @NSManaged public var img: String
-    @NSManaged public var title: String
+    @NSManaged public var author: String?
+    @NSManaged public var img: String?
+    @NSManaged public var title: String?
+    @NSManaged public var updateDays: [String]
+
 }
 
 extension WebtoonEntity : Identifiable {
@@ -26,6 +28,7 @@ extension WebtoonEntity : Identifiable {
         self.title = value.title
         self.author = value.author
         self.img = value.img
+        self.updateDays = value.updateDays
         
         do {
             try managedObjectContext?.save()

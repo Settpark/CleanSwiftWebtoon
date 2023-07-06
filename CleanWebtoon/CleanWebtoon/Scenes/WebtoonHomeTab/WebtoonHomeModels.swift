@@ -14,6 +14,9 @@ import UIKit
 
 enum WebtoonHome
 {
+    struct LastUpdate: Decodable {
+        var lastUpdate: String
+    }
     struct Webtoon: Decodable {
         var title: String
         var author: String

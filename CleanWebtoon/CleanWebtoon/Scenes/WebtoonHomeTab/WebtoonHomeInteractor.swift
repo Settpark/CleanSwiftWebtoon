@@ -29,14 +29,37 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     private var worker: WebtoonHomeWorker
     private var lastUpdateDay: UpdateDay?
     
-    private let coreDataManager = CoreDataManager(persistentContainerName: "WebtoonCacheModel")
+    private let coreDataManager: CoreDataManager
+    private let dispatchGroup: DispatchGroup
+    private let webtoonFetchQueue: DispatchQueue
+    private lazy var checkLastUpdate: DispatchWorkItem = DispatchWorkItem(qos: .background, block: {
+        self.dispatchGroup.enter()
+        
+        
+    })
     
     init() {
         worker = WebtoonHomeWorker(service: WebtoonsAPI())
         lastUpdateDay = nil
+        coreDataManager = CoreDataManager(persistentContainerName: "WebtoonCacheModel")
+        dispatchGroup = DispatchGroup()
+        webtoonFetchQueue = DispatchQueue(label: "webtoonFetcher")
     }
     
     func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request, isButtonPress: Bool) {
+        self.worker.isAlreadyFetch { [weak self] in
+            if $0 {
+                //TODO: 에러 메시지 뜸. 이유 확인.
+                self?.coreDataManager.fetchData(type: WebtoonEntity.self,
+                                                predicate: [option.updateDay])
+            } else {
+                //TODO: 에러 메시지 뜸. 이유 확인.
+                self?.fetchWebtoons(option: option, isButtonPress: isButtonPress)
+            }
+        }
+    }
+    
+    func fetchWebtoons(option: WebtoonHome.WebtoonList.Request, isButtonPress: Bool) {
         if lastUpdateDay == option.updateDay {
             return
         }

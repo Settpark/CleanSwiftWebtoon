@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="WebtoonEntities" representedClassName="WebtoonEntities" syncable="YES">
-        <attribute name="webtoonEntities" attributeType="Transformable"/>
-    </entity>
     <entity name="WebtoonEntity" representedClassName="WebtoonEntity" syncable="YES">
         <attribute name="author" attributeType="String"/>
         <attribute name="img" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
+        <attribute name="updateDays" attributeType="Transformable" customClassName="[String]"/>
     </entity>
 </model>
