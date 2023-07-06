@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol WebtoonHomeBusinessLogic {
     func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request, isButtonPress: Bool)
@@ -27,6 +28,8 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     var presenter: WebtoonHomePresentationLogic?
     private var worker: WebtoonHomeWorker
     private var lastUpdateDay: UpdateDay?
+    
+    private let coreDataManager = CoreDataManager(persistentContainerName: "WebtoonCacheModel")
     
     init() {
         worker = WebtoonHomeWorker(service: WebtoonsAPI())

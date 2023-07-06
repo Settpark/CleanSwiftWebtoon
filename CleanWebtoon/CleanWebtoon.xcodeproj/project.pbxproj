@@ -44,6 +44,12 @@
 		ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */; };
 		ABD0881A2A53F8C700A28006 /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD088192A53F8C700A28006 /* ScrollDelegate.swift */; };
 		ABD0885A2A5561D500A28006 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD088592A5561D500A28006 /* Cache.swift */; };
+		ABD088622A56753300A28006 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD088612A56753300A28006 /* CoreDataManager.swift */; };
+		ABD0886E2A568C0400A28006 /* WebtoonEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD0886C2A568C0400A28006 /* WebtoonEntity+CoreDataClass.swift */; };
+		ABD0886F2A568C0400A28006 /* WebtoonEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD0886D2A568C0400A28006 /* WebtoonEntity+CoreDataProperties.swift */; };
+		ABD0887A2A569CEA00A28006 /* WebtoonCacheModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ABD088782A569CEA00A28006 /* WebtoonCacheModel.xcdatamodeld */; };
+		ABD0887D2A569D0D00A28006 /* WebtoonEntities+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD0887B2A569D0D00A28006 /* WebtoonEntities+CoreDataClass.swift */; };
+		ABD0887E2A569D0D00A28006 /* WebtoonEntities+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD0887C2A569D0D00A28006 /* WebtoonEntities+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +111,12 @@
 		ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		ABD088192A53F8C700A28006 /* ScrollDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDelegate.swift; sourceTree = "<group>"; };
 		ABD088592A5561D500A28006 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		ABD088612A56753300A28006 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		ABD0886C2A568C0400A28006 /* WebtoonEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebtoonEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		ABD0886D2A568C0400A28006 /* WebtoonEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebtoonEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		ABD088792A569CEA00A28006 /* WebtoonCacheModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WebtoonCacheModel.xcdatamodel; sourceTree = "<group>"; };
+		ABD0887B2A569D0D00A28006 /* WebtoonEntities+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebtoonEntities+CoreDataClass.swift"; sourceTree = "<group>"; };
+		ABD0887C2A569D0D00A28006 /* WebtoonEntities+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebtoonEntities+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +188,7 @@
 		AB6C58ED2A4290A3003BBEAD /* CleanWebtoon */ = {
 			isa = PBXGroup;
 			children = (
+				ABD0885B2A566CE000A28006 /* Repository */,
 				ABD088582A5561CA00A28006 /* Cache */,
 				AB4DE8632A4EC02F00FE1EC2 /* Fonts */,
 				ABE197832A4A6CEA00C50CB5 /* Services */,
@@ -303,6 +316,27 @@
 				ABD088592A5561D500A28006 /* Cache.swift */,
 			);
 			path = Cache;
+			sourceTree = "<group>";
+		};
+		ABD0885B2A566CE000A28006 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				ABD088632A56782500A28006 /* Entities */,
+				ABD088612A56753300A28006 /* CoreDataManager.swift */,
+				ABD088782A569CEA00A28006 /* WebtoonCacheModel.xcdatamodeld */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		ABD088632A56782500A28006 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				ABD0887B2A569D0D00A28006 /* WebtoonEntities+CoreDataClass.swift */,
+				ABD0887C2A569D0D00A28006 /* WebtoonEntities+CoreDataProperties.swift */,
+				ABD0886C2A568C0400A28006 /* WebtoonEntity+CoreDataClass.swift */,
+				ABD0886D2A568C0400A28006 /* WebtoonEntity+CoreDataProperties.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		ABE197832A4A6CEA00C50CB5 /* Services */ = {
@@ -448,7 +482,10 @@
 				AB14F7402A44401D002984B3 /* RecommandedCompletionPresenter.swift in Sources */,
 				ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */,
 				AB6C592E2A42AB5D003BBEAD /* WebtoonHomePresenter.swift in Sources */,
+				ABD0886F2A568C0400A28006 /* WebtoonEntity+CoreDataProperties.swift in Sources */,
 				AB6C59412A42B844003BBEAD /* AppRootViewController.swift in Sources */,
+				ABD0887A2A569CEA00A28006 /* WebtoonCacheModel.xcdatamodeld in Sources */,
+				ABD088622A56753300A28006 /* CoreDataManager.swift in Sources */,
 				AB14F7422A44401D002984B3 /* RecommandedCompletionRouter.swift in Sources */,
 				AB4DE8672A4EC0A500FE1EC2 /* Font+.swift in Sources */,
 				AB14F7452A44401D002984B3 /* RecommandedCompletionInteractor.swift in Sources */,
@@ -472,6 +509,9 @@
 				AB14F7442A44401D002984B3 /* RecommandedCompletionViewController.swift in Sources */,
 				AB6C58EF2A4290A3003BBEAD /* AppDelegate.swift in Sources */,
 				ABD0885A2A5561D500A28006 /* Cache.swift in Sources */,
+				ABD0886E2A568C0400A28006 /* WebtoonEntity+CoreDataClass.swift in Sources */,
+				ABD0887E2A569D0D00A28006 /* WebtoonEntities+CoreDataProperties.swift in Sources */,
+				ABD0887D2A569D0D00A28006 /* WebtoonEntities+CoreDataClass.swift in Sources */,
 				AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */,
 				ABD0881A2A53F8C700A28006 /* ScrollDelegate.swift in Sources */,
 				AB6C593D2A42B844003BBEAD /* AppRootPresenter.swift in Sources */,
@@ -803,6 +843,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		ABD088782A569CEA00A28006 /* WebtoonCacheModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				ABD088792A569CEA00A28006 /* WebtoonCacheModel.xcdatamodel */,
+			);
+			currentVersion = ABD088792A569CEA00A28006 /* WebtoonCacheModel.xcdatamodel */;
+			path = WebtoonCacheModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = AB6C58E32A4290A3003BBEAD /* Project object */;
 }
