@@ -44,18 +44,18 @@ extension Date {
         }
     }
     
-    static func isAlreadyFetch(serverDate: String) -> Bool {
+    static func isAlreadyFetch(serverDate: String, targetDate: UpdateDay) -> Bool {
         let inputDateFormatter: DateFormatter = DateFormatter()
         inputDateFormatter.dateFormat = "yyyy.MM.dd-hh:mm"
         inputDateFormatter.locale = Locale(identifier: "ko_KR")
         let lastUpdateDate = inputDateFormatter.date(from: serverDate)
         
-        let deviceLastUpdate = UserDefaults.standard.string(forKey: "lastUpdate")
+        let deviceLastUpdate = UserDefaults.standard.string(forKey: targetDate.rawValue)
         
         guard let lastUpdateDate = lastUpdateDate,
               let deviceLastUpdateValue = deviceLastUpdate,
               let deviceLastUpdateDate = inputDateFormatter.date(from: deviceLastUpdateValue) else {
-            UserDefaults.standard.setValue(serverDate, forKey: "lastUpdate")
+            UserDefaults.standard.setValue(serverDate, forKey: targetDate.rawValue)
             return false
         }
         if deviceLastUpdateDate.timeIntervalSince(lastUpdateDate) > 0 {
@@ -63,5 +63,13 @@ extension Date {
         } else {
             return false
         }
+    }
+    
+    static func makeTodayToString() -> String {
+        let inputDateFormatter: DateFormatter = DateFormatter()
+        inputDateFormatter.dateFormat = "yyyy.MM.dd-hh:mm"
+        inputDateFormatter.locale = Locale(identifier: "ko_KR")
+        let lastUpdateDate = inputDateFormatter.string(from: Date())
+        return lastUpdateDate
     }
 }

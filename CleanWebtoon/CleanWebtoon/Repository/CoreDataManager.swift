@@ -25,25 +25,29 @@ class CoreDataManager {
         self.managedObjectContext = self.persistentContainer.viewContext
     }
 
-    func fetchData<T: NSManagedObject>(type: T.Type,
-                                       predicate: [UpdateDay]?) {
+    func fetchData<T: NSManagedObject>(type: T.Type, predicate: UpdateDay?) -> [WebtoonEntity] {
         guard let fetchRequest = T.fetchRequest() as? NSFetchRequest<T> else {
-            return
-        }
-        if let predicate = predicate {
-            let mappedUpdatedays = predicate.map { $0.rawValue }
-            //TODO: 잘 작동하는 지 확인
-            fetchRequest.predicate = NSPredicate(format: "ANY updatedays IN == %@", mappedUpdatedays)
+            return []
         }
         
         do {
             let results = try managedObjectContext.fetch(fetchRequest)
-            if let results = results as? [WebtoonEntity] {
-                results.forEach { print($0.title) }
+            guard let results = results as? [WebtoonEntity] else {
+                return []
             }
+            if let predicate = predicate {
+                let filtered = results.filter {
+                    $0.updateDays.contains(predicate.rawValue)
+                }
+                return filtered
+            } else {
+                return results
+            }
+            
         } catch let error as NSError {
             print("Failed to fetch data: \(error), \(error.userInfo)")
         }
+        return []
     }
     
     func makeEntity<T: NSManagedObject>(className: String) -> T? {

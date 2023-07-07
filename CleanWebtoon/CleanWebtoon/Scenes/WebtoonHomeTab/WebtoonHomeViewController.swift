@@ -576,9 +576,9 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     }
     
     func setupTodayWebtoonlist(offset: CGFloat) {
-        let scrollOffset = offset * self.view.frame.width
         disableAllButton()
         DispatchQueue.main.async {
+            let scrollOffset = offset * self.view.frame.width
             self.webtoonListScrollView.setContentOffset(CGPoint(x: scrollOffset, y: 0), animated: true)
             if let button = self.weekDayStackView.subviews[Int(offset)+1] as? UIButton {
                 button.setTitleColor(.green, for: .normal)

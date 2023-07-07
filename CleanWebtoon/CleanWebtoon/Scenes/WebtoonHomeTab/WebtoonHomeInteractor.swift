@@ -30,36 +30,35 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     private var lastUpdateDay: UpdateDay?
     
     private let coreDataManager: CoreDataManager
-    private let dispatchGroup: DispatchGroup
-    private let webtoonFetchQueue: DispatchQueue
-    private lazy var checkLastUpdate: DispatchWorkItem = DispatchWorkItem(qos: .background, block: {
-        self.dispatchGroup.enter()
-        
-        
-    })
     
     init() {
         worker = WebtoonHomeWorker(service: WebtoonsAPI())
         lastUpdateDay = nil
         coreDataManager = CoreDataManager(persistentContainerName: "WebtoonCacheModel")
-        dispatchGroup = DispatchGroup()
-        webtoonFetchQueue = DispatchQueue(label: "webtoonFetcher")
     }
     
-    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request, isButtonPress: Bool) {
-        self.worker.isAlreadyFetch { [weak self] in
+    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request,
+                                  isButtonPress: Bool) {
+        self.worker.isAlreadyFetch(targetDate: option.updateDay) { [weak self] in
             if $0 {
-                //TODO: 에러 메시지 뜸. 이유 확인.
-                self?.coreDataManager.fetchData(type: WebtoonEntity.self,
-                                                predicate: [option.updateDay])
+                let fetchedData = self?.coreDataManager.fetchData(type: WebtoonEntity.self,
+                                                                  predicate: option.updateDay)
+                guard let fetchedData = fetchedData else {
+                    self?.fetchWebtoons(option: option, isButtonPress: isButtonPress)
+                    return
+                }
+                self?.sendToPresenterFromCoreData(fetchedData: fetchedData, updateDay: option.updateDay)
+                if isButtonPress {
+                    self?.moveToSpecificdayWebtoonlist(updateday: option.updateDay)
+                }
             } else {
-                //TODO: 에러 메시지 뜸. 이유 확인.
                 self?.fetchWebtoons(option: option, isButtonPress: isButtonPress)
             }
         }
     }
     
-    func fetchWebtoons(option: WebtoonHome.WebtoonList.Request, isButtonPress: Bool) {
+    func fetchWebtoons(option: WebtoonHome.WebtoonList.Request,
+                       isButtonPress: Bool) {
         if lastUpdateDay == option.updateDay {
             return
         }
@@ -68,11 +67,23 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
             guard let self = self else {
                 return
             }
+            response.webtoons.forEach {
+                let entity = self.coreDataManager.makeEntity(className: "WebtoonEntity") as? WebtoonEntity
+                entity?.save(value: $0)
+                if isButtonPress {
+                    self.moveToSpecificdayWebtoonlist(updateday: option.updateDay)
+                }
+            }
+            UserDefaults.standard.setValue(Date.makeTodayToString(), forKey: option.updateDay.rawValue)
             self.presenter?.presentWebtoonList(response: response, updateDay: option.updateDay)
         }
         if isButtonPress {
             moveToSpecificdayWebtoonlist(updateday: option.updateDay)
         }
+    }
+    
+    func sendToPresenterFromCoreData(fetchedData: [WebtoonEntity], updateDay: UpdateDay) {
+        presenter?.presentWebtoonList(entity: fetchedData, updateDay: updateDay)
     }
     
     func updateCurrent(updateDay: UpdateDay) {

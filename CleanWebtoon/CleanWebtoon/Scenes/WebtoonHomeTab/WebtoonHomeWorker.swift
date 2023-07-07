@@ -39,11 +39,12 @@ class WebtoonHomeWorker {
         }
     }
     
-    func isAlreadyFetch(completion: @escaping (Bool) -> Void) {
+    func isAlreadyFetch(targetDate: UpdateDay,
+                        completion: @escaping (Bool) -> Void) {
         service.fetchLastUpdateTime { result in
             switch result {
             case .success(let sucess):
-                completion(Date.isAlreadyFetch(serverDate: sucess.lastUpdate))
+                completion(Date.isAlreadyFetch(serverDate: sucess.lastUpdate, targetDate: targetDate))
             case .failure(_):
                 completion(false)
             }

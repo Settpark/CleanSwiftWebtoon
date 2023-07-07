@@ -15,6 +15,7 @@ import UIKit
 protocol WebtoonHomePresentationLogic {
     func presentWebtoonList(response: WebtoonHome.WebtoonList.Response, updateDay: UpdateDay)
     func presentRecommandWebtoons(response: WebtoonHome.WebtoonList.Response)
+    func presentWebtoonList(entity: [WebtoonEntity], updateDay: UpdateDay)
     func presentSpecificDayWebtoons(offset: CGFloat)
 }
 
@@ -54,6 +55,22 @@ class WebtoonHomePresenter: WebtoonHomePresentationLogic {
                                                      isWaitFree: isWaitFree(value: $0.additional.singularityList))
         }
         viewController?.displayRecommandWebtoon(viewModels: viewModels)
+    }
+    
+    func presentWebtoonList(entity: [WebtoonEntity], updateDay: UpdateDay) {
+        let viewModels = entity.map {
+            return WebtoonHome.WebtoonList.ViewModel(title: $0.title,
+                                                     author: $0.author,
+                                                     img: $0.img,
+                                                     isNew: false,
+                                                     isAdult: false,
+                                                     isRest: false,
+                                                     isUp: false,
+                                                     isOver15: false,
+                                                     isFree: false,
+                                                     isWaitFree: false)
+        }
+        viewController?.displayWebtoonList(viewModels: viewModels, updateDay: updateDay)
     }
     
     func presentSpecificDayWebtoons(offset: CGFloat) {
