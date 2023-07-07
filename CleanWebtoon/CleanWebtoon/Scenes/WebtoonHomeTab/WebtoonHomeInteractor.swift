@@ -39,6 +39,10 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     
     func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request,
                                   isButtonPress: Bool) {
+        if lastUpdateDay == option.updateDay {
+            return
+        }
+        lastUpdateDay = option.updateDay
         self.worker.isAlreadyFetch(targetDate: option.updateDay) { [weak self] in
             if $0 {
                 let fetchedData = self?.coreDataManager.fetchData(type: WebtoonEntity.self,
@@ -59,10 +63,6 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     
     func fetchWebtoons(option: WebtoonHome.WebtoonList.Request,
                        isButtonPress: Bool) {
-        if lastUpdateDay == option.updateDay {
-            return
-        }
-        lastUpdateDay = option.updateDay
         worker.fetchSpecificDayWebtoons(updateDay: option.updateDay) { [weak self] response in
             guard let self = self else {
                 return

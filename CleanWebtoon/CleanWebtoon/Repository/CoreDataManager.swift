@@ -30,20 +30,28 @@ class CoreDataManager {
             return []
         }
         
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
         do {
             let results = try managedObjectContext.fetch(fetchRequest)
             guard let results = results as? [WebtoonEntity] else {
                 return []
             }
             if let predicate = predicate {
-                let filtered = results.filter {
-                    $0.updateDays.contains(predicate.rawValue)
+                let filtered: [WebtoonEntity] = results.filter {
+                    return $0.updateDays.contains(predicate.rawValue)
                 }
-                return filtered
+                let results: [WebtoonEntity] = []
+                let removedDuplicates = filtered.reduce(into: results) { result, webtoon in
+                    if !result.contains(where: { $0.title == webtoon.title }) {
+                        result.append(webtoon)
+                    }
+                }
+                return removedDuplicates
             } else {
                 return results
             }
-            
         } catch let error as NSError {
             print("Failed to fetch data: \(error), \(error.userInfo)")
         }
@@ -59,12 +67,13 @@ class CoreDataManager {
     }
     
     func deleteData<T: NSManagedObject>(type: T.Type,
-                                        targetTitle: String) {
+                                        targetTitle: String?) {
         guard let fetchRequest = T.fetchRequest() as? NSFetchRequest<T> else {
             return
         }
-        fetchRequest.predicate = NSPredicate(format: "title == %@", targetTitle)
-
+        if let targetTitle = targetTitle {
+            fetchRequest.predicate = NSPredicate(format: "title == %@", targetTitle)
+        }
         do {
             let results = try managedObjectContext.fetch(fetchRequest)
             for data in results {
