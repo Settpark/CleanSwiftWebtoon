@@ -54,7 +54,7 @@ enum WebtoonHome
             var lastUpdate: String?
             var webtoons: [Webtoon]
         }
-        struct ViewModel {
+        struct ViewModel: Hashable {
             var title: String
             var author: String
             var img: String

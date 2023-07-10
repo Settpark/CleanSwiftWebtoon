@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB0659B12A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0659B02A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift */; };
 		AB14F7402A44401D002984B3 /* RecommandedCompletionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73A2A44401D002984B3 /* RecommandedCompletionPresenter.swift */; };
 		AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73B2A44401D002984B3 /* RecommandedCompletionWorker.swift */; };
 		AB14F7422A44401D002984B3 /* RecommandedCompletionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73C2A44401D002984B3 /* RecommandedCompletionRouter.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB0659B02A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListDiffableDatasourceManager.swift; sourceTree = "<group>"; };
 		AB14F73A2A44401D002984B3 /* RecommandedCompletionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionPresenter.swift; sourceTree = "<group>"; };
 		AB14F73B2A44401D002984B3 /* RecommandedCompletionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionWorker.swift; sourceTree = "<group>"; };
 		AB14F73C2A44401D002984B3 /* RecommandedCompletionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionRouter.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */,
 				ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */,
 				ABD088192A53F8C700A28006 /* ScrollDelegate.swift */,
+				AB0659B02A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				AB14F7442A44401D002984B3 /* RecommandedCompletionViewController.swift in Sources */,
 				AB6C58EF2A4290A3003BBEAD /* AppDelegate.swift in Sources */,
 				ABD0885A2A5561D500A28006 /* Cache.swift in Sources */,
+				AB0659B12A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift in Sources */,
 				ABD088842A56B7E900A28006 /* WebtoonEntity+CoreDataClass.swift in Sources */,
 				AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */,
 				ABD0881A2A53F8C700A28006 /* ScrollDelegate.swift in Sources */,

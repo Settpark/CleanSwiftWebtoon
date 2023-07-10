@@ -70,6 +70,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private let topEventStackView: UIStackView
     private var currentCollectionHeightConstraint: NSLayoutConstraint?
     
+    private let mondayWebtoonDiffableDatasource: DiffableDatasourceManagable
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         mainScrollView = {
             let scrollView = UIScrollView()
@@ -304,11 +306,14 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         webtoonListScrollView.delegate = scrollDelegate
         
         currentCollectionHeightConstraint = nil
+        
+        mondayWebtoonDiffableDatasource = WebtoonListDiffableDatasourceManager()
+        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
-        setupViews()
         setupDataSource()
         setupWebtoonScrollDelegate()
+        setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -542,8 +547,10 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         everyDayPlusWebtoonCollection.dataSource = everyDayPlusWebtoonDataSource
         everyDayPlusWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         mondayWebtoonCollection.delegate = webtoonListLayout
-        mondayWebtoonCollection.dataSource = mondayWebtoonDataSource
+//        mondayWebtoonCollection.dataSource = mondayWebtoonDataSource
         mondayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
+        mondayWebtoonDiffableDatasource.bindingDatasource(collectionView: mondayWebtoonCollection)
+        mondayWebtoonCollection.dataSource = mondayWebtoonDiffableDatasource.diffableDatasource
         tuesdayWebtoonCollection.delegate = webtoonListLayout
         tuesdayWebtoonCollection.dataSource = tuesdayWebtoonDataSource
         tuesdayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
@@ -733,9 +740,10 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
                 self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.everyDayPlusWebtoonCollection)
             }
         case .mon:
-            self.mondayWebtoonDataSource.update(dataSource: viewModels)
+//            self.mondayWebtoonDataSource.update(dataSource: viewModels)
+            self.mondayWebtoonDiffableDatasource.updateCollectionViewData(newData: viewModels)
             DispatchQueue.main.async { [weak self] in
-                self?.mondayWebtoonCollection.reloadData()
+//                self?.mondayWebtoonCollection.reloadData()
                 let heightConstraint = self?.mondayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
                 self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.mondayWebtoonCollection)
             }
