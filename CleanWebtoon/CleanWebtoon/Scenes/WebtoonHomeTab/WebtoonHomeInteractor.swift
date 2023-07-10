@@ -47,7 +47,8 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
             if $0 {
                 let fetchedData = self?.coreDataManager.fetchData(type: WebtoonEntity.self,
                                                                   predicate: option.updateDay)
-                guard let fetchedData = fetchedData else {
+                guard let fetchedData = fetchedData,
+                      fetchedData.count != 0 else {
                     self?.fetchWebtoons(option: option, isButtonPress: isButtonPress)
                     return
                 }
