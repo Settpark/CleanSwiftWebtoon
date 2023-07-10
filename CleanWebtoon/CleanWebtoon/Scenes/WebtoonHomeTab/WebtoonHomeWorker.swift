@@ -13,7 +13,7 @@
 import UIKit
 
 protocol ServiceLayer {
-    func fetchSpecificDayWebtoons(updateDay: UpdateDay,
+    func fetchSpecificDayWebtoons(request: WebtoonHome.WebtoonList.Request,
                                   completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void)
     func fetchRecommandWebtoons(completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void)
     func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHome.LastUpdate, Error>) -> Void)
@@ -27,9 +27,9 @@ class WebtoonHomeWorker {
         self.service = service
     }
     
-    func fetchSpecificDayWebtoons(updateDay: UpdateDay,
+    func fetchSpecificDayWebtoons(request: WebtoonHome.WebtoonList.Request,
                                   completion: @escaping (WebtoonHome.WebtoonList.Response) -> Void)  {
-        service.fetchSpecificDayWebtoons(updateDay: updateDay) { result in
+        service.fetchSpecificDayWebtoons(request: request) { result in
             switch result {
             case .success(let success):
                 completion(success)

@@ -20,7 +20,7 @@ protocol ScrollViewPositionChecker: AnyObject {
     func updateCurrentUpdateday(offset: CGFloat)
 }
 
-class ScrollDelegate: NSObject, UIScrollViewDelegate {
+class WebtoonListScrollDelegate: NSObject, UIScrollViewDelegate {
     weak var listner: ScrollViewPositionChecker?
     
     private var previousPostion: CGPoint?

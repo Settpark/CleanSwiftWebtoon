@@ -66,7 +66,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private let sundayWebtoonDataSource: WebtoonListDataSource
     private let finishWebtoonDataSource: WebtoonListDataSource
     
-    private let scrollDelegate: ScrollDelegate
+    private let mainScrollDelegate: WebtoonMainScrollDelegate
+    private let webtoonListScrollDelegate: WebtoonListScrollDelegate
     private let topEventStackView: UIStackView
     private var currentCollectionHeightConstraint: NSLayoutConstraint?
     
@@ -302,8 +303,11 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         sundayWebtoonDataSource = WebtoonListDataSource()
         finishWebtoonDataSource = WebtoonListDataSource()
         
-        scrollDelegate = ScrollDelegate()
-        webtoonListScrollView.delegate = scrollDelegate
+        mainScrollDelegate = WebtoonMainScrollDelegate()
+        mainScrollView.delegate = mainScrollDelegate
+        
+        webtoonListScrollDelegate = WebtoonListScrollDelegate()
+        webtoonListScrollView.delegate = webtoonListScrollDelegate
         
         currentCollectionHeightConstraint = nil
         
@@ -579,7 +583,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     }
     
     func setupWebtoonScrollDelegate() {
-        self.scrollDelegate.listner = self
+        self.webtoonListScrollDelegate.listner = self
+        self.mainScrollDelegate.listner = self
     }
     
     func setupTodayWebtoonlist(offset: CGFloat) {
@@ -633,16 +638,16 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         default:
             break
         }
-        interactor?.fetchSpecificDayWebtoons(option: request,
+        interactor?.fetchSpecificDayWebtoons(request: request,
                                              isButtonPress: true)
     }
     
     func fetchTodayWebtoon() {
         let request = WebtoonHome.WebtoonList.Request(page: 0,
-                                                      perPage: 65536,
+                                                      perPage: 15,
                                                       service: .naver,
                                                       updateDay: Date.makeTodayWeekday())
-        interactor?.fetchSpecificDayWebtoons(option: request,
+        interactor?.fetchSpecificDayWebtoons(request: request,
                                              isButtonPress: true)
         interactor?.fetchRecommandWebtoons()
     }
@@ -740,10 +745,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
                 self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.everyDayPlusWebtoonCollection)
             }
         case .mon:
-//            self.mondayWebtoonDataSource.update(dataSource: viewModels)
             self.mondayWebtoonDiffableDatasource.updateCollectionViewData(newData: viewModels)
             DispatchQueue.main.async { [weak self] in
-//                self?.mondayWebtoonCollection.reloadData()
                 let heightConstraint = self?.mondayWebtoonCollection.collectionViewLayout.collectionViewContentSize.height
                 self?.resetCollectionView(heightConstraint: heightConstraint, targetView: self?.mondayWebtoonCollection)
             }
@@ -822,11 +825,11 @@ extension WebtoonHomeViewController: ScrollViewPositionChecker {
             fetchTargetIndex = floor(Double(nextPostion/self.view.safeAreaLayoutGuide.layoutFrame.width))
         }
         let targetDay = UpdateDay.makeIntToUpdateDay(value: Int(fetchTargetIndex))
-        let request = WebtoonHome.WebtoonList.Request(page: 1,
-                                                      perPage: Int(Int16.max),
+        let request = WebtoonHome.WebtoonList.Request(page: 0,
+                                                      perPage: 15,
                                                       service: .naver,
                                                       updateDay: targetDay)
-        interactor?.fetchSpecificDayWebtoons(option: request,
+        interactor?.fetchSpecificDayWebtoons(request: request,
                                              isButtonPress: false)
         disableAllButton()
         DispatchQueue.main.async { [weak self] in
@@ -834,5 +837,13 @@ extension WebtoonHomeViewController: ScrollViewPositionChecker {
                 button.setTitleColor(.green, for: .normal)
             }
         }
+    }
+}
+
+extension WebtoonHomeViewController: NextWebtoonListFetcher {
+    func fetchNextWebtoonList() {
+        let request = WebtoonHome.WebtoonList.Request(perPage: 15,
+                                                      service: .naver)
+        interactor?.fetchNextWebtoonList(request: request)
     }
 }

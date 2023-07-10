@@ -15,8 +15,11 @@ protocol DiffableDatasourceManagable {
 
 class WebtoonListDiffableDatasourceManager: DiffableDatasourceManagable {
     var diffableDatasource: UICollectionViewDiffableDataSource<Section, WebtoonHome.WebtoonList.ViewModel>?
+    private var snapShot: NSDiffableDataSourceSnapshot<Section, WebtoonHome.WebtoonList.ViewModel>
     
     init() {
+        self.snapShot = NSDiffableDataSourceSnapshot<Section, WebtoonHome.WebtoonList.ViewModel>()
+        snapShot.appendSections([.main])
     }
     
     func bindingDatasource(collectionView: UICollectionView) {
@@ -32,12 +35,14 @@ class WebtoonListDiffableDatasourceManager: DiffableDatasourceManagable {
         })
     }
     
-    
     func updateCollectionViewData(newData: [WebtoonHome.WebtoonList.ViewModel]) {
-        var snapShot = NSDiffableDataSourceSnapshot<Section, WebtoonHome.WebtoonList.ViewModel>()
-        snapShot.appendSections([.main])
+//        var snapShot = NSDiffableDataSourceSnapshot<Section, WebtoonHome.WebtoonList.ViewModel>()
+//        snapShot.appendSections([.main])
         snapShot.appendItems(newData)
-        diffableDatasource?.apply(snapShot, animatingDifferences: false)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.diffableDatasource?.apply(self.snapShot, animatingDifferences: false)
+        }
     }
 }
 

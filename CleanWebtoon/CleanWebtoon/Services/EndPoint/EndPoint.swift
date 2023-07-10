@@ -107,11 +107,12 @@ struct EndPoint {
     }
     
     func makeEndpoint(service: WebtoonSupplier,
-                      updateDay: UpdateDay) -> URLComponents {
+                      request: WebtoonHome.WebtoonList.Request) -> URLComponents {
         var endPointComponent: URLComponents = URLComponents(string: self.baseURL) ?? URLComponents()
         endPointComponent.queryItems = [URLQueryItem(name: "service", value: String(describing: service)),
-                                        URLQueryItem(name: "updateDay", value: String(describing: updateDay.rawValue)),
-                                        URLQueryItem(name: "perPage", value: String(describing: Int16.max))]
+                                        URLQueryItem(name: "page", value: String(describing: request.page)),
+                                        URLQueryItem(name: "updateDay", value: String(describing: request.updateDay.rawValue)),
+                                        URLQueryItem(name: "perPage", value: String(describing: request.perPage))]
         return endPointComponent
     }
 }

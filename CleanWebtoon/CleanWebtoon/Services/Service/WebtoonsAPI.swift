@@ -26,10 +26,10 @@ struct WebtoonsAPI: ServiceLayer {
         }
     }
     
-    func fetchSpecificDayWebtoons(updateDay: UpdateDay,
+    func fetchSpecificDayWebtoons(request: WebtoonHome.WebtoonList.Request,
                                   completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void) {
         let endPoint: URLComponents = EndPoint().makeEndpoint(service: .naver,
-                                                              updateDay: updateDay)
+                                                              request: request)
         guard let validURL = endPoint.url else {
             completion(.failure(APIError.failMakeValidURL))
             return

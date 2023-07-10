@@ -14,57 +14,64 @@ import UIKit
 import CoreData
 
 protocol WebtoonHomeBusinessLogic {
-    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request, isButtonPress: Bool)
+    func fetchSpecificDayWebtoons(request: WebtoonHome.WebtoonList.Request, isButtonPress: Bool)
     func updateCurrent(updateDay: UpdateDay)
+    func fetchNextWebtoonList(request: WebtoonHome.WebtoonList.Request)
     func fetchRecommandWebtoons()
 }
 
 protocol WebtoonHomeDataStore {
-    //var name: String { get set }
+    var webtoonStore: WebtoonListMangable { get }
 }
 
 class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
-    
+
     var presenter: WebtoonHomePresentationLogic?
+    
+    var webtoonStore: WebtoonListMangable
     private var worker: WebtoonHomeWorker
     private var lastUpdateDay: UpdateDay?
-    
     private let coreDataManager: CoreDataManager
     
     init() {
+        webtoonStore = WebtoonListsManager()
         worker = WebtoonHomeWorker(service: WebtoonsAPI())
         lastUpdateDay = nil
         coreDataManager = CoreDataManager(persistentContainerName: "WebtoonCacheModel")
+        coreDataManager.deleteData(type: WebtoonEntity.self, targetTitle: nil) //TODO: 모두 지우는 함수.
     }
     
-    func fetchSpecificDayWebtoons(option: WebtoonHome.WebtoonList.Request,
+    func fetchSpecificDayWebtoons(request: WebtoonHome.WebtoonList.Request,
                                   isButtonPress: Bool) {
-        if lastUpdateDay == option.updateDay {
+        if lastUpdateDay == request.updateDay {
             return
         }
-        lastUpdateDay = option.updateDay
-        self.worker.isAlreadyFetch(targetDate: option.updateDay) { [weak self] in
+        lastUpdateDay = request.updateDay
+        self.worker.isAlreadyFetch(targetDate: request.updateDay) { [weak self] in
             if $0 {
                 let fetchedData = self?.coreDataManager.fetchData(type: WebtoonEntity.self,
-                                                                  predicate: option.updateDay)
+                                                                  predicate: request.updateDay)
                 guard let fetchedData = fetchedData,
                       fetchedData.count != 0 else {
-                    self?.fetchWebtoons(option: option, isButtonPress: isButtonPress)
+                    self?.fetchWebtoons(option: request,
+                                        isButtonPress: isButtonPress)
                     return
                 }
-                self?.sendToPresenterFromCoreData(fetchedData: fetchedData, updateDay: option.updateDay)
+                self?.sendToPresenterFromCoreData(fetchedData: fetchedData,
+                                                  updateDay: request.updateDay)
                 if isButtonPress {
-                    self?.moveToSpecificdayWebtoonlist(updateday: option.updateDay)
+                    self?.moveToSpecificdayWebtoonlist(updateday: request.updateDay)
                 }
             } else {
-                self?.fetchWebtoons(option: option, isButtonPress: isButtonPress)
+                self?.fetchWebtoons(option: request,
+                                    isButtonPress: isButtonPress)
             }
         }
     }
     
     func fetchWebtoons(option: WebtoonHome.WebtoonList.Request,
                        isButtonPress: Bool) {
-        worker.fetchSpecificDayWebtoons(updateDay: option.updateDay) { [weak self] response in
+        worker.fetchSpecificDayWebtoons(request: option) { [weak self] response in
             guard let self = self else {
                 return
             }
@@ -75,11 +82,26 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
                     self.moveToSpecificdayWebtoonlist(updateday: option.updateDay)
                 }
             }
-            UserDefaults.standard.setValue(Date.makeTodayToString(), forKey: option.updateDay.rawValue)
-            self.presenter?.presentWebtoonList(response: response, updateDay: option.updateDay)
+            UserDefaults.standard.setValue(Date.makeTodayToString(),
+                                           forKey: option.updateDay.rawValue)
+            self.presenter?.presentWebtoonList(response: response,
+                                               updateDay: option.updateDay)
         }
         if isButtonPress {
             moveToSpecificdayWebtoonlist(updateday: option.updateDay)
+        }
+    }
+    
+    func fetchNextWebtoonList(request: WebtoonHome.WebtoonList.Request) {
+        var newRequest = request
+        if let lastUpdateDay = lastUpdateDay {
+            newRequest.updateDay = lastUpdateDay
+        }
+        webtoonStore.currentMondayWebtoonPage += 1
+        newRequest.page = webtoonStore.currentMondayWebtoonPage
+        worker.fetchSpecificDayWebtoons(request: newRequest) { response in
+            self.presenter?.presentWebtoonList(response: response,
+                                               updateDay: newRequest.updateDay)
         }
     }
     
