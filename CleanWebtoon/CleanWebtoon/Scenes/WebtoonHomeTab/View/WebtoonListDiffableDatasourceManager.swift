@@ -36,8 +36,6 @@ class WebtoonListDiffableDatasourceManager: DiffableDatasourceManagable {
     }
     
     func updateCollectionViewData(newData: [WebtoonHome.WebtoonList.ViewModel]) {
-//        var snapShot = NSDiffableDataSourceSnapshot<Section, WebtoonHome.WebtoonList.ViewModel>()
-//        snapShot.appendSections([.main])
         snapShot.appendItems(newData)
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }

@@ -16,7 +16,6 @@ import CoreData
 protocol WebtoonHomeBusinessLogic {
     func fetchSpecificDayWebtoons(request: WebtoonHome.WebtoonList.Request, isButtonPress: Bool)
     func updateCurrent(updateDay: UpdateDay)
-    func fetchNextWebtoonList(request: WebtoonHome.WebtoonList.Request)
     func fetchRecommandWebtoons()
 }
 
@@ -89,19 +88,6 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
         }
         if isButtonPress {
             moveToSpecificdayWebtoonlist(updateday: option.updateDay)
-        }
-    }
-    
-    func fetchNextWebtoonList(request: WebtoonHome.WebtoonList.Request) {
-        var newRequest = request
-        if let lastUpdateDay = lastUpdateDay {
-            newRequest.updateDay = lastUpdateDay
-        }
-        webtoonStore.currentMondayWebtoonPage += 1
-        newRequest.page = webtoonStore.currentMondayWebtoonPage
-        worker.fetchSpecificDayWebtoons(request: newRequest) { response in
-            self.presenter?.presentWebtoonList(response: response,
-                                               updateDay: newRequest.updateDay)
         }
     }
     
