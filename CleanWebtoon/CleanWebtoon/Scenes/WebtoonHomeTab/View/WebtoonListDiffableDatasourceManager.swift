@@ -13,11 +13,16 @@ protocol DiffableDatasourceManagable {
     func bindingDatasource(collectionView: UICollectionView)
 }
 
-class WebtoonListDiffableDatasourceManager: DiffableDatasourceManagable {
+class WebtoonListDiffableDatasourceManager: NSObject,
+                                            DiffableDatasourceManagable,
+                                            UICollectionViewDelegate,
+                                            UICollectionViewDelegateFlowLayout {
+    
     var diffableDatasource: UICollectionViewDiffableDataSource<Section, WebtoonHome.WebtoonList.ViewModel>?
     private var snapShot: NSDiffableDataSourceSnapshot<Section, WebtoonHome.WebtoonList.ViewModel>
     
-    init() {
+    init(inset: Int) {
+        leadingTrailingInset = inset
         self.snapShot = NSDiffableDataSourceSnapshot<Section, WebtoonHome.WebtoonList.ViewModel>()
         snapShot.appendSections([.main])
     }
@@ -41,6 +46,33 @@ class WebtoonListDiffableDatasourceManager: DiffableDatasourceManagable {
             guard let self = self else { return }
             self.diffableDatasource?.apply(self.snapShot, animatingDifferences: false)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        let snapShotItems: [WebtoonHome.WebtoonList.ViewModel] = snapShot.itemIdentifiers(inSection: .main)
+        let targetItem: WebtoonHome.WebtoonList.ViewModel = snapShotItems[indexPath.row]
+        if let webtoonCell = cell as? WebtoonListCell {
+            webtoonCell.loadImage(viewModel: targetItem)
+        }
+    }
+    
+    private let minimumInteritemSpacing: CGFloat = 10
+    private let leadingTrailingInset: Int
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionViewWidth = collectionView.bounds.width
+        let itemWidth = (collectionViewWidth - (2 * minimumInteritemSpacing) - (CGFloat(leadingTrailingInset) * 2)) / 3
+        return CGSize(width: itemWidth, height: itemWidth / 100 * 170)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return minimumInteritemSpacing
     }
 }
 

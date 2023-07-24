@@ -70,7 +70,9 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private let topEventStackView: UIStackView
     private var currentCollectionHeightConstraint: NSLayoutConstraint?
     
-    private let mondayWebtoonDiffableDatasource: DiffableDatasourceManagable
+    private let mondayWebtoonDiffableDatasource: (DiffableDatasourceManagable &
+                                                  UICollectionViewDelegate &
+                                                  UICollectionViewDelegateFlowLayout)
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         mainScrollView = {
@@ -307,7 +309,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         
         currentCollectionHeightConstraint = nil
         
-        mondayWebtoonDiffableDatasource = WebtoonListDiffableDatasourceManager()
+        mondayWebtoonDiffableDatasource = WebtoonListDiffableDatasourceManager(inset: 20)
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
@@ -546,7 +548,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         everyDayPlusWebtoonCollection.delegate = webtoonListLayout
         everyDayPlusWebtoonCollection.dataSource = everyDayPlusWebtoonDataSource
         everyDayPlusWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
-        mondayWebtoonCollection.delegate = webtoonListLayout
+        mondayWebtoonCollection.delegate = mondayWebtoonDiffableDatasource
 //        mondayWebtoonCollection.dataSource = mondayWebtoonDataSource
         mondayWebtoonCollection.register(WebtoonListCell.self, forCellWithReuseIdentifier: WebtoonListCell.identifier)
         mondayWebtoonDiffableDatasource.bindingDatasource(collectionView: mondayWebtoonCollection)

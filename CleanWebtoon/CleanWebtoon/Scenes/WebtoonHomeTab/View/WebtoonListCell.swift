@@ -114,6 +114,9 @@ class WebtoonListCell: UICollectionViewCell {
             self?.webtoonTitle.text = viewModel.title
             self?.ratingScore.text = "8.56"
         }
+    }
+    
+    func loadImage(viewModel: WebtoonHome.WebtoonList.ViewModel) {
         imageLoadingTask = UIImage.loadImage(from: viewModel.img) { [weak self] image in
             guard let image = image else {
                 return
