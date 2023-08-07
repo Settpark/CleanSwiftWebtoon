@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol ServiceLayer {
+    
+}
+
 struct WebtoonsAPI: ServiceLayer {
     
     func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHome.LastUpdate, Error>) -> Void) {

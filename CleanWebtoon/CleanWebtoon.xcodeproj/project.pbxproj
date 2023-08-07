@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB0659B12A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0659B02A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift */; };
-		AB0659B42A5BCA980015F921 /* WebtoonListsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0659B32A5BCA980015F921 /* WebtoonListsManager.swift */; };
 		AB14F7402A44401D002984B3 /* RecommandedCompletionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73A2A44401D002984B3 /* RecommandedCompletionPresenter.swift */; };
 		AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73B2A44401D002984B3 /* RecommandedCompletionWorker.swift */; };
 		AB14F7422A44401D002984B3 /* RecommandedCompletionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F73C2A44401D002984B3 /* RecommandedCompletionRouter.swift */; };
@@ -18,18 +16,21 @@
 		AB4DE8672A4EC0A500FE1EC2 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4DE8662A4EC0A500FE1EC2 /* Font+.swift */; };
 		AB4DE86B2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf in Resources */ = {isa = PBXBuildFile; fileRef = AB4DE86A2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf */; };
 		AB4DE86D2A4EC7A600FE1EC2 /* CAGradientLayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4DE86C2A4EC7A600FE1EC2 /* CAGradientLayer+.swift */; };
+		AB5224572A7B3E8B00EB3403 /* WebtoonHomeDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5224562A7B3E8B00EB3403 /* WebtoonHomeDatasource.swift */; };
+		AB52245B2A7B5F8C00EB3403 /* WebtoonRecommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB52245A2A7B5F8C00EB3403 /* WebtoonRecommandCell.swift */; };
+		AB52245D2A7B5FBB00EB3403 /* WeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB52245C2A7B5FBB00EB3403 /* WeekCell.swift */; };
+		AB5E0EEA2A72240E006805D6 /* HomeTabPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E0EE42A72240E006805D6 /* HomeTabPresenter.swift */; };
+		AB5E0EEB2A72240E006805D6 /* HomeTabWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E0EE52A72240E006805D6 /* HomeTabWorker.swift */; };
+		AB5E0EEC2A72240E006805D6 /* HomeTabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E0EE62A72240E006805D6 /* HomeTabRouter.swift */; };
+		AB5E0EED2A72240E006805D6 /* HomeTabModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E0EE72A72240E006805D6 /* HomeTabModels.swift */; };
+		AB5E0EEE2A72240E006805D6 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E0EE82A72240E006805D6 /* HomeTabViewController.swift */; };
+		AB5E0EEF2A72240E006805D6 /* HomeTabInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E0EE92A72240E006805D6 /* HomeTabInteractor.swift */; };
 		AB6C58EF2A4290A3003BBEAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C58EE2A4290A3003BBEAD /* AppDelegate.swift */; };
 		AB6C58F12A4290A3003BBEAD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C58F02A4290A3003BBEAD /* SceneDelegate.swift */; };
 		AB6C58F82A4290A4003BBEAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6C58F72A4290A4003BBEAD /* Assets.xcassets */; };
 		AB6C59062A4290A4003BBEAD /* CleanWebtoonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C59052A4290A4003BBEAD /* CleanWebtoonTests.swift */; };
 		AB6C59102A4290A4003BBEAD /* CleanWebtoonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C590F2A4290A4003BBEAD /* CleanWebtoonUITests.swift */; };
 		AB6C59122A4290A4003BBEAD /* CleanWebtoonUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C59112A4290A4003BBEAD /* CleanWebtoonUITestsLaunchTests.swift */; };
-		AB6C592E2A42AB5D003BBEAD /* WebtoonHomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C59282A42AB5D003BBEAD /* WebtoonHomePresenter.swift */; };
-		AB6C592F2A42AB5D003BBEAD /* WebtoonHomeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C59292A42AB5D003BBEAD /* WebtoonHomeWorker.swift */; };
-		AB6C59302A42AB5D003BBEAD /* WebtoonHomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C592A2A42AB5D003BBEAD /* WebtoonHomeRouter.swift */; };
-		AB6C59312A42AB5D003BBEAD /* WebtoonHomeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C592B2A42AB5D003BBEAD /* WebtoonHomeModels.swift */; };
-		AB6C59322A42AB5D003BBEAD /* WebtoonHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C592C2A42AB5D003BBEAD /* WebtoonHomeViewController.swift */; };
-		AB6C59332A42AB5D003BBEAD /* WebtoonHomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C592D2A42AB5D003BBEAD /* WebtoonHomeInteractor.swift */; };
 		AB6C593D2A42B844003BBEAD /* AppRootPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C59372A42B844003BBEAD /* AppRootPresenter.swift */; };
 		AB6C593E2A42B844003BBEAD /* AppRootWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C59382A42B844003BBEAD /* AppRootWorker.swift */; };
 		AB6C593F2A42B844003BBEAD /* AppRootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C59392A42B844003BBEAD /* AppRootRouter.swift */; };
@@ -39,12 +40,9 @@
 		ABCFCA672A4A7D8F0061F5EE /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA662A4A7D8F0061F5EE /* EndPoint.swift */; };
 		ABCFCA6B2A4A83970061F5EE /* RequestMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA6A2A4A83970061F5EE /* RequestMaker.swift */; };
 		ABCFCA6F2A4A85350061F5EE /* WebtoonsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA6E2A4A85350061F5EE /* WebtoonsAPI.swift */; };
-		ABCFCA742A4ABB920061F5EE /* WebtoonListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA732A4ABB920061F5EE /* WebtoonListDataSource.swift */; };
 		ABCFCA762A4ABDD70061F5EE /* WebtoonListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */; };
-		ABCFCA782A4ACCC50061F5EE /* WebtoonListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */; };
 		ABCFCA832A4BE9680061F5EE /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA822A4BE9680061F5EE /* Date+.swift */; };
 		ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */; };
-		ABD0881A2A53F8C700A28006 /* WebtoonListScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD088192A53F8C700A28006 /* WebtoonListScrollDelegate.swift */; };
 		ABD0885A2A5561D500A28006 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD088592A5561D500A28006 /* Cache.swift */; };
 		ABD088622A56753300A28006 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD088612A56753300A28006 /* CoreDataManager.swift */; };
 		ABD0887A2A569CEA00A28006 /* WebtoonCacheModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ABD088782A569CEA00A28006 /* WebtoonCacheModel.xcdatamodeld */; };
@@ -71,8 +69,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AB0659B02A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListDiffableDatasourceManager.swift; sourceTree = "<group>"; };
-		AB0659B32A5BCA980015F921 /* WebtoonListsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListsManager.swift; sourceTree = "<group>"; };
 		AB14F73A2A44401D002984B3 /* RecommandedCompletionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionPresenter.swift; sourceTree = "<group>"; };
 		AB14F73B2A44401D002984B3 /* RecommandedCompletionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionWorker.swift; sourceTree = "<group>"; };
 		AB14F73C2A44401D002984B3 /* RecommandedCompletionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandedCompletionRouter.swift; sourceTree = "<group>"; };
@@ -82,6 +78,15 @@
 		AB4DE8662A4EC0A500FE1EC2 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		AB4DE86A2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ClimateCrisisKR-1979.otf"; sourceTree = "<group>"; };
 		AB4DE86C2A4EC7A600FE1EC2 /* CAGradientLayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+.swift"; sourceTree = "<group>"; };
+		AB5224562A7B3E8B00EB3403 /* WebtoonHomeDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonHomeDatasource.swift; sourceTree = "<group>"; };
+		AB52245A2A7B5F8C00EB3403 /* WebtoonRecommandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonRecommandCell.swift; sourceTree = "<group>"; };
+		AB52245C2A7B5FBB00EB3403 /* WeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCell.swift; sourceTree = "<group>"; };
+		AB5E0EE42A72240E006805D6 /* HomeTabPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabPresenter.swift; sourceTree = "<group>"; };
+		AB5E0EE52A72240E006805D6 /* HomeTabWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabWorker.swift; sourceTree = "<group>"; };
+		AB5E0EE62A72240E006805D6 /* HomeTabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabRouter.swift; sourceTree = "<group>"; };
+		AB5E0EE72A72240E006805D6 /* HomeTabModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabModels.swift; sourceTree = "<group>"; };
+		AB5E0EE82A72240E006805D6 /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
+		AB5E0EE92A72240E006805D6 /* HomeTabInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabInteractor.swift; sourceTree = "<group>"; };
 		AB6C58EB2A4290A3003BBEAD /* CleanWebtoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanWebtoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6C58EE2A4290A3003BBEAD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB6C58F02A4290A3003BBEAD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,12 +97,6 @@
 		AB6C590B2A4290A4003BBEAD /* CleanWebtoonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleanWebtoonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6C590F2A4290A4003BBEAD /* CleanWebtoonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanWebtoonUITests.swift; sourceTree = "<group>"; };
 		AB6C59112A4290A4003BBEAD /* CleanWebtoonUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanWebtoonUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		AB6C59282A42AB5D003BBEAD /* WebtoonHomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonHomePresenter.swift; sourceTree = "<group>"; };
-		AB6C59292A42AB5D003BBEAD /* WebtoonHomeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonHomeWorker.swift; sourceTree = "<group>"; };
-		AB6C592A2A42AB5D003BBEAD /* WebtoonHomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonHomeRouter.swift; sourceTree = "<group>"; };
-		AB6C592B2A42AB5D003BBEAD /* WebtoonHomeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonHomeModels.swift; sourceTree = "<group>"; };
-		AB6C592C2A42AB5D003BBEAD /* WebtoonHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonHomeViewController.swift; sourceTree = "<group>"; };
-		AB6C592D2A42AB5D003BBEAD /* WebtoonHomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonHomeInteractor.swift; sourceTree = "<group>"; };
 		AB6C59372A42B844003BBEAD /* AppRootPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootPresenter.swift; sourceTree = "<group>"; };
 		AB6C59382A42B844003BBEAD /* AppRootWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootWorker.swift; sourceTree = "<group>"; };
 		AB6C59392A42B844003BBEAD /* AppRootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootRouter.swift; sourceTree = "<group>"; };
@@ -107,12 +106,9 @@
 		ABCFCA662A4A7D8F0061F5EE /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		ABCFCA6A2A4A83970061F5EE /* RequestMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMaker.swift; sourceTree = "<group>"; };
 		ABCFCA6E2A4A85350061F5EE /* WebtoonsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonsAPI.swift; sourceTree = "<group>"; };
-		ABCFCA732A4ABB920061F5EE /* WebtoonListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListDataSource.swift; sourceTree = "<group>"; };
 		ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListCell.swift; sourceTree = "<group>"; };
-		ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListLayout.swift; sourceTree = "<group>"; };
 		ABCFCA822A4BE9680061F5EE /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
-		ABD088192A53F8C700A28006 /* WebtoonListScrollDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListScrollDelegate.swift; sourceTree = "<group>"; };
 		ABD088592A5561D500A28006 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		ABD088612A56753300A28006 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		ABD088792A569CEA00A28006 /* WebtoonCacheModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WebtoonCacheModel.xcdatamodel; sourceTree = "<group>"; };
@@ -146,14 +142,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AB0659B22A5BCA840015F921 /* WebtoonHomeStore */ = {
-			isa = PBXGroup;
-			children = (
-				AB0659B32A5BCA980015F921 /* WebtoonListsManager.swift */,
-			);
-			path = WebtoonHomeStore;
-			sourceTree = "<group>";
-		};
 		AB14F7392A44400B002984B3 /* RecommandedCompletion */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +161,39 @@
 				AB4DE86A2A4EC63600FE1EC2 /* ClimateCrisisKR-1979.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		AB5224552A7B35C100EB3403 /* CollectionViewElement */ = {
+			isa = PBXGroup;
+			children = (
+				AB5224632A7B627200EB3403 /* Cell */,
+				AB5224562A7B3E8B00EB3403 /* WebtoonHomeDatasource.swift */,
+			);
+			path = CollectionViewElement;
+			sourceTree = "<group>";
+		};
+		AB5224632A7B627200EB3403 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				AB52245C2A7B5FBB00EB3403 /* WeekCell.swift */,
+				AB52245A2A7B5F8C00EB3403 /* WebtoonRecommandCell.swift */,
+				ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		AB5E0EE22A7223D0006805D6 /* WebtoonHome */ = {
+			isa = PBXGroup;
+			children = (
+				AB5224552A7B35C100EB3403 /* CollectionViewElement */,
+				AB5E0EE42A72240E006805D6 /* HomeTabPresenter.swift */,
+				AB5E0EE52A72240E006805D6 /* HomeTabWorker.swift */,
+				AB5E0EE62A72240E006805D6 /* HomeTabRouter.swift */,
+				AB5E0EE72A72240E006805D6 /* HomeTabModels.swift */,
+				AB5E0EE82A72240E006805D6 /* HomeTabViewController.swift */,
+				AB5E0EE92A72240E006805D6 /* HomeTabInteractor.swift */,
+			);
+			path = WebtoonHome;
 			sourceTree = "<group>";
 		};
 		AB6C58E22A4290A3003BBEAD = {
@@ -242,26 +263,11 @@
 			path = AppRoot;
 			sourceTree = "<group>";
 		};
-		AB6C59242A42AAE5003BBEAD /* WebtoonHomeTab */ = {
-			isa = PBXGroup;
-			children = (
-				AB0659B22A5BCA840015F921 /* WebtoonHomeStore */,
-				ABCFCA722A4ABB810061F5EE /* View */,
-				AB6C59282A42AB5D003BBEAD /* WebtoonHomePresenter.swift */,
-				AB6C59292A42AB5D003BBEAD /* WebtoonHomeWorker.swift */,
-				AB6C592A2A42AB5D003BBEAD /* WebtoonHomeRouter.swift */,
-				AB6C592B2A42AB5D003BBEAD /* WebtoonHomeModels.swift */,
-				AB6C592C2A42AB5D003BBEAD /* WebtoonHomeViewController.swift */,
-				AB6C592D2A42AB5D003BBEAD /* WebtoonHomeInteractor.swift */,
-			);
-			path = WebtoonHomeTab;
-			sourceTree = "<group>";
-		};
 		AB6C59342A42B641003BBEAD /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
 				AB6C59232A42AADA003BBEAD /* AppRoot */,
-				AB6C59242A42AAE5003BBEAD /* WebtoonHomeTab */,
+				AB5E0EE22A7223D0006805D6 /* WebtoonHome */,
 				AB14F7392A44400B002984B3 /* RecommandedCompletion */,
 			);
 			path = Scenes;
@@ -298,18 +304,6 @@
 				ABCFCA6E2A4A85350061F5EE /* WebtoonsAPI.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		ABCFCA722A4ABB810061F5EE /* View */ = {
-			isa = PBXGroup;
-			children = (
-				ABCFCA732A4ABB920061F5EE /* WebtoonListDataSource.swift */,
-				ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */,
-				ABCFCA772A4ACCC50061F5EE /* WebtoonListLayout.swift */,
-				ABD088192A53F8C700A28006 /* WebtoonListScrollDelegate.swift */,
-				AB0659B02A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		ABCFCA812A4BE9470061F5EE /* Extension */ = {
@@ -501,39 +495,37 @@
 			files = (
 				AB14F7402A44401D002984B3 /* RecommandedCompletionPresenter.swift in Sources */,
 				ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */,
-				AB6C592E2A42AB5D003BBEAD /* WebtoonHomePresenter.swift in Sources */,
+				AB5224572A7B3E8B00EB3403 /* WebtoonHomeDatasource.swift in Sources */,
 				ABD088852A56B7E900A28006 /* WebtoonEntity+CoreDataProperties.swift in Sources */,
 				AB6C59412A42B844003BBEAD /* AppRootViewController.swift in Sources */,
+				AB5E0EEF2A72240E006805D6 /* HomeTabInteractor.swift in Sources */,
 				ABD0887A2A569CEA00A28006 /* WebtoonCacheModel.xcdatamodeld in Sources */,
 				ABD088622A56753300A28006 /* CoreDataManager.swift in Sources */,
 				AB14F7422A44401D002984B3 /* RecommandedCompletionRouter.swift in Sources */,
+				AB5E0EEB2A72240E006805D6 /* HomeTabWorker.swift in Sources */,
 				AB4DE8672A4EC0A500FE1EC2 /* Font+.swift in Sources */,
 				AB14F7452A44401D002984B3 /* RecommandedCompletionInteractor.swift in Sources */,
 				AB6C593E2A42B844003BBEAD /* AppRootWorker.swift in Sources */,
 				AB14F7432A44401D002984B3 /* RecommandedCompletionModels.swift in Sources */,
-				AB6C592F2A42AB5D003BBEAD /* WebtoonHomeWorker.swift in Sources */,
 				ABCFCA6B2A4A83970061F5EE /* RequestMaker.swift in Sources */,
 				ABCFCA832A4BE9680061F5EE /* Date+.swift in Sources */,
-				AB6C59322A42AB5D003BBEAD /* WebtoonHomeViewController.swift in Sources */,
-				AB0659B42A5BCA980015F921 /* WebtoonListsManager.swift in Sources */,
+				AB5E0EEA2A72240E006805D6 /* HomeTabPresenter.swift in Sources */,
 				AB4DE86D2A4EC7A600FE1EC2 /* CAGradientLayer+.swift in Sources */,
-				AB6C59332A42AB5D003BBEAD /* WebtoonHomeInteractor.swift in Sources */,
-				ABCFCA742A4ABB920061F5EE /* WebtoonListDataSource.swift in Sources */,
+				AB5E0EEC2A72240E006805D6 /* HomeTabRouter.swift in Sources */,
 				AB6C593F2A42B844003BBEAD /* AppRootRouter.swift in Sources */,
-				AB6C59302A42AB5D003BBEAD /* WebtoonHomeRouter.swift in Sources */,
 				ABCFCA762A4ABDD70061F5EE /* WebtoonListCell.swift in Sources */,
 				ABCFCA672A4A7D8F0061F5EE /* EndPoint.swift in Sources */,
+				AB52245B2A7B5F8C00EB3403 /* WebtoonRecommandCell.swift in Sources */,
 				AB6C59402A42B844003BBEAD /* AppRootModels.swift in Sources */,
-				AB6C59312A42AB5D003BBEAD /* WebtoonHomeModels.swift in Sources */,
-				ABCFCA782A4ACCC50061F5EE /* WebtoonListLayout.swift in Sources */,
+				AB5E0EED2A72240E006805D6 /* HomeTabModels.swift in Sources */,
 				AB6C59422A42B844003BBEAD /* AppRootInteractor.swift in Sources */,
 				AB14F7442A44401D002984B3 /* RecommandedCompletionViewController.swift in Sources */,
+				AB52245D2A7B5FBB00EB3403 /* WeekCell.swift in Sources */,
 				AB6C58EF2A4290A3003BBEAD /* AppDelegate.swift in Sources */,
 				ABD0885A2A5561D500A28006 /* Cache.swift in Sources */,
-				AB0659B12A5B9BDF0015F921 /* WebtoonListDiffableDatasourceManager.swift in Sources */,
+				AB5E0EEE2A72240E006805D6 /* HomeTabViewController.swift in Sources */,
 				ABD088842A56B7E900A28006 /* WebtoonEntity+CoreDataClass.swift in Sources */,
 				AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */,
-				ABD0881A2A53F8C700A28006 /* WebtoonListScrollDelegate.swift in Sources */,
 				AB6C593D2A42B844003BBEAD /* AppRootPresenter.swift in Sources */,
 				AB6C58F12A4290A3003BBEAD /* SceneDelegate.swift in Sources */,
 				ABCFCA6F2A4A85350061F5EE /* WebtoonsAPI.swift in Sources */,
