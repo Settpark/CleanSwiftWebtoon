@@ -12,20 +12,24 @@
 
 import UIKit
 
-protocol WebtoonHomePresentationLogic
-{
-  func presentSomething(response: WebtoonHomeModels.WebtoonModel.Response)
+protocol WebtoonHomePresentationLogic {
+    func presentWebtoons(response: WebtoonHomeModels.WebtoonModels.Response)
 }
 
-class WebtoonHomePresenter: WebtoonHomePresentationLogic
-{
-  weak var viewController: WebtoonHomeDisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentSomething(response: WebtoonHomeModels.WebtoonModel.Response)
-  {
-//    let viewModel = HomeTab.WebtoonModel.ViewModel()
-//    viewController?.displaySomething(viewModel: viewModel)
-  }
+class WebtoonHomePresenter: WebtoonHomePresentationLogic {
+    weak var viewController: WebtoonHomeDisplayLogic?
+    
+    func presentWebtoons(response: WebtoonHomeModels.WebtoonModels.Response) {
+        var viewModels: [WebtoonHomeModels.WebtoonModels.ViewModel] = []
+        response.webtoons.forEach {
+            let isOver15 = $0.additional.singularityList.contains("over15")
+            let free = $0.additional.singularityList.contains("free")
+            let waitFree = $0.additional.singularityList.contains("waitFree")
+            let viewModel = WebtoonHomeModels.WebtoonModels.ViewModel(title: $0.title, author: $0.author, img: $0.img,
+                                                                      isNew: $0.additional.new, isAdult: $0.additional.adult, isRest: $0.additional.rest,
+                                                                      isUp: $0.additional.up, isOver15: isOver15, isFree: free, isWaitFree: waitFree)
+            viewModels.append(viewModel)
+        }
+        viewController?.displayWebtoons(viewModels: viewModels)
+    }
 }

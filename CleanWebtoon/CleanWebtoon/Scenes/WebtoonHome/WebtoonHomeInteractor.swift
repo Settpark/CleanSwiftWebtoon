@@ -12,30 +12,30 @@
 
 import UIKit
 
-protocol WebtoonHomeBusinessLogic
-{
-  func doSomething(request: WebtoonHomeModels.WebtoonModel.Request)
+protocol WebtoonHomeBusinessLogic {
+    init(errorHandler: WebtoonHomeServiceErrorHandler)
+    func fetchWebtoons(request: WebtoonHomeModels.WebtoonModels.Request)
 }
 
-protocol WebtoonHomeDataStore
-{
-  //var name: String { get set }
-}
-
-class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore
-{
-  var presenter: WebtoonHomePresentationLogic?
-  var worker: WebtoonHomeWorker?
-  //var name: String = ""
-  
-  // MARK: Do something
-  
-  func doSomething(request: WebtoonHomeModels.WebtoonModel.Request)
-  {
-      worker = WebtoonHomeWorker()
-    worker?.doSomeWork()
+protocol WebtoonHomeDataStore {
     
-    let response = WebtoonHomeModels.WebtoonModel.Response()
-    presenter?.presentSomething(response: response)
-  }
+}
+
+class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
+    var presenter: WebtoonHomePresentationLogic?
+    var worker: WebtoonHomeWorker?
+    
+    // MARK: Do something
+    required init(errorHandler: WebtoonHomeServiceErrorHandler) {
+        worker = WebtoonHomeWorker()
+        worker?.webtoonHomeServiceErrorHandler = errorHandler
+    }
+    
+    func fetchWebtoons(request: WebtoonHomeModels.WebtoonModels.Request) {
+        worker?.requestWetoons(request: request,
+                               completion: { [weak self] response in
+            guard let self = self else { return }
+            presenter?.presentWebtoons(response: response)
+        })
+    }
 }

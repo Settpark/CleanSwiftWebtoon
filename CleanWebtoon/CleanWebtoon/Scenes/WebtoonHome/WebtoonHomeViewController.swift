@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonHomeDisplayLogic: AnyObject {
-    func displaySomething(viewModel: WebtoonHomeModels.WebtoonModel.ViewModel)
+    func displayWebtoons(viewModels: [WebtoonHomeModels.WebtoonModels.ViewModel])
 }
 
 class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
@@ -42,7 +42,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     private func setup() {
         let viewController = self
-        let interactor = WebtoonHomeInteractor()
+        let interactor = WebtoonHomeInteractor(errorHandler: self)
         let presenter = WebtoonHomePresenter()
         let router = WebtoonHomeRouter()
         viewController.interactor = interactor
@@ -98,19 +98,31 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        fetchTodayWebtoonWhenAppStarted()
+        fetchRecommandWebtoonsWhenAppStarted()
     }
     
     // MARK: Do something
     
-    //@IBOutlet weak var nameTextField: UITextField!
-    
-    func doSomething() {
-        let request = WebtoonHomeModels.WebtoonModel.Request()
-        interactor?.doSomething(request: request)
+    func fetchTodayWebtoonWhenAppStarted() {
+        let request = WebtoonHomeModels.WebtoonModels.Request(page: 0,
+                                                             perPage: Int(Int16.max),
+                                                             service: ServiceCase.naver.rawValue,
+                                                             updateDay: Date.makeTodayWeekday())
+        interactor?.fetchWebtoons(request: request)
     }
     
-    func displaySomething(viewModel: WebtoonHomeModels.WebtoonModel.ViewModel) {
-        //nameTextField.text = viewModel.name
+    func fetchRecommandWebtoonsWhenAppStarted() {
+        
+    }
+    
+    func displayWebtoons(viewModels: [WebtoonHomeModels.WebtoonModels.ViewModel]) {
+        print(viewModels)
+    }
+}
+
+extension WebtoonHomeViewController: WebtoonHomeServiceErrorHandler {
+    func errorHandling(error: Error) {
+        //TODO: Show Alert Controller
     }
 }

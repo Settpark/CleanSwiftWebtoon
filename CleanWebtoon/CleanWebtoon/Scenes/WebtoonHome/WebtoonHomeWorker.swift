@@ -12,9 +12,24 @@
 
 import UIKit
 
-class WebtoonHomeWorker
-{
-  func doSomeWork()
-  {
-  }
+protocol WebtoonHomeServiceErrorHandler: AnyObject {
+    func errorHandling(error: Error)
+}
+
+
+final class WebtoonHomeWorker {
+    weak var webtoonHomeServiceErrorHandler: WebtoonHomeServiceErrorHandler?
+    
+    func requestWetoons(request: WebtoonHomeModels.WebtoonModels.Request,
+                        completion: @escaping (WebtoonHomeModels.WebtoonModels.Response) -> (Void)) {
+        WebtoonHomeService().fetchSpecificDayWebtoons(request: request) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                completion(success)
+            case .failure(let failure):
+                webtoonHomeServiceErrorHandler?.errorHandling(error: failure)
+            }
+        }
+    }
 }

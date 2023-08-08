@@ -25,7 +25,7 @@ enum WebtoonHomeModels {
         case sun
         case complete
     }
-    enum WebtoonModel {
+    enum WebtoonModels {
         struct Request {
             var page: Int
             var perPage: Int
@@ -49,6 +49,10 @@ enum WebtoonHomeModels {
             }
         }
         struct Response: Decodable {
+            var webtoons: [WebtoonModel]
+        }
+        
+        struct WebtoonModel: Decodable {
             var title: String
             var author: String
             var url: String
@@ -74,6 +78,7 @@ enum WebtoonHomeModels {
             var adult: Bool
             var rest: Bool
             var up: Bool
+            var singularityList: [String]
             
             static var empty = Self.init()
             
@@ -82,6 +87,7 @@ enum WebtoonHomeModels {
                 adult = false
                 rest = false
                 up = false
+                singularityList = []
             }
         }
         struct ViewModel: Hashable, WebtoonCollectionType {

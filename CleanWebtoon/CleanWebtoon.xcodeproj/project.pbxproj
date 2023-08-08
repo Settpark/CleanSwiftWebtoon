@@ -37,9 +37,10 @@
 		AB6C59402A42B844003BBEAD /* AppRootModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C593A2A42B844003BBEAD /* AppRootModels.swift */; };
 		AB6C59412A42B844003BBEAD /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C593B2A42B844003BBEAD /* AppRootViewController.swift */; };
 		AB6C59422A42B844003BBEAD /* AppRootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C593C2A42B844003BBEAD /* AppRootInteractor.swift */; };
+		AB6FCED32A82290E00D2AF2D /* ServiceCaseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6FCED22A82290E00D2AF2D /* ServiceCaseModels.swift */; };
 		ABCFCA672A4A7D8F0061F5EE /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA662A4A7D8F0061F5EE /* EndPoint.swift */; };
 		ABCFCA6B2A4A83970061F5EE /* RequestMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA6A2A4A83970061F5EE /* RequestMaker.swift */; };
-		ABCFCA6F2A4A85350061F5EE /* WebtoonsHomeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA6E2A4A85350061F5EE /* WebtoonsHomeAPI.swift */; };
+		ABCFCA6F2A4A85350061F5EE /* WebtoonHomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA6E2A4A85350061F5EE /* WebtoonHomeService.swift */; };
 		ABCFCA762A4ABDD70061F5EE /* WebtoonListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */; };
 		ABCFCA832A4BE9680061F5EE /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA822A4BE9680061F5EE /* Date+.swift */; };
 		ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */; };
@@ -103,9 +104,10 @@
 		AB6C593A2A42B844003BBEAD /* AppRootModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootModels.swift; sourceTree = "<group>"; };
 		AB6C593B2A42B844003BBEAD /* AppRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
 		AB6C593C2A42B844003BBEAD /* AppRootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootInteractor.swift; sourceTree = "<group>"; };
+		AB6FCED22A82290E00D2AF2D /* ServiceCaseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCaseModels.swift; sourceTree = "<group>"; };
 		ABCFCA662A4A7D8F0061F5EE /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		ABCFCA6A2A4A83970061F5EE /* RequestMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMaker.swift; sourceTree = "<group>"; };
-		ABCFCA6E2A4A85350061F5EE /* WebtoonsHomeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonsHomeAPI.swift; sourceTree = "<group>"; };
+		ABCFCA6E2A4A85350061F5EE /* WebtoonHomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonHomeService.swift; sourceTree = "<group>"; };
 		ABCFCA752A4ABDD70061F5EE /* WebtoonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListCell.swift; sourceTree = "<group>"; };
 		ABCFCA822A4BE9680061F5EE /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		ABCFCA842A4BFBA10061F5EE /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -282,6 +284,14 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		AB6FCED12A8228FE00D2AF2D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AB6FCED22A82290E00D2AF2D /* ServiceCaseModels.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		ABCFCA652A4A7D860061F5EE /* EndPoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,7 +311,7 @@
 		ABCFCA6D2A4A851C0061F5EE /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				ABCFCA6E2A4A85350061F5EE /* WebtoonsHomeAPI.swift */,
+				ABCFCA6E2A4A85350061F5EE /* WebtoonHomeService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -355,6 +365,7 @@
 		ABE197832A4A6CEA00C50CB5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AB6FCED12A8228FE00D2AF2D /* Model */,
 				ABCFCA6D2A4A851C0061F5EE /* Service */,
 				ABCFCA6C2A4A839A0061F5EE /* Requestable */,
 				ABCFCA652A4A7D860061F5EE /* EndPoint */,
@@ -513,6 +524,7 @@
 				AB4DE86D2A4EC7A600FE1EC2 /* CAGradientLayer+.swift in Sources */,
 				AB5E0EEC2A72240E006805D6 /* WebtoonHomeRouter.swift in Sources */,
 				AB6C593F2A42B844003BBEAD /* AppRootRouter.swift in Sources */,
+				AB6FCED32A82290E00D2AF2D /* ServiceCaseModels.swift in Sources */,
 				ABCFCA762A4ABDD70061F5EE /* WebtoonListCell.swift in Sources */,
 				ABCFCA672A4A7D8F0061F5EE /* EndPoint.swift in Sources */,
 				AB52245B2A7B5F8C00EB3403 /* WebtoonRecommandCell.swift in Sources */,
@@ -528,7 +540,7 @@
 				AB14F7412A44401D002984B3 /* RecommandedCompletionWorker.swift in Sources */,
 				AB6C593D2A42B844003BBEAD /* AppRootPresenter.swift in Sources */,
 				AB6C58F12A4290A3003BBEAD /* SceneDelegate.swift in Sources */,
-				ABCFCA6F2A4A85350061F5EE /* WebtoonsHomeAPI.swift in Sources */,
+				ABCFCA6F2A4A85350061F5EE /* WebtoonHomeService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,16 +8,16 @@
 import UIKit
 
 protocol DatasourceDependency {
-    var datasource: UICollectionViewDiffableDataSource<WebtoonHomeModels.WebtoonHomeTabSection, WebtoonHomeModels.WebtoonModel.ViewModel> { get }
+    var datasource: UICollectionViewDiffableDataSource<WebtoonHomeModels.WebtoonHomeTabSection, WebtoonHomeModels.WebtoonModels.ViewModel> { get }
 }
 
 class WebtoonHomeDatasource: DatasourceDependency {
     
     private let weekDataModel: [String] = ["신작", "매일+", "월", "화", "수", "목", "금", "토", "일", "완결"]
-    var datasource: UICollectionViewDiffableDataSource<WebtoonHomeModels.WebtoonHomeTabSection, WebtoonHomeModels.WebtoonModel.ViewModel>
+    var datasource: UICollectionViewDiffableDataSource<WebtoonHomeModels.WebtoonHomeTabSection, WebtoonHomeModels.WebtoonModels.ViewModel>
     
     init(datasourceTargetCollectionView: UICollectionView) {
-        self.datasource = UICollectionViewDiffableDataSource<WebtoonHomeModels.WebtoonHomeTabSection, WebtoonHomeModels.WebtoonModel.ViewModel>(
+        self.datasource = UICollectionViewDiffableDataSource<WebtoonHomeModels.WebtoonHomeTabSection, WebtoonHomeModels.WebtoonModels.ViewModel>(
             collectionView: datasourceTargetCollectionView,
             cellProvider: { collectionView, indexPath, viewModel in
                 return collectionView.dequeueConfiguredReusableCell(using: WebtoonHomeDatasource.makeCellConfiguration(section: indexPath.section),
@@ -27,10 +27,10 @@ class WebtoonHomeDatasource: DatasourceDependency {
         )
     }
     
-    private static func makeCellConfiguration<T: UICollectionViewCell>(section: Int) -> UICollectionView.CellRegistration<T, WebtoonHomeModels.WebtoonModel.ViewModel> {
+    private static func makeCellConfiguration<T: UICollectionViewCell>(section: Int) -> UICollectionView.CellRegistration<T, WebtoonHomeModels.WebtoonModels.ViewModel> {
         switch WebtoonHomeModels.WebtoonHomeTabSection(rawValue: section) {
         case .recommand:
-            return UICollectionView.CellRegistration<T, WebtoonHomeModels.WebtoonModel.ViewModel> { cell, indexPath, itemIdentifier in
+            return UICollectionView.CellRegistration<T, WebtoonHomeModels.WebtoonModels.ViewModel> { cell, indexPath, itemIdentifier in
                 if let cell = cell as? WebtoonListCell {
                     cell.configureCell(viewModel: itemIdentifier)
                 }
@@ -42,6 +42,6 @@ class WebtoonHomeDatasource: DatasourceDependency {
         case .none:
             break
         }
-        return UICollectionView.CellRegistration<T, WebtoonHomeModels.WebtoonModel.ViewModel> { cell, indexPath, itemIdentifier in }
+        return UICollectionView.CellRegistration<T, WebtoonHomeModels.WebtoonModels.ViewModel> { cell, indexPath, itemIdentifier in }
     }
 }
