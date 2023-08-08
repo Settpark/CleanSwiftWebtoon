@@ -24,7 +24,7 @@ extension WebtoonEntity {
 }
 
 extension WebtoonEntity : Identifiable {
-    func save(value: WebtoonHome.Webtoon) {
+    func save(value: WebtoonHomeModels.WebtoonModel.Response) {
         self.title = value.title
         self.author = value.author
         self.img = value.img

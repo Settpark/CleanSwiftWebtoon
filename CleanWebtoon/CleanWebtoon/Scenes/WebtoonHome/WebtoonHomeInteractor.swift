@@ -12,30 +12,30 @@
 
 import UIKit
 
-protocol HomeTabBusinessLogic
+protocol WebtoonHomeBusinessLogic
 {
-  func doSomething(request: WebtoonHomeTab.WebtoonModel.Request)
+  func doSomething(request: WebtoonHomeModels.WebtoonModel.Request)
 }
 
-protocol HomeTabDataStore
+protocol WebtoonHomeDataStore
 {
   //var name: String { get set }
 }
 
-class HomeTabInteractor: HomeTabBusinessLogic, HomeTabDataStore
+class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore
 {
-  var presenter: HomeTabPresentationLogic?
-  var worker: HomeTabWorker?
+  var presenter: WebtoonHomePresentationLogic?
+  var worker: WebtoonHomeWorker?
   //var name: String = ""
   
   // MARK: Do something
   
-  func doSomething(request: WebtoonHomeTab.WebtoonModel.Request)
+  func doSomething(request: WebtoonHomeModels.WebtoonModel.Request)
   {
-    worker = HomeTabWorker()
+      worker = WebtoonHomeWorker()
     worker?.doSomeWork()
     
-    let response = WebtoonHomeTab.WebtoonModel.Response()
+    let response = WebtoonHomeModels.WebtoonModel.Response()
     presenter?.presentSomething(response: response)
   }
 }

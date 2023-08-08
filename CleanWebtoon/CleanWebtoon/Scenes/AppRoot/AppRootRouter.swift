@@ -46,7 +46,7 @@ class AppRootRouter: NSObject, AppRootRoutingLogic, AppRootDataPassing
   //}
     
     func setupViewControllers() {
-        let webtoonHomeViewController = HomeTabViewController()
+        let webtoonHomeViewController = WebtoonHomeViewController()
 //        let webtoonHomeViewController = WebtoonHomeViewController()
         let recommandedCompletionViewController = RecommandedCompletionViewController()
         

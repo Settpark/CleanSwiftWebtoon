@@ -12,20 +12,20 @@
 
 import UIKit
 
-@objc protocol HomeTabRoutingLogic
+@objc protocol WebtoonHomeRoutingLogic
 {
   //func routeToSomewhere(segue: UIStoryboardSegue?)
 }
 
-protocol HomeTabDataPassing
+protocol WebtoonHomeDataPassing
 {
-  var dataStore: HomeTabDataStore? { get }
+  var dataStore: WebtoonHomeDataStore? { get }
 }
 
-class HomeTabRouter: NSObject, HomeTabRoutingLogic, HomeTabDataPassing
+class WebtoonHomeRouter: NSObject, WebtoonHomeRoutingLogic, WebtoonHomeDataPassing
 {
-  weak var viewController: HomeTabViewController?
-  var dataStore: HomeTabDataStore?
+  weak var viewController: WebtoonHomeViewController?
+  var dataStore: WebtoonHomeDataStore?
   
   // MARK: Routing
   

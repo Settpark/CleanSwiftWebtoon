@@ -7,13 +7,8 @@
 
 import Foundation
 
-protocol ServiceLayer {
-    
-}
-
-struct WebtoonsAPI: ServiceLayer {
-    
-    func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHome.LastUpdate, Error>) -> Void) {
+struct WebtoonsHomeAPI {
+    func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHomeModels.LastUpdateModel, Error>) -> Void) {
         let url = Bundle.main.url(forResource: "LastUpdate", withExtension: "json")
         guard let url = url else {
             return
@@ -23,15 +18,15 @@ struct WebtoonsAPI: ServiceLayer {
             return
         }
         do {
-            let decoded = try JSONDecoder().decode(WebtoonHome.LastUpdate.self, from: data)
+            let decoded = try JSONDecoder().decode(WebtoonHomeModels.LastUpdateModel.self, from: data)
             completion(.success(decoded))
         } catch {
             completion(.failure(error))
         }
     }
     
-    func fetchSpecificDayWebtoons(request: WebtoonHome.WebtoonList.Request,
-                                  completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void) {
+    func fetchSpecificDayWebtoons(request: WebtoonHomeModels.WebtoonModel.Request,
+                                  completion: @escaping (Result<WebtoonHomeModels.WebtoonModel.Response, Error>) -> Void) {
         let endPoint: URLComponents = EndPoint().makeEndpoint(service: .naver,
                                                               request: request)
         guard let validURL = endPoint.url else {
@@ -43,7 +38,7 @@ struct WebtoonsAPI: ServiceLayer {
         URLSession.shared.dataTask(with: requestMaker.request) { data, response, error in
             if let validData = data {
                 do {
-                    let decoded = try JSONDecoder().decode(WebtoonHome.WebtoonList.Response.self, from: validData)
+                    let decoded = try JSONDecoder().decode(WebtoonHomeModels.WebtoonModel.Response.self, from: validData)
                     completion(.success(decoded))
                 } catch {
                     print(error)
@@ -55,7 +50,7 @@ struct WebtoonsAPI: ServiceLayer {
         }.resume()
     }
     
-    func fetchRecommandWebtoons(completion: @escaping (Result<WebtoonHome.WebtoonList.Response, Error>) -> Void) {
+    func fetchRecommandWebtoons(completion: @escaping (Result<WebtoonHomeModels.WebtoonModel.Response, Error>) -> Void) {
         let endPoint: URLComponents = EndPoint().makeEndpoint(page: 1,
                                                               perPage: 10,
                                                               service: .kakao,
@@ -68,7 +63,7 @@ struct WebtoonsAPI: ServiceLayer {
         URLSession.shared.dataTask(with: requestMaker.request) { data, response, error in
             if let validData = data {
                 do {
-                    let decoded = try JSONDecoder().decode(WebtoonHome.WebtoonList.Response.self, from: validData)
+                    let decoded = try JSONDecoder().decode(WebtoonHomeModels.WebtoonModel.Response.self, from: validData)
                     completion(.success(decoded))
                 } catch {
                     print(error)

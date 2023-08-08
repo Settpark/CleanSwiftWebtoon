@@ -12,13 +12,13 @@
 
 import UIKit
 
-protocol HomeTabDisplayLogic: AnyObject {
-    func displaySomething(viewModel: WebtoonHomeTab.WebtoonModel.ViewModel)
+protocol WebtoonHomeDisplayLogic: AnyObject {
+    func displaySomething(viewModel: WebtoonHomeModels.WebtoonModel.ViewModel)
 }
 
-class HomeTabViewController: UIViewController, HomeTabDisplayLogic {
-    var interactor: HomeTabBusinessLogic?
-    var router: (NSObjectProtocol & HomeTabRoutingLogic & HomeTabDataPassing)?
+class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
+    var interactor: WebtoonHomeBusinessLogic?
+    var router: (NSObjectProtocol & WebtoonHomeRoutingLogic & WebtoonHomeDataPassing)?
     
     // MARK: Object lifecycle
     private lazy var webtoonCollectionView: UICollectionView = {
@@ -42,9 +42,9 @@ class HomeTabViewController: UIViewController, HomeTabDisplayLogic {
     
     private func setup() {
         let viewController = self
-        let interactor = HomeTabInteractor()
-        let presenter = HomeTabPresenter()
-        let router = HomeTabRouter()
+        let interactor = WebtoonHomeInteractor()
+        let presenter = WebtoonHomePresenter()
+        let router = WebtoonHomeRouter()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
@@ -106,11 +106,11 @@ class HomeTabViewController: UIViewController, HomeTabDisplayLogic {
     //@IBOutlet weak var nameTextField: UITextField!
     
     func doSomething() {
-        let request = WebtoonHomeTab.WebtoonModel.Request()
+        let request = WebtoonHomeModels.WebtoonModel.Request()
         interactor?.doSomething(request: request)
     }
     
-    func displaySomething(viewModel: WebtoonHomeTab.WebtoonModel.ViewModel) {
+    func displaySomething(viewModel: WebtoonHomeModels.WebtoonModel.ViewModel) {
         //nameTextField.text = viewModel.name
     }
 }

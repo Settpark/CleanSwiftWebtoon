@@ -12,7 +12,7 @@
 
 import UIKit
 
-class HomeTabWorker
+class WebtoonHomeWorker
 {
   func doSomeWork()
   {
