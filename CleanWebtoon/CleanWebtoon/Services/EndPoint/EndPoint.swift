@@ -13,7 +13,7 @@ enum WebtoonSupplier: String {
     case kakaoPage
 }
 
-enum UpdateDay: String {
+enum UpdateDay: String, CaseIterable {
     case new
     case everyDayPlus = "naverDaily"
     case mon

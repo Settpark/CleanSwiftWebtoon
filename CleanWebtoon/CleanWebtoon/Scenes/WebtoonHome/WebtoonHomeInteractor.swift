@@ -25,7 +25,10 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
     var presenter: WebtoonHomePresentationLogic?
     var worker: WebtoonHomeWorker?
     
-    // MARK: Do something
+    init() {
+        worker = WebtoonHomeWorker()
+    }
+        
     required init(errorHandler: WebtoonHomeServiceErrorHandler) {
         worker = WebtoonHomeWorker()
         worker?.webtoonHomeServiceErrorHandler = errorHandler

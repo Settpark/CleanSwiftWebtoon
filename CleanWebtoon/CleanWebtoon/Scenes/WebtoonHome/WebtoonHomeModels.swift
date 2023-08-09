@@ -13,7 +13,7 @@ enum WebtoonHomeModels {
     struct LastUpdateModel: Decodable {
         var lastUpdate: String
     }
-    enum WeekModel: WebtoonCollectionType {
+    enum WeekModel: CaseIterable {
         case new
         case everyDayPlus
         case mon

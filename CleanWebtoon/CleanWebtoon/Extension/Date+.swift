@@ -72,4 +72,29 @@ extension Date {
         let lastUpdateDate = inputDateFormatter.string(from: Date())
         return lastUpdateDate
     }
+    
+    static func makeUpdateDayToInt(_ updateDay: UpdateDay) -> Int {
+        switch updateDay {
+        case .new:
+            return 2
+        case .everyDayPlus:
+            return 1
+        case .mon:
+            return 3
+        case .tue:
+            return 4
+        case .wed:
+            return 5
+        case .thu:
+            return 6
+        case .fri:
+            return 7
+        case .sat:
+            return 8
+        case .sun:
+            return 9
+        case .finished:
+            return 10
+        }
+    }
 }
