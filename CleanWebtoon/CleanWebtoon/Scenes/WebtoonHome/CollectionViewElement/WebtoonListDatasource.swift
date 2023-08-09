@@ -19,10 +19,11 @@ class WebtoonListDatasource: DataSourceDependency {
     var datasource: UICollectionViewDiffableDataSource<WebtoonListDatasource.Section, WebtoonHomeModels.WebtoonModels.ViewModel>?
     
     func bindingCollectionView(_ collectionView: UICollectionView) {
+        let cellRegistration = makeCellRegistration()
         self.datasource = UICollectionViewDiffableDataSource<WebtoonListDatasource.Section, WebtoonHomeModels.WebtoonModels.ViewModel>(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, viewModel in
-                return collectionView.dequeueConfiguredReusableCell(using: self.makeCellConfiguration(),
+                return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
                                                                     for: indexPath,
                                                                     item: viewModel)
             }
@@ -37,7 +38,7 @@ class WebtoonListDatasource: DataSourceDependency {
         datasource?.apply(snapShot, animatingDifferences: false)
     }
     
-    private func makeCellConfiguration() -> UICollectionView.CellRegistration<WebtoonListCell, WebtoonHomeModels.WebtoonModels.ViewModel> {
+    private func makeCellRegistration() -> UICollectionView.CellRegistration<WebtoonListCell, WebtoonHomeModels.WebtoonModels.ViewModel> {
         return UICollectionView.CellRegistration<WebtoonListCell, WebtoonHomeModels.WebtoonModels.ViewModel> { cell, indexPath, itemIdentifier in
             cell.configureCell(viewModel: itemIdentifier)
         }

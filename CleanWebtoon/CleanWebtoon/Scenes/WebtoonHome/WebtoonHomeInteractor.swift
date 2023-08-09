@@ -38,7 +38,7 @@ class WebtoonHomeInteractor: WebtoonHomeBusinessLogic, WebtoonHomeDataStore {
         worker?.requestWetoons(request: request,
                                completion: { [weak self] response in
             guard let self = self else { return }
-            presenter?.presentWebtoons(response: response)
+            self.presenter?.presentWebtoons(response: response)
         })
     }
 }

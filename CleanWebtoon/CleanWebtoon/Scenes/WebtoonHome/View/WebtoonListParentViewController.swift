@@ -13,10 +13,7 @@ class WebtoonListParentViewController: UIPageViewController {
     init(today: Int, pageChangeEventListener: PageChangeEventListener? = nil) {
         self.pagechangeEventListener = pageChangeEventListener
         self.contentViewControllerIdx = today
-        listViewControllers = [WebtoonListViewController(index: 1), WebtoonListViewController(index: 2), WebtoonListViewController(index: 3),
-                               WebtoonListViewController(index: 4), WebtoonListViewController(index: 5), WebtoonListViewController(index: 6),
-                               WebtoonListViewController(index: 7), WebtoonListViewController(index: 8), WebtoonListViewController(index: 9),
-                               WebtoonListViewController(index: 10)]
+        listViewControllers = (0..<10).map({ _ in return WebtoonListViewController()})
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         setupViewController(at: today)
     }
@@ -41,7 +38,7 @@ class WebtoonListParentViewController: UIPageViewController {
             guard let self = self else {
                 return
             }
-            let currentViewController = listViewControllers[contentViewControllerIdx]
+            let currentViewController = self.listViewControllers[self.contentViewControllerIdx]
             currentViewController.updateDatasource(models: data)
         }
     }

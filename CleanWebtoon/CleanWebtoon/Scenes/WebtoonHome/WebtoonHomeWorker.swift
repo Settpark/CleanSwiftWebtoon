@@ -28,7 +28,7 @@ final class WebtoonHomeWorker {
             case .success(let success):
                 completion(success)
             case .failure(let failure):
-                webtoonHomeServiceErrorHandler?.errorHandling(error: failure)
+                self.webtoonHomeServiceErrorHandler?.errorHandling(error: failure)
             }
         }
     }

@@ -10,15 +10,14 @@ import UIKit
 class WebtoonListViewController: UIViewController {
     private lazy var webtoonListCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.bounces = false
+        collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     private let dataSource: WebtoonListDatasource
     
-    private let index: Int
-    
-    init(index: Int) {
-        self.index = index
+    init() {
         dataSource = WebtoonListDatasource()
         super.init(nibName: nil, bundle: nil)
         
@@ -36,9 +35,9 @@ class WebtoonListViewController: UIViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
 
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalWidth(0.2))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .fractionalWidth(0.3))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
@@ -51,19 +50,12 @@ class WebtoonListViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.backgroundColor = UIColor.random()
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "\(index)"
-        label.font = .systemFont(ofSize: 15)
-        self.view.addSubview(label)
-        label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        view.backgroundColor = .white
         view.addSubview(webtoonListCollectionView)
         NSLayoutConstraint.activate([
             webtoonListCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            webtoonListCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            webtoonListCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            webtoonListCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            webtoonListCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             webtoonListCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }

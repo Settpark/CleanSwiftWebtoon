@@ -28,6 +28,7 @@ class WebtoonListCell: UICollectionViewCell {
         }()
         webtoonTitle = {
             let label = UILabel()
+            label.textColor = .black
             label.translatesAutoresizingMaskIntoConstraints = false
             label.font = .systemFont(ofSize: 12, weight: .semibold)
             label.sizeToFit()
