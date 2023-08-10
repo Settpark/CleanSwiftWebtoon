@@ -3,6 +3,7 @@ import UIKit
 protocol PageChangeEventListener: AnyObject {
     func setupView(_ view: UIView)
     func pageChange(page: Int)
+    func sendCurrentCollectionView(_ collectionView: UICollectionView)
 }
 
 class WebtoonListParentViewController: UIPageViewController {
@@ -15,7 +16,7 @@ class WebtoonListParentViewController: UIPageViewController {
         self.contentViewControllerIdx = today
         listViewControllers = (0..<10).map({ _ in return WebtoonListViewController()})
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        setupViewController(at: today)
+        setupViewController()
     }
     
     required init?(coder: NSCoder) {
@@ -23,14 +24,25 @@ class WebtoonListParentViewController: UIPageViewController {
     }
     
     func setListener(_ listener: PageChangeEventListener) {
-        self.pagechangeEventListener = listener
-        self.pagechangeEventListener?.setupView(self.view)
+        pagechangeEventListener = listener
+        pagechangeEventListener?.setupView(view)
+        sendCurrentCollectionView()
     }
     
-    private func setupViewController(at index: Int) {
-        let initialViewController = listViewControllers[index]
+    private func setupViewController() {
+        let initialViewController = listViewControllers[contentViewControllerIdx]
         setViewControllers([initialViewController], direction: .forward, animated: true)
-        self.dataSource = self
+        dataSource = self
+    }
+    
+    private func findCurrentViewController() -> UICollectionView? {
+        return listViewControllers[contentViewControllerIdx].view.subviews.compactMap({ return $0 as? UICollectionView }).first
+    }
+    
+    private func sendCurrentCollectionView() {
+        if let collectionView = findCurrentViewController() {
+            pagechangeEventListener?.sendCurrentCollectionView(collectionView)
+        }
     }
     
     func updateCollectionView(data: [WebtoonHomeModels.WebtoonModels.ViewModel]) {
@@ -55,6 +67,7 @@ extension WebtoonListParentViewController: UIPageViewControllerDataSource {
             return nil
         }
         contentViewControllerIdx = previousIndex
+//        sendCurrentCollectionView()
         return listViewControllers[contentViewControllerIdx]
     }
     
@@ -68,6 +81,7 @@ extension WebtoonListParentViewController: UIPageViewControllerDataSource {
             return nil
         }
         contentViewControllerIdx = nextIndex
+//        sendCurrentCollectionView()
         return listViewControllers[contentViewControllerIdx]
     }
 }
