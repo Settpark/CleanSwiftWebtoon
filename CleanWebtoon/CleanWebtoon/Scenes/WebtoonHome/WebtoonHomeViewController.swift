@@ -25,6 +25,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     private lazy var webtoonCollectionView: UICollectionView = {
         let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: setupCollectionViewLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.bounces = false
         collectionView.backgroundColor = .clear
         return collectionView
     }()
@@ -65,7 +66,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         NSLayoutConstraint.activate([
             webtoonCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             webtoonCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            webtoonCollectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            webtoonCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
             webtoonCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
@@ -98,7 +99,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             } else if sectionKind == .week {
                 section = HirarchyCreater.createWeekSection()
             } else if sectionKind == .webtoonList {
-                section = HirarchyCreater.createMainGroup()
+                section = HirarchyCreater.createWebtoonListGroup()
             }
             return section
         }
@@ -122,9 +123,9 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     
     func fetchTodayWebtoonWhenAppStarted() {
         let request = WebtoonHomeModels.WebtoonModels.Request(page: 0,
-                                                             perPage: Int(Int16.max),
-                                                             service: ServiceCase.naver.rawValue,
-                                                             updateDay: Date.makeTodayWeekday())
+                                                              perPage: Int(Int16.max),
+                                                              service: ServiceCase.naver.rawValue,
+                                                              updateDay: Date.makeTodayWeekday())
         interactor?.fetchWebtoons(request: request)
     }
     
@@ -147,7 +148,7 @@ extension WebtoonHomeViewController: PageChangeEventListener {
     func setupView(_ view: UIView) {
         var snapShot = NSDiffableDataSourceSnapshot<WebtoonHomeModels.WebtoonHomeTabSection,
                                                     UIView>()
-        snapShot.appendSections([.webtoonList, .recommand, .week])
+        snapShot.appendSections([.recommand, .week, .webtoonList])
         snapShot.appendItems([view])
         webtoonCollectionDataSource.apply(snapShot)
     }

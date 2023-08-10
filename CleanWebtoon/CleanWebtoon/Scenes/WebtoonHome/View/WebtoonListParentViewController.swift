@@ -54,7 +54,6 @@ extension WebtoonListParentViewController: UIPageViewControllerDataSource {
         if previousIndex < 0 {
             return nil
         }
-        print("previousIndex ==", previousIndex)
         contentViewControllerIdx = previousIndex
         return listViewControllers[contentViewControllerIdx]
     }
@@ -68,7 +67,6 @@ extension WebtoonListParentViewController: UIPageViewControllerDataSource {
         if nextIndex > 9 {
             return nil
         }
-        print("nextIndex ==", nextIndex)
         contentViewControllerIdx = nextIndex
         return listViewControllers[contentViewControllerIdx]
     }
