@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
-    func displayWebtoonList(viewModel: WebtoonHomeWebtoonList.WebtoonModels.ViewModel)
+    func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel])
 }
 
 class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoonListDisplayLogic {
@@ -113,13 +113,13 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     
     func fetchWebtoonList() {
         let request = WebtoonHomeWebtoonList.WebtoonModels.Request(page: 0,
-                                                                   perPage: 65536,
+                                                                   perPage: 300,
                                                                    service: ServiceCase.naver.rawValue,
                                                                    updateDay: targetDay)
         interactor?.doSomething(request: request)
     }
     
-    func displayWebtoonList(viewModel: WebtoonHomeWebtoonList.WebtoonModels.ViewModel) {
-        
+    func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel]) {
+        self.dataSource.updateData(models: viewModel)
     }
 }

@@ -22,6 +22,22 @@ class WebtoonHomeWebtoonListPresenter: WebtoonHomeWebtoonListPresentationLogic {
   // MARK: Do something
   
   func presentWebtoons(response: WebtoonHomeWebtoonList.WebtoonModels.Response) {
-      print(response)
+      let viewModels: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel] = response.webtoons.map {
+          let isOver15: Bool = $0.additional.singularityList.contains("over15")
+          let isFree: Bool = $0.additional.singularityList.contains("free")
+          let isWaitFree: Bool = $0.additional.singularityList.contains("waitFree")
+          
+          return WebtoonHomeWebtoonList.WebtoonModels.ViewModel(title: $0.title,
+                                                                author: $0.author,
+                                                                img: $0.img,
+                                                                isNew: $0.additional.new,
+                                                                isAdult: $0.additional.adult,
+                                                                isRest: $0.additional.rest,
+                                                                isUp: $0.additional.up,
+                                                                isOver15: isOver15,
+                                                                isFree: isFree,
+                                                                isWaitFree: isWaitFree)
+      }
+      viewController?.displayWebtoonList(viewModel: viewModels)
   }
 }

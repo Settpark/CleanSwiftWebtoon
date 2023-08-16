@@ -53,7 +53,7 @@ extension WebtoonListParentViewController: UIPageViewControllerDataSource {
             return nil
         }
         let nextIndex = index + 1
-        if nextIndex > 9 {
+        if nextIndex > WebtoonHomeWebtoonList.UpdateDay.allCases.count - 1 {
             return nil
         }
         contentViewControllerIdx = nextIndex

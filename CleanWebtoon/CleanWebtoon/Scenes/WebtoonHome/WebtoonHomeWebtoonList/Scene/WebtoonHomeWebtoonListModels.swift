@@ -15,7 +15,6 @@ import UIKit
 enum WebtoonHomeWebtoonList {
     // MARK: Use cases
     enum UpdateDay: String, CaseIterable {
-        case new
         case everyDayPlus = "naverDaily"
         case mon
         case tue
@@ -92,7 +91,7 @@ enum WebtoonHomeWebtoonList {
                 singularityList = []
             }
         }
-        struct ViewModel: Hashable, WebtoonCollectionType {
+        struct ViewModel: Hashable {
             var title: String
             var author: String
             var img: String

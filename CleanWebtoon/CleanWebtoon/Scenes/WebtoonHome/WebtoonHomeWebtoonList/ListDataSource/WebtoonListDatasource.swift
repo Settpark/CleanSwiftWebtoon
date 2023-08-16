@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DataSourceDependency {
-    var datasource: UICollectionViewDiffableDataSource<WebtoonListDatasource.Section, WebtoonHomeModels.WebtoonModels.ViewModel>? { get }
+    var datasource: UICollectionViewDiffableDataSource<WebtoonListDatasource.Section, WebtoonHomeWebtoonList.WebtoonModels.ViewModel>? { get }
 }
 
 class WebtoonListDatasource: DataSourceDependency {
@@ -16,11 +16,11 @@ class WebtoonListDatasource: DataSourceDependency {
         case main
     }
     
-    var datasource: UICollectionViewDiffableDataSource<WebtoonListDatasource.Section, WebtoonHomeModels.WebtoonModels.ViewModel>?
+    var datasource: UICollectionViewDiffableDataSource<WebtoonListDatasource.Section, WebtoonHomeWebtoonList.WebtoonModels.ViewModel>?
     
     func bindingCollectionView(_ collectionView: UICollectionView) {
         let cellRegistration = makeCellRegistration()
-        self.datasource = UICollectionViewDiffableDataSource<WebtoonListDatasource.Section, WebtoonHomeModels.WebtoonModels.ViewModel>(
+        self.datasource = UICollectionViewDiffableDataSource<WebtoonListDatasource.Section, WebtoonHomeWebtoonList.WebtoonModels.ViewModel>(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, viewModel in
                 return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
@@ -30,16 +30,16 @@ class WebtoonListDatasource: DataSourceDependency {
         )
     }
     
-    func updateData(models: [WebtoonHomeModels.WebtoonModels.ViewModel]) {
+    func updateData(models: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel]) {
         var snapShot = NSDiffableDataSourceSnapshot<WebtoonListDatasource.Section,
-                                                    WebtoonHomeModels.WebtoonModels.ViewModel>()
+                                                    WebtoonHomeWebtoonList.WebtoonModels.ViewModel>()
         snapShot.appendSections([.main])
         snapShot.appendItems(models)
         datasource?.apply(snapShot, animatingDifferences: false)
     }
     
-    private func makeCellRegistration() -> UICollectionView.CellRegistration<WebtoonListCell, WebtoonHomeModels.WebtoonModels.ViewModel> {
-        return UICollectionView.CellRegistration<WebtoonListCell, WebtoonHomeModels.WebtoonModels.ViewModel> { cell, indexPath, itemIdentifier in
+    private func makeCellRegistration() -> UICollectionView.CellRegistration<WebtoonListCell, WebtoonHomeWebtoonList.WebtoonModels.ViewModel> {
+        return UICollectionView.CellRegistration<WebtoonListCell, WebtoonHomeWebtoonList.WebtoonModels.ViewModel> { cell, indexPath, itemIdentifier in
             cell.configureCell(viewModel: itemIdentifier)
         }
     }

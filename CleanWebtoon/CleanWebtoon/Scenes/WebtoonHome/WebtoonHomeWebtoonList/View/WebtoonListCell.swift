@@ -109,7 +109,7 @@ class WebtoonListCell: UICollectionViewCell {
         ])
     }
     
-    func configureCell(viewModel: WebtoonHomeModels.WebtoonModels.ViewModel) {
+    func configureCell(viewModel: WebtoonHomeWebtoonList.WebtoonModels.ViewModel) {
         DispatchQueue.main.async { [weak self] in
             self?.author.text = viewModel.author
             self?.webtoonTitle.text = viewModel.title
@@ -117,7 +117,7 @@ class WebtoonListCell: UICollectionViewCell {
         }
     }
     
-    func loadImage(viewModel: WebtoonHomeModels.WebtoonModels.ViewModel) {
+    func loadImage(viewModel: WebtoonHomeWebtoonList.WebtoonModels.ViewModel) {
         imageLoadingTask = UIImage.loadImage(from: viewModel.img) { [weak self] image in
             guard let image = image else {
                 return

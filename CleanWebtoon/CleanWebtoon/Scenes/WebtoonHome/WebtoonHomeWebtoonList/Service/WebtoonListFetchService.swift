@@ -13,24 +13,7 @@ enum APIError: Error {
     case notValidData
 }
 
-struct WebtoonListFetchService {
-//    func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHomeModels.LastUpdateModel, Error>) -> Void) {
-//        let url = Bundle.main.url(forResource: "LastUpdate", withExtension: "json")
-//        guard let url = url else {
-//            return
-//        }
-//        let data = try? Data(contentsOf: url)
-//        guard let data = data else {
-//            return
-//        }
-//        do {
-//            let decoded = try JSONDecoder().decode(WebtoonHomeModels.LastUpdateModel.self, from: data)
-//            completion(.success(decoded))
-//        } catch {
-//            completion(.failure(error))
-//        }
-//    }
-    
+struct WebtoonListFetchService {    
     func fetchSpecificDayWebtoons(request: WebtoonHomeWebtoonList.WebtoonModels.Request,
                                   completion: @escaping (Result<WebtoonHomeWebtoonList.WebtoonModels.Response, Error>) -> Void) {
         let endPoint: URLComponents = EndPoint().makeEndpoint(service: .naver,
@@ -40,7 +23,6 @@ struct WebtoonListFetchService {
             return
         }
         let requestMaker = RequestMaker(url: validURL, method: .get)
-        
         URLSession.shared.dataTask(with: requestMaker.request) { data, response, error in
             if let validData = data {
                 do {
@@ -55,7 +37,7 @@ struct WebtoonListFetchService {
         }.resume()
     }
     
-    func fetchRecommandWebtoons(completion: @escaping (Result<WebtoonHomeModels.WebtoonModels.Response, Error>) -> Void) {
+    func fetchRecommandWebtoons(completion: @escaping (Result<WebtoonHomeWebtoonList.WebtoonModels.Response, Error>) -> Void) {
         let endPoint: URLComponents = EndPoint().makeEndpoint(page: 1,
                                                               perPage: 10,
                                                               service: .kakao,
@@ -68,7 +50,7 @@ struct WebtoonListFetchService {
         URLSession.shared.dataTask(with: requestMaker.request) { data, response, error in
             if let validData = data {
                 do {
-                    let decoded = try JSONDecoder().decode(WebtoonHomeModels.WebtoonModels.Response.self, from: validData)
+                    let decoded = try JSONDecoder().decode(WebtoonHomeWebtoonList.WebtoonModels.Response.self, from: validData)
                     completion(.success(decoded))
                 } catch {
                     completion(.failure(error))

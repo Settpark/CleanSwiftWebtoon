@@ -33,8 +33,5 @@ class WebtoonHomeWebtoonListInteractor: WebtoonHomeWebtoonListBusinessLogic, Web
                                completion: { response in
             self.presenter?.presentWebtoons(response: response)
         })
-        
-//        let response = WebtoonHomeWebtoonList.WebtoonModels.response()
-//        presenter?.presentSomething(response: response)
     }
 }
