@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonHomeWebtoonListBusinessLogic {
-    func doSomething(request: WebtoonHomeWebtoonList.Something.Request)
+    func doSomething(request: WebtoonHomeWebtoonList.WebtoonModels.Request)
 }
 
 protocol WebtoonHomeWebtoonListDataStore {
@@ -27,11 +27,14 @@ class WebtoonHomeWebtoonListInteractor: WebtoonHomeWebtoonListBusinessLogic, Web
     
     // MARK: Do something
     
-    func doSomething(request: WebtoonHomeWebtoonList.Something.Request) {
+    func doSomething(request: WebtoonHomeWebtoonList.WebtoonModels.Request) {
         worker = WebtoonHomeWebtoonListWorker()
-        worker?.doSomeWork()
+        worker?.requestWetoons(request: request,
+                               completion: { response in
+            self.presenter?.presentWebtoons(response: response)
+        })
         
-        let response = WebtoonHomeWebtoonList.Something.Response()
-        presenter?.presentSomething(response: response)
+//        let response = WebtoonHomeWebtoonList.WebtoonModels.response()
+//        presenter?.presentSomething(response: response)
     }
 }

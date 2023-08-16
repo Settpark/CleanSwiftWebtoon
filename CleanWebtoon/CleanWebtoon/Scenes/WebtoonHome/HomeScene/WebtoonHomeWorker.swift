@@ -10,26 +10,21 @@
 //  see http://clean-swift.com
 //
 
-import UIKit
-
-protocol WebtoonHomeServiceErrorHandler: AnyObject {
-    func errorHandling(error: Error)
-}
-
+import Foundation
 
 final class WebtoonHomeWorker {
     weak var webtoonHomeServiceErrorHandler: WebtoonHomeServiceErrorHandler?
     
     func requestWetoons(request: WebtoonHomeModels.WebtoonModels.Request,
                         completion: @escaping (WebtoonHomeModels.WebtoonModels.Response) -> (Void)) {
-        WebtoonHomeService().fetchSpecificDayWebtoons(request: request) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                completion(success)
-            case .failure(let failure):
-                self.webtoonHomeServiceErrorHandler?.errorHandling(error: failure)
-            }
-        }
+//        WebtoonHomeService().fetchSpecificDayWebtoons(request: request) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let success):
+//                completion(success)
+//            case .failure(let failure):
+//                self.webtoonHomeServiceErrorHandler?.errorHandling(error: failure)
+//            }
+//        }
     }
 }

@@ -12,20 +12,16 @@
 
 import UIKit
 
-protocol WebtoonHomeWebtoonListPresentationLogic
-{
-  func presentSomething(response: WebtoonHomeWebtoonList.Something.Response)
+protocol WebtoonHomeWebtoonListPresentationLogic {
+    func presentWebtoons(response: WebtoonHomeWebtoonList.WebtoonModels.Response)
 }
 
-class WebtoonHomeWebtoonListPresenter: WebtoonHomeWebtoonListPresentationLogic
-{
+class WebtoonHomeWebtoonListPresenter: WebtoonHomeWebtoonListPresentationLogic {
   weak var viewController: WebtoonHomeWebtoonListDisplayLogic?
   
   // MARK: Do something
   
-  func presentSomething(response: WebtoonHomeWebtoonList.Something.Response)
-  {
-    let viewModel = WebtoonHomeWebtoonList.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
+  func presentWebtoons(response: WebtoonHomeWebtoonList.WebtoonModels.Response) {
+      print(response)
   }
 }

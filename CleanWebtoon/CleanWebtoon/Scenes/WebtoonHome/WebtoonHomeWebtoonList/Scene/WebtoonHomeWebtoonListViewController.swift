@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
-    func displaySomething(viewModel: WebtoonHomeWebtoonList.Something.ViewModel)
+    func displayWebtoonList(viewModel: WebtoonHomeWebtoonList.WebtoonModels.ViewModel)
 }
 
 class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoonListDisplayLogic {
@@ -29,10 +29,12 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
         return collectionView
     }()
     private let dataSource: WebtoonListDatasource
+    private var targetDay: WebtoonHomeWebtoonList.UpdateDay
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    init(targetDay: WebtoonHomeWebtoonList.UpdateDay) {
         dataSource = WebtoonListDatasource()
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.targetDay = targetDay
+        super.init(nibName: nil, bundle: nil)
         setup()
         
         setupViews()
@@ -104,17 +106,20 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        fetchWebtoonList()
     }
     
     // MARK: Do something
     
-    func doSomething() {
-        let request = WebtoonHomeWebtoonList.Something.Request()
+    func fetchWebtoonList() {
+        let request = WebtoonHomeWebtoonList.WebtoonModels.Request(page: 0,
+                                                                   perPage: 65536,
+                                                                   service: ServiceCase.naver.rawValue,
+                                                                   updateDay: targetDay)
         interactor?.doSomething(request: request)
     }
     
-    func displaySomething(viewModel: WebtoonHomeWebtoonList.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    func displayWebtoonList(viewModel: WebtoonHomeWebtoonList.WebtoonModels.ViewModel) {
+        
     }
 }

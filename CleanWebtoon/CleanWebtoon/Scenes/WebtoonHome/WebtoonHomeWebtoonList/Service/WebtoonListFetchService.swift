@@ -1,32 +1,38 @@
 //
-//  WebtoonsAPI.swift
+//  WebtoonListRequest.swift
 //  CleanWebtoon
 //
-//  Created by temp_name on 2023/06/27.
+//  Created by temp_name on 2023/08/16.
 //
 
 import Foundation
 
-struct WebtoonHomeService {
-    func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHomeModels.LastUpdateModel, Error>) -> Void) {
-        let url = Bundle.main.url(forResource: "LastUpdate", withExtension: "json")
-        guard let url = url else {
-            return
-        }
-        let data = try? Data(contentsOf: url)
-        guard let data = data else {
-            return
-        }
-        do {
-            let decoded = try JSONDecoder().decode(WebtoonHomeModels.LastUpdateModel.self, from: data)
-            completion(.success(decoded))
-        } catch {
-            completion(.failure(error))
-        }
-    }
+enum APIError: Error {
+    case failMakeValidURL
+    case failDecode
+    case notValidData
+}
+
+struct WebtoonListFetchService {
+//    func fetchLastUpdateTime(completion: @escaping (Result<WebtoonHomeModels.LastUpdateModel, Error>) -> Void) {
+//        let url = Bundle.main.url(forResource: "LastUpdate", withExtension: "json")
+//        guard let url = url else {
+//            return
+//        }
+//        let data = try? Data(contentsOf: url)
+//        guard let data = data else {
+//            return
+//        }
+//        do {
+//            let decoded = try JSONDecoder().decode(WebtoonHomeModels.LastUpdateModel.self, from: data)
+//            completion(.success(decoded))
+//        } catch {
+//            completion(.failure(error))
+//        }
+//    }
     
-    func fetchSpecificDayWebtoons(request: WebtoonHomeModels.WebtoonModels.Request,
-                                  completion: @escaping (Result<WebtoonHomeModels.WebtoonModels.Response, Error>) -> Void) {
+    func fetchSpecificDayWebtoons(request: WebtoonHomeWebtoonList.WebtoonModels.Request,
+                                  completion: @escaping (Result<WebtoonHomeWebtoonList.WebtoonModels.Response, Error>) -> Void) {
         let endPoint: URLComponents = EndPoint().makeEndpoint(service: .naver,
                                                               request: request)
         guard let validURL = endPoint.url else {
@@ -38,7 +44,7 @@ struct WebtoonHomeService {
         URLSession.shared.dataTask(with: requestMaker.request) { data, response, error in
             if let validData = data {
                 do {
-                    let decoded = try JSONDecoder().decode(WebtoonHomeModels.WebtoonModels.Response.self, from: validData)
+                    let decoded = try JSONDecoder().decode(WebtoonHomeWebtoonList.WebtoonModels.Response.self, from: validData)
                     completion(.success(decoded))
                 } catch {
                     completion(.failure(error))
@@ -72,10 +78,4 @@ struct WebtoonHomeService {
             }
         }.resume()
     }
-}
-
-enum APIError: Error {
-    case failMakeValidURL
-    case failDecode
-    case notValidData
 }
