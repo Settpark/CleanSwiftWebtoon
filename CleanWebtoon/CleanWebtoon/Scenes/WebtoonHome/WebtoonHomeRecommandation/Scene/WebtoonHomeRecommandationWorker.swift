@@ -12,9 +12,8 @@
 
 import UIKit
 
-class WebtoonHomeRecommandationWorker
-{
-  func doSomeWork()
-  {
+class WebtoonHomeRecommandationWorker {
+  func fetchRecommandationWebtoons() {
+      
   }
 }

@@ -14,7 +14,7 @@ import UIKit
 
 protocol WebtoonHomeRecommandationBusinessLogic
 {
-  func doSomething(request: WebtoonHomeRecommandation.Something.Request)
+  func fetchRecommandationWebtoons(request: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request)
 }
 
 protocol WebtoonHomeRecommandationDataStore
@@ -30,12 +30,12 @@ class WebtoonHomeRecommandationInteractor: WebtoonHomeRecommandationBusinessLogi
   
   // MARK: Do something
   
-  func doSomething(request: WebtoonHomeRecommandation.Something.Request)
+  func fetchRecommandationWebtoons(request: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request)
   {
     worker = WebtoonHomeRecommandationWorker()
-    worker?.doSomeWork()
+    worker?.fetchRecommandationWebtoons()
     
-    let response = WebtoonHomeRecommandation.Something.Response()
-    presenter?.presentSomething(response: response)
+//    let response = WebtoonHomeRecommandation.Something.Response()
+//    presenter?.presentSomething(response: response)
   }
 }

@@ -13,14 +13,24 @@
 import UIKit
 
 protocol WebtoonHomeRecommandationDisplayLogic: AnyObject {
-    func displaySomething(viewModel: WebtoonHomeRecommandation.Something.ViewModel)
+    func displaySomething(viewModel: WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel)
 }
 
 class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeRecommandationDisplayLogic {
     var interactor: WebtoonHomeRecommandationBusinessLogic?
     var router: (NSObjectProtocol & WebtoonHomeRecommandationRoutingLogic & WebtoonHomeRecommandationDataPassing)?
     
+    private var recommnadWebtoons: [UIImageView]
+    private lazy var webtoonTitleCollectionView: UICollectionView = {
+        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: setupCollectionView())
+        collectionView.bounces = false
+        collectionView.backgroundColor = .white
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        recommnadWebtoons = []
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
         setupViews()
@@ -50,6 +60,22 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
         view.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    private func setupCollectionView() -> UICollectionViewCompositionalLayout {
+        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                                             heightDimension: .absolute(45)))
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil,
+                                                         top: .flexible(135),
+                                                         trailing: nil,
+                                                         bottom: nil)
+        let groupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
+                                                                       heightDimension: .absolute(180))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+        return UICollectionViewCompositionalLayout(section: section)
+    }
+    
     // MARK: Routing
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -65,19 +91,16 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        fetchRecommandationWebtoon()
     }
     
     // MARK: Do something
     
-    //@IBOutlet weak var nameTextField: UITextField!
-    
-    func doSomething() {
-        let request = WebtoonHomeRecommandation.Something.Request()
-        interactor?.doSomething(request: request)
+    func fetchRecommandationWebtoon() {
+        let request = WebtoonHomeRecommandation.RecommandationWebtoonModel.Request()
+        interactor?.fetchRecommandationWebtoons(request: request)
     }
     
-    func displaySomething(viewModel: WebtoonHomeRecommandation.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    func displaySomething(viewModel: WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel) {
     }
 }

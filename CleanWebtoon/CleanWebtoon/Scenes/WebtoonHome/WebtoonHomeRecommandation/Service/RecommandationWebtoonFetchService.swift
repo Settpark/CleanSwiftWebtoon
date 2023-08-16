@@ -1,5 +1,5 @@
 //
-//  WebtoonListRequest.swift
+//  RecommandationWebtoonFetchService.swift
 //  CleanWebtoon
 //
 //  Created by temp_name on 2023/08/16.
@@ -7,16 +7,11 @@
 
 import Foundation
 
-enum APIError: Error {
-    case failMakeValidURL
-    case failDecode
-    case notValidData
-}
-
-struct WebtoonListFetchService {
-    func fetchSpecificDayWebtoons(request: WebtoonHomeWebtoonList.WebtoonModels.Request,
-                                  completion: @escaping (Result<WebtoonHomeWebtoonList.WebtoonModels.Response, Error>) -> Void) {
-        let endPoint: URLComponents = WebtoonListFetchEndPoint().makeEndpoint(request: request)
+struct RecommandationWebtoonFetchService {
+    func fetchRecommandWebtoons(requestModel: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request,
+                                completion: @escaping (Result<WebtoonHomeWebtoonList.WebtoonModels.Response, Error>) -> Void) {
+        let endPointConvertible: EndPointConvertible =  RecommandationEndPoint()
+        let endPoint: URLComponents = endPointConvertible.makeEndPoint(request: requestModel)
         guard let validURL = endPoint.url else {
             completion(.failure(APIError.failMakeValidURL))
             return

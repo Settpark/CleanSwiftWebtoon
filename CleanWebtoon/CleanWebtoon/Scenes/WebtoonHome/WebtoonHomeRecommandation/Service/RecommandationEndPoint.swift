@@ -1,19 +1,15 @@
 //
-//  EndPoint.swift
+//  RecommandationEndPointConvertible.swift
 //  CleanWebtoon
 //
-//  Created by temp_name on 2023/06/27.
+//  Created by temp_name on 2023/08/16.
 //
 
 import Foundation
 
-protocol EndPointConvertible {
-    associatedtype requestType
-    func makeEndPoint(request: requestType) -> URLComponents
-}
 
-struct WebtoonListFetchEndPoint: EndPointConvertible {
-    typealias requestType = WebtoonHomeWebtoonList.WebtoonModels.Request
+struct RecommandationEndPoint: EndPointConvertible {
+    typealias requestType = WebtoonHomeRecommandation.RecommandationWebtoonModel.Request
     private let baseURL: String
     
     init() {
@@ -21,7 +17,7 @@ struct WebtoonListFetchEndPoint: EndPointConvertible {
     }
     
     
-    func makeEndPoint(request: WebtoonHomeWebtoonList.WebtoonModels.Request) -> URLComponents {
+    func makeEndPoint(request: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request) -> URLComponents {
         var endPointComponent: URLComponents = URLComponents(string: self.baseURL) ?? URLComponents()
         endPointComponent.queryItems = [URLQueryItem(name: "service", value: String(describing: request.service)),
                                         URLQueryItem(name: "page", value: String(describing: request.page)),
