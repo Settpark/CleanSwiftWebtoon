@@ -21,26 +21,15 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     var router: (NSObjectProtocol & WebtoonHomeRoutingLogic & WebtoonHomeDataPassing)?
     
     private let recommandSectionViewController: WebtoonHomeRecommandationViewController
-    
     private let webtoonListViewController: WebtoonListParentViewController
-    private var webtoonCollectionDataSource: UICollectionViewDiffableDataSource<WebtoonHomeModels.WebtoonHomeTabSection, UIView>!
-    private lazy var webtoonCollectionView: UICollectionView = {
-        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: setupCollectionViewLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.bounces = false
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         recommandSectionViewController = .init()
         webtoonListViewController = .init(today: Date.makeUpdateDayToInt(Date.makeTodayWeekday()))
-        webtoonCollectionDataSource = nil
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
-        setupViews()
-        setupDataSource()
         setupChildViewController()
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
@@ -66,11 +55,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         tabBarItem = UITabBarItem(title: "웹툰", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         
         self.view.addSubview(recommandSectionViewController.view)
-        recommandSectionViewController.didMove(toParent: self)
-        recommandSectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        addChild(recommandSectionViewController)
-        
-        self.view.addSubview(webtoonCollectionView)
+        self.view.addSubview(webtoonListViewController.view)
         
         NSLayoutConstraint.activate([
             recommandSectionViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -78,46 +63,19 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
             recommandSectionViewController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
             recommandSectionViewController.view.heightAnchor.constraint(equalToConstant: 185),
             
-            webtoonCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            webtoonCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            webtoonCollectionView.topAnchor.constraint(equalTo: recommandSectionViewController.view.bottomAnchor),
-            webtoonCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            webtoonListViewController.view.topAnchor.constraint(equalTo: recommandSectionViewController.view.bottomAnchor),
+            webtoonListViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            webtoonListViewController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            webtoonListViewController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
     
-    private func setupDataSource() {
-        let cellConfiguration = UICollectionView.CellRegistration<WebtoonSectionCell, UIView> { cell, indexPath, itemIdentifier in
-            cell.configureCell(contentView: itemIdentifier)
-        }
-        webtoonCollectionDataSource = UICollectionViewDiffableDataSource(collectionView: webtoonCollectionView,
-                                                                         cellProvider: { collectionView, indexPath, itemIdentifier in
-            return collectionView.dequeueConfiguredReusableCell(using: cellConfiguration, for: indexPath, item: itemIdentifier)
-        })
-    }
-    
     private func setupChildViewController() {
-        webtoonListViewController.setListener(self)
-        addChild(webtoonListViewController)
+        recommandSectionViewController.didMove(toParent: self)
+        addChild(recommandSectionViewController)
+        
         webtoonListViewController.didMove(toParent: self)
-    }
-    
-    private func setupCollectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionProvider, configuration) -> NSCollectionLayoutSection? in
-            let sectionKind = WebtoonHomeModels.WebtoonHomeTabSection(rawValue: sectionProvider)
-            guard let sectionKind = sectionKind else {
-                return nil
-            }
-            var section: NSCollectionLayoutSection?
-            if sectionKind == .recommand {
-                section = HirarchyCreater.createRecommandGroup()
-            } else if sectionKind == .week {
-                section = HirarchyCreater.createWeekSection()
-            } else if sectionKind == .webtoonList {
-                section = HirarchyCreater.createWebtoonListGroup()
-            }
-            return section
-        }
-        return layout
+        addChild(webtoonListViewController)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -160,11 +118,7 @@ extension WebtoonHomeViewController: WebtoonHomeServiceErrorHandler {
 
 extension WebtoonHomeViewController: PageChangeEventListener {
     func setupView(_ view: UIView) {
-        var snapShot = NSDiffableDataSourceSnapshot<WebtoonHomeModels.WebtoonHomeTabSection,
-                                                    UIView>()
-        snapShot.appendSections([.recommand, .week, .webtoonList])
-        snapShot.appendItems([view])
-        webtoonCollectionDataSource.apply(snapShot)
+        
     }
     
     func pageChange(page: Int) {

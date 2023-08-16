@@ -23,12 +23,13 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
+        setupViews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+    
     
     // MARK: Setup
     
@@ -46,7 +47,7 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     }
     
     private func setupViews() {
-        
+        view.translatesAutoresizingMaskIntoConstraints = false
     }
     
     // MARK: Routing
