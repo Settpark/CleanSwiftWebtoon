@@ -20,6 +20,8 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     var interactor: WebtoonHomeBusinessLogic?
     var router: (NSObjectProtocol & WebtoonHomeRoutingLogic & WebtoonHomeDataPassing)?
     
+    private let recommandSectionViewController: WebtoonHomeRecommandationViewController
+    
     private let webtoonListViewController: WebtoonListParentViewController
     private var webtoonCollectionDataSource: UICollectionViewDiffableDataSource<WebtoonHomeModels.WebtoonHomeTabSection, UIView>!
     private lazy var webtoonCollectionView: UICollectionView = {
@@ -31,6 +33,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     }()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        recommandSectionViewController = .init()
         webtoonListViewController = .init(today: Date.makeUpdateDayToInt(Date.makeTodayWeekday()))
         webtoonCollectionDataSource = nil
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -61,12 +64,23 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         self.view.backgroundColor = .white
         title = "웹툰"
         tabBarItem = UITabBarItem(title: "웹툰", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
+        
+        self.view.addSubview(recommandSectionViewController.view)
+        recommandSectionViewController.didMove(toParent: self)
+        recommandSectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        addChild(recommandSectionViewController)
+        
         self.view.addSubview(webtoonCollectionView)
         
         NSLayoutConstraint.activate([
+            recommandSectionViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            recommandSectionViewController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            recommandSectionViewController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
+            recommandSectionViewController.view.heightAnchor.constraint(equalToConstant: 185),
+            
             webtoonCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             webtoonCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            webtoonCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            webtoonCollectionView.topAnchor.constraint(equalTo: recommandSectionViewController.view.bottomAnchor),
             webtoonCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
