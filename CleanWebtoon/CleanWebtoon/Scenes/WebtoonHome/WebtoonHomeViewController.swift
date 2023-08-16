@@ -29,18 +29,15 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
         collectionView.backgroundColor = .clear
         return collectionView
     }()
-    private let scrollEventDelegate: ScrollEventDelegate
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         webtoonListViewController = .init(today: Date.makeUpdateDayToInt(Date.makeTodayWeekday()))
         webtoonCollectionDataSource = nil
-        scrollEventDelegate = ScrollEventDelegate()
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
         setupViews()
         setupDataSource()
         setupChildViewController()
-        scrollEventDelegate.changeOuterScrollView(self.webtoonCollectionView)
     }
     
     required init?(coder: NSCoder) {
@@ -161,6 +158,5 @@ extension WebtoonHomeViewController: PageChangeEventListener {
     }
     
     func sendCurrentCollectionView(_ collectionView: UICollectionView) {
-        self.scrollEventDelegate.changeInnerScrollView(collectionView)
     }
 }
