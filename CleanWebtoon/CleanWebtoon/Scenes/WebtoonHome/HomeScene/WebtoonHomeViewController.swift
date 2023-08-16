@@ -106,7 +106,7 @@ class WebtoonHomeViewController: UIViewController, WebtoonHomeDisplayLogic {
     }
     
     func displayWebtoons(viewModels: [WebtoonHomeModels.WebtoonModels.ViewModel]) {
-        webtoonListViewController.updateCollectionView(data: viewModels)
+        
     }
 }
 

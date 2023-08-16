@@ -8,11 +8,11 @@ protocol PageChangeEventListener: AnyObject {
 
 class WebtoonListParentViewController: UIPageViewController {
     private var contentViewControllerIdx: Int
-    private let listViewControllers: [WebtoonListViewController]
+    private let listViewControllers: [WebtoonHomeWebtoonListViewController]
     
     init(today: Int, pageChangeEventListener: PageChangeEventListener? = nil) {
         self.contentViewControllerIdx = today
-        listViewControllers = (0..<10).map({ _ in return WebtoonListViewController()})
+        listViewControllers = (0..<10).map({ _ in return WebtoonHomeWebtoonListViewController()})
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         setupViewController()
     }
@@ -31,21 +31,11 @@ class WebtoonListParentViewController: UIPageViewController {
     private func findCurrentViewController() -> UICollectionView? {
         return listViewControllers[contentViewControllerIdx].view.subviews.compactMap({ return $0 as? UICollectionView }).first
     }
-    
-    func updateCollectionView(data: [WebtoonHomeModels.WebtoonModels.ViewModel]) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
-                return
-            }
-            let currentViewController = self.listViewControllers[self.contentViewControllerIdx]
-            currentViewController.updateDatasource(models: data)
-        }
-    }
 }
 
 extension WebtoonListParentViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewController = viewController as? WebtoonListViewController,
+        guard let viewController = viewController as? WebtoonHomeWebtoonListViewController,
               let index = listViewControllers.firstIndex(of: viewController) else {
             return nil
         }
@@ -58,7 +48,7 @@ extension WebtoonListParentViewController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewController = viewController as? WebtoonListViewController,
+        guard let viewController = viewController as? WebtoonHomeWebtoonListViewController,
               let index = listViewControllers.firstIndex(of: viewController) else {
             return nil
         }
