@@ -114,7 +114,7 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     func fetchWebtoonList() {
         let request = WebtoonHomeWebtoonList.WebtoonModels.Request(page: 0,
                                                                    perPage: 300,
-                                                                   service: ServiceCase.naver.rawValue,
+                                                                   service: .naver,
                                                                    updateDay: targetDay)
         interactor?.doSomething(request: request)
     }

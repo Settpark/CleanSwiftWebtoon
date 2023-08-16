@@ -10,8 +10,10 @@
 //  see http://clean-swift.com
 //
 
-import UIKit
+import Foundation
 
-enum ServiceCase: String {
-  case naver = "naver"
+enum WebtoonSupplier: String {
+    case naver
+    case kakao
+    case kakaoPage
 }

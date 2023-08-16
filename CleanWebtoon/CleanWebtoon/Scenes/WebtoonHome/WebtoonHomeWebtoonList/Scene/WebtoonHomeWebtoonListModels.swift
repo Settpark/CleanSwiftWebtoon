@@ -35,10 +35,10 @@ enum WebtoonHomeWebtoonList {
             
             static var empty = Self.init()
             
-            init(page: Int, perPage: Int, service: String, updateDay: WebtoonHomeWebtoonList.UpdateDay) {
+            init(page: Int, perPage: Int, service: WebtoonSupplier, updateDay: WebtoonHomeWebtoonList.UpdateDay) {
                 self.page = page
                 self.perPage = perPage
-                self.service = service
+                self.service = service.rawValue
                 self.updateDay = updateDay
             }
             

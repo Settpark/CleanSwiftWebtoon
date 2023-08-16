@@ -8,7 +8,7 @@
 import Foundation
 
 extension Date {
-    static func makeTodayWeekday() -> UpdateDay {
+    static func makeTodayWeekday() -> WebtoonHomeWebtoonList.UpdateDay {
         let date = Date()
 
         let calendar = Calendar.current
@@ -44,7 +44,7 @@ extension Date {
         }
     }
     
-    static func isAlreadyFetch(serverDate: String, targetDate: UpdateDay) -> Bool {
+    static func isAlreadyFetch(serverDate: String, targetDate: WebtoonHomeWebtoonList.UpdateDay) -> Bool {
         let inputDateFormatter: DateFormatter = DateFormatter()
         inputDateFormatter.dateFormat = "yyyy.MM.dd-hh:mm"
         inputDateFormatter.locale = Locale(identifier: "ko_KR")
@@ -73,28 +73,26 @@ extension Date {
         return lastUpdateDate
     }
     
-    static func makeUpdateDayToInt(_ updateDay: UpdateDay) -> Int {
+    static func makeUpdateDayToInt(_ updateDay: WebtoonHomeWebtoonList.UpdateDay) -> Int {
         switch updateDay {
-        case .new:
-            return 2
         case .everyDayPlus:
             return 1
         case .mon:
-            return 3
+            return 2
         case .tue:
-            return 4
+            return 3
         case .wed:
-            return 5
+            return 4
         case .thu:
-            return 6
+            return 5
         case .fri:
-            return 7
+            return 6
         case .sat:
-            return 8
+            return 7
         case .sun:
-            return 9
+            return 8
         case .finished:
-            return 10
+            return 9
         }
     }
 }

@@ -25,7 +25,7 @@ class CoreDataManager {
         self.managedObjectContext = self.persistentContainer.viewContext
     }
 
-    func fetchData<T: NSManagedObject>(type: T.Type, predicate: UpdateDay?) -> [WebtoonEntity] {
+    func fetchData<T: NSManagedObject>(type: T.Type, predicate: WebtoonHomeWebtoonList.UpdateDay?) -> [WebtoonEntity] {
         guard let fetchRequest = T.fetchRequest() as? NSFetchRequest<T> else {
             return []
         }
