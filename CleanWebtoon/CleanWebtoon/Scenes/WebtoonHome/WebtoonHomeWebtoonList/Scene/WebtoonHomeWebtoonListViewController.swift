@@ -28,15 +28,15 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    private let dataSource: WebtoonListDatasource
+    private var dataSource: CustomCollectionViewDatasource<WebtoonListSection,
+                                                          WebtoonHomeWebtoonList.WebtoonModels.ViewModel,
+                                                          WebtoonListCell>?
     private var targetDay: WebtoonHomeWebtoonList.UpdateDay
     
     init(targetDay: WebtoonHomeWebtoonList.UpdateDay) {
-        dataSource = WebtoonListDatasource()
         self.targetDay = targetDay
         super.init(nibName: nil, bundle: nil)
         setup()
-        
         setupViews()
         setupDataSource()
     }
@@ -77,12 +77,14 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     }
     
     private func setupDataSource() {
-        dataSource.bindingCollectionView(webtoonListCollectionView)
+        self.dataSource = CustomCollectionViewDatasource(collectionView: webtoonListCollectionView, completion: { cell, IndexPath, itemType in
+            cell.configureCell(viewModel: itemType)
+        })
     }
     
     private func setupViews() {
-        view.backgroundColor = .white
-        view.addSubview(webtoonListCollectionView)
+        self.view.backgroundColor = .white
+        self.view.addSubview(webtoonListCollectionView)
         NSLayoutConstraint.activate([
             webtoonListCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
             webtoonListCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
@@ -120,6 +122,6 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     }
     
     func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel]) {
-        self.dataSource.updateData(models: viewModel)
+        self.dataSource?.updateData(seciton: .main, models: viewModel)
     }
 }

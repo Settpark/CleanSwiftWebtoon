@@ -20,20 +20,24 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     var interactor: WebtoonHomeRecommandationBusinessLogic?
     var router: (NSObjectProtocol & WebtoonHomeRecommandationRoutingLogic & WebtoonHomeRecommandationDataPassing)?
     
-    private var recommnadationWebtoons: [RecommandationView]
+    private var recommandationWebtoons: [RecommandationView]
     private lazy var webtoonTitleCollectionView: UICollectionView = {
         let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: setupCollectionView())
         collectionView.bounces = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
+    private var collectionViewDataSource: CustomCollectionViewDatasource<RecommandWebtoonSection,
+                                                                        WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel,
+                                                                        RecommandCollectionViewCell>?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        recommnadationWebtoons = []
+        recommandationWebtoons = []
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
-        setupViews()
+        setupView()
+        setupDataSource()
     }
     
     required init?(coder: NSCoder) {
@@ -56,20 +60,23 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
         router.dataStore = interactor
     }
     
-    private func setupViews() {
+    private func setupView() {
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(webtoonTitleCollectionView)
+        NSLayoutConstraint.activate([
+            webtoonTitleCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webtoonTitleCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webtoonTitleCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            webtoonTitleCollectionView.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
     
     private func setupCollectionView() -> UICollectionViewCompositionalLayout {
-        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                                             heightDimension: .absolute(45)))
+        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                                             heightDimension: .fractionalHeight(1.0)))
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
-        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil,
-                                                         top: .flexible(135),
-                                                         trailing: nil,
-                                                         bottom: nil)
         let groupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
-                                                                       heightDimension: .absolute(180))
+                                                                       heightDimension: .fractionalHeight(1.0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
@@ -77,16 +84,22 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     }
     
     private func setupRecommandationViews() {
-        self.recommnadationWebtoons.reversed().forEach {
+        self.recommandationWebtoons.reversed().forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 $0.topAnchor.constraint(equalTo: self.view.topAnchor),
-                $0.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                $0.bottomAnchor.constraint(equalTo: webtoonTitleCollectionView.bottomAnchor, constant: -5),
                 $0.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                 $0.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
             ])
         }
+    }
+    
+    private func setupDataSource() {
+        self.collectionViewDataSource = CustomCollectionViewDatasource(collectionView: webtoonTitleCollectionView, completion: { cell, indexPath, item in
+            cell.configureView(title: item.title)
+        })
     }
     
     // MARK: Routing
@@ -123,12 +136,14 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
             guard let self = self else {
                 return
             }
-            recommnadationWebtoons = viewModels.map { _ in RecommandationView() }
+            recommandationWebtoons = viewModels.map { _ in RecommandationView() }
             setupRecommandationViews()
             viewModels.enumerated().forEach { (index, value) in
-                self.recommnadationWebtoons[index].configureView(imageURL: value.img,
+                self.recommandationWebtoons[index].configureView(imageURL: value.img,
                                                                  title: value.title)
             }
+            view.bringSubviewToFront(webtoonTitleCollectionView)
+            collectionViewDataSource?.updateData(seciton: .main, models: viewModels)
         }
     }
 }

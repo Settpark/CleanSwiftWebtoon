@@ -35,7 +35,7 @@ class WebtoonHomeViewController: UIViewController {
             recommandSectionViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             recommandSectionViewController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             recommandSectionViewController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
-            recommandSectionViewController.view.heightAnchor.constraint(equalToConstant: 240),
+            recommandSectionViewController.view.heightAnchor.constraint(equalToConstant: 270),
             
             webtoonListViewController.view.topAnchor.constraint(equalTo: recommandSectionViewController.view.bottomAnchor),
             webtoonListViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
