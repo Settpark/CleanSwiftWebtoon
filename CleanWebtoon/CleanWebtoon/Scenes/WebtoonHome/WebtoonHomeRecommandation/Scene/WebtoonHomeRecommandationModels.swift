@@ -81,28 +81,11 @@ enum WebtoonHomeRecommandation {
         }
         struct ViewModel: Hashable {
             var title: String
-            var author: String
             var img: String
-            var isNew: Bool
-            var isAdult: Bool
-            var isRest: Bool
-            var isUp: Bool
-            var isOver15: Bool
-            var isFree: Bool
-            var isWaitFree: Bool
             
-            init(title: String, author: String, img: String, isNew: Bool, isAdult: Bool,
-                 isRest: Bool, isUp: Bool, isOver15: Bool, isFree: Bool, isWaitFree: Bool) {
+            init(title: String, img: String) {
                 self.title = title
-                self.author = author
                 self.img = img
-                self.isNew = isNew
-                self.isAdult = isAdult
-                self.isRest = isRest
-                self.isUp = isUp
-                self.isOver15 = isOver15
-                self.isFree = isFree
-                self.isWaitFree = isWaitFree
             }
         }
     }

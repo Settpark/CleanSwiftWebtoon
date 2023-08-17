@@ -20,21 +20,9 @@ class WebtoonHomeRecommandationPresenter: WebtoonHomeRecommandationPresentationL
     weak var viewController: WebtoonHomeRecommandationDisplayLogic?
     
     func presentRecommandationWebtoons(response: WebtoonHomeRecommandation.RecommandationWebtoonModel.Response) {
-        let viewModels: [WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel] = response.webtoons.map {
-            let isOver15: Bool = $0.additional.singularityList.contains("over15")
-            let isFree: Bool = $0.additional.singularityList.contains("free")
-            let isWaitFree: Bool = $0.additional.singularityList.contains("waitFree")
-            
+        let viewModels: [WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel] = response.webtoons.map {            
             return WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel(title: $0.title,
-                                                                  author: $0.author,
-                                                                  img: $0.img,
-                                                                  isNew: $0.additional.new,
-                                                                  isAdult: $0.additional.adult,
-                                                                  isRest: $0.additional.rest,
-                                                                  isUp: $0.additional.up,
-                                                                  isOver15: isOver15,
-                                                                  isFree: isFree,
-                                                                  isWaitFree: isWaitFree)
+                                                                                  img: $0.img)
         }
         viewController?.displayRecommandationWebtoons(viewModels: viewModels)
     }
