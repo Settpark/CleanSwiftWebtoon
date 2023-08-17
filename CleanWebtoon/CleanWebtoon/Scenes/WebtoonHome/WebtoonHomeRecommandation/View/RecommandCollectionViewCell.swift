@@ -29,9 +29,8 @@ class RecommandCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupView() {
-        self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.masksToBounds = true
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = 5
         
         self.contentView.addSubview(titleLabel)
         
