@@ -16,7 +16,7 @@ enum APIError: Error {
 struct WebtoonListFetchService {
     func fetchSpecificDayWebtoons(request: WebtoonHomeWebtoonList.WebtoonModels.Request,
                                   completion: @escaping (Result<WebtoonHomeWebtoonList.WebtoonModels.Response, Error>) -> Void) {
-        let endPoint: URLComponents = WebtoonListFetchEndPoint().makeEndpoint(request: request)
+        let endPoint: URLComponents = WebtoonServiceEndPoint<WebtoonHomeWebtoonList.WebtoonModels.Request>().makeEndPoint(request: request)
         guard let validURL = endPoint.url else {
             completion(.failure(APIError.failMakeValidURL))
             return

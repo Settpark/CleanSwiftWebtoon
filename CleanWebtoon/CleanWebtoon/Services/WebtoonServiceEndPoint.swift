@@ -7,13 +7,7 @@
 
 import Foundation
 
-protocol EndPointConvertible {
-    associatedtype requestType
-    func makeEndPoint(request: requestType) -> URLComponents
-}
-
-struct WebtoonListFetchEndPoint: EndPointConvertible {
-    typealias requestType = WebtoonHomeWebtoonList.WebtoonModels.Request
+struct WebtoonServiceEndPoint<T: WebtoonRequestable> {
     private let baseURL: String
     
     init() {
@@ -21,7 +15,7 @@ struct WebtoonListFetchEndPoint: EndPointConvertible {
     }
     
     
-    func makeEndPoint(request: WebtoonHomeWebtoonList.WebtoonModels.Request) -> URLComponents {
+    func makeEndPoint(request: T) -> URLComponents {
         var endPointComponent: URLComponents = URLComponents(string: self.baseURL) ?? URLComponents()
         endPointComponent.queryItems = [URLQueryItem(name: "service", value: String(describing: request.service)),
                                         URLQueryItem(name: "page", value: String(describing: request.page)),

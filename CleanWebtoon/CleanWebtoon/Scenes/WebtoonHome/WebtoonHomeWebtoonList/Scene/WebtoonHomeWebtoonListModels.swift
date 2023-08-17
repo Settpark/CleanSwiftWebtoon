@@ -12,6 +12,13 @@
 
 import UIKit
 
+protocol WebtoonRequestable {
+    var page: Int { get }
+    var perPage: Int { get }
+    var service: WebtoonSupplier { get }
+    var updateDay: WebtoonHomeWebtoonList.UpdateDay { get }
+}
+
 enum WebtoonHomeWebtoonList {
     // MARK: Use cases
     enum UpdateDay: String, CaseIterable {
@@ -27,10 +34,10 @@ enum WebtoonHomeWebtoonList {
     }
     
     enum WebtoonModels {
-        struct Request {
+        struct Request: WebtoonRequestable {
             var page: Int
             var perPage: Int
-            var service: String
+            var service: WebtoonSupplier
             var updateDay: WebtoonHomeWebtoonList.UpdateDay
             
             static var empty = Self.init()
@@ -38,14 +45,14 @@ enum WebtoonHomeWebtoonList {
             init(page: Int, perPage: Int, service: WebtoonSupplier, updateDay: WebtoonHomeWebtoonList.UpdateDay) {
                 self.page = page
                 self.perPage = perPage
-                self.service = service.rawValue
+                self.service = service
                 self.updateDay = updateDay
             }
             
             init() {
                 page = 0
                 perPage = 0
-                service = ""
+                service = .naver
                 updateDay = .everyDayPlus
             }
         }

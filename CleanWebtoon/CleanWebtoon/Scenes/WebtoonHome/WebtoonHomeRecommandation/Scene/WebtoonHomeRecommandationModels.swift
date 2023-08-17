@@ -15,7 +15,7 @@ import UIKit
 enum WebtoonHomeRecommandation {
     
     enum RecommandationWebtoonModel {
-        struct Request {
+        struct Request: WebtoonRequestable {
             var page: Int
             var perPage: Int
             var service: WebtoonSupplier

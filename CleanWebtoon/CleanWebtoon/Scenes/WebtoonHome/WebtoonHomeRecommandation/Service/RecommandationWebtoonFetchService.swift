@@ -10,7 +10,7 @@ import Foundation
 struct RecommandationWebtoonFetchService {
     func fetchRecommandWebtoons(requestModel: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request,
                                 completion: @escaping (Result<WebtoonHomeWebtoonList.WebtoonModels.Response, Error>) -> Void) {
-        let endPointConvertible: EndPointConvertible =  RecommandationEndPoint()
+        let endPointConvertible: WebtoonServiceEndPoint = WebtoonServiceEndPoint<WebtoonHomeRecommandation.RecommandationWebtoonModel.Request>()
         let endPoint: URLComponents = endPointConvertible.makeEndPoint(request: requestModel)
         guard let validURL = endPoint.url else {
             completion(.failure(APIError.failMakeValidURL))
