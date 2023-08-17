@@ -13,7 +13,16 @@
 import UIKit
 
 class WebtoonHomeRecommandationWorker {
-  func fetchRecommandationWebtoons() {
-      
-  }
+    weak var webtoonHomeServiceErrorHandler: WebtoonHomeServiceErrorHandler?
+    func fetchRecommandationWebtoons(request: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request,
+                                     completion: @escaping (WebtoonHomeRecommandation.RecommandationWebtoonModel.Response) -> (Void)) {
+        RecommandationWebtoonFetchService().fetchRecommandWebtoons(requestModel: request) { result in
+            switch result {
+            case .success(let success):
+                completion(success)
+            case .failure(let failure):
+                self.webtoonHomeServiceErrorHandler?.errorHandling(error: failure)
+            }
+        }
+    }
 }

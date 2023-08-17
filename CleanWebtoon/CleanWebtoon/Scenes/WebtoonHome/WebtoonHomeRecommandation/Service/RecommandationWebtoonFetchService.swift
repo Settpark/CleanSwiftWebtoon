@@ -9,7 +9,7 @@ import Foundation
 
 struct RecommandationWebtoonFetchService {
     func fetchRecommandWebtoons(requestModel: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request,
-                                completion: @escaping (Result<WebtoonHomeWebtoonList.WebtoonModels.Response, Error>) -> Void) {
+                                completion: @escaping (Result<WebtoonHomeRecommandation.RecommandationWebtoonModel.Response, Error>) -> Void) {
         let endPointConvertible: WebtoonServiceEndPoint = WebtoonServiceEndPoint<WebtoonHomeRecommandation.RecommandationWebtoonModel.Request>()
         let endPoint: URLComponents = endPointConvertible.makeEndPoint(request: requestModel)
         guard let validURL = endPoint.url else {
@@ -20,7 +20,7 @@ struct RecommandationWebtoonFetchService {
         URLSession.shared.dataTask(with: requestMaker.request) { data, response, error in
             if let validData = data {
                 do {
-                    let decoded = try JSONDecoder().decode(WebtoonHomeWebtoonList.WebtoonModels.Response.self, from: validData)
+                    let decoded = try JSONDecoder().decode(WebtoonHomeRecommandation.RecommandationWebtoonModel.Response.self, from: validData)
                     completion(.success(decoded))
                 } catch {
                     completion(.failure(error))

@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonHomeRecommandationDisplayLogic: AnyObject {
-    func displaySomething(viewModel: WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel)
+    func displayRecommandationWebtoons(viewModels: [WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel])
 }
 
 class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeRecommandationDisplayLogic {
@@ -97,10 +97,14 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     // MARK: Do something
     
     func fetchRecommandationWebtoon() {
-        let request = WebtoonHomeRecommandation.RecommandationWebtoonModel.Request()
+        let request = WebtoonHomeRecommandation.RecommandationWebtoonModel.Request(page: 0,
+                                                                                   perPage: 10,
+                                                                                   service: .kakao,
+                                                                                   updateDay: .mon)
         interactor?.fetchRecommandationWebtoons(request: request)
     }
     
-    func displaySomething(viewModel: WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel) {
+    func displayRecommandationWebtoons(viewModels: [WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel]) {
+        //TODO: 추천 웹툰 상단 표시, DataSoruce 선언 및 업데이트
     }
 }

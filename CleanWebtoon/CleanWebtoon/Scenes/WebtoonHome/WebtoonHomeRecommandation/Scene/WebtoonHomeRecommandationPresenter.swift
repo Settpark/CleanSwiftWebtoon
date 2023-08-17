@@ -12,20 +12,30 @@
 
 import UIKit
 
-protocol WebtoonHomeRecommandationPresentationLogic
-{
-  func presentSomething(response: WebtoonHomeRecommandation.RecommandationWebtoonModel.Response)
+protocol WebtoonHomeRecommandationPresentationLogic {
+    func presentRecommandationWebtoons(response: WebtoonHomeRecommandation.RecommandationWebtoonModel.Response)
 }
 
-class WebtoonHomeRecommandationPresenter: WebtoonHomeRecommandationPresentationLogic
-{
-  weak var viewController: WebtoonHomeRecommandationDisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentSomething(response: WebtoonHomeRecommandation.RecommandationWebtoonModel.Response)
-  {
-//    let viewModel = WebtoonHomeRecommandation.Something.ViewModel()
-//    viewController?.displaySomething(viewModel: viewModel)
-  }
+class WebtoonHomeRecommandationPresenter: WebtoonHomeRecommandationPresentationLogic {
+    weak var viewController: WebtoonHomeRecommandationDisplayLogic?
+    
+    func presentRecommandationWebtoons(response: WebtoonHomeRecommandation.RecommandationWebtoonModel.Response) {
+        let viewModels: [WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel] = response.webtoons.map {
+            let isOver15: Bool = $0.additional.singularityList.contains("over15")
+            let isFree: Bool = $0.additional.singularityList.contains("free")
+            let isWaitFree: Bool = $0.additional.singularityList.contains("waitFree")
+            
+            return WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel(title: $0.title,
+                                                                  author: $0.author,
+                                                                  img: $0.img,
+                                                                  isNew: $0.additional.new,
+                                                                  isAdult: $0.additional.adult,
+                                                                  isRest: $0.additional.rest,
+                                                                  isUp: $0.additional.up,
+                                                                  isOver15: isOver15,
+                                                                  isFree: isFree,
+                                                                  isWaitFree: isWaitFree)
+        }
+        viewController?.displayRecommandationWebtoons(viewModels: viewModels)
+    }
 }

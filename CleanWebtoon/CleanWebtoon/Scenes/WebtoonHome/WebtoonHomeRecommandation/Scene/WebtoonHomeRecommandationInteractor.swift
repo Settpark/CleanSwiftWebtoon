@@ -12,30 +12,24 @@
 
 import UIKit
 
-protocol WebtoonHomeRecommandationBusinessLogic
-{
-  func fetchRecommandationWebtoons(request: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request)
+protocol WebtoonHomeRecommandationBusinessLogic {
+    func fetchRecommandationWebtoons(request: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request)
 }
 
-protocol WebtoonHomeRecommandationDataStore
-{
-  //var name: String { get set }
+protocol WebtoonHomeRecommandationDataStore {
 }
 
-class WebtoonHomeRecommandationInteractor: WebtoonHomeRecommandationBusinessLogic, WebtoonHomeRecommandationDataStore
-{
-  var presenter: WebtoonHomeRecommandationPresentationLogic?
-  var worker: WebtoonHomeRecommandationWorker?
-  //var name: String = ""
-  
-  // MARK: Do something
-  
-  func fetchRecommandationWebtoons(request: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request)
-  {
-    worker = WebtoonHomeRecommandationWorker()
-    worker?.fetchRecommandationWebtoons()
+class WebtoonHomeRecommandationInteractor: WebtoonHomeRecommandationBusinessLogic, WebtoonHomeRecommandationDataStore {
+    var presenter: WebtoonHomeRecommandationPresentationLogic?
+    var worker: WebtoonHomeRecommandationWorker?
     
-//    let response = WebtoonHomeRecommandation.Something.Response()
-//    presenter?.presentSomething(response: response)
-  }
+    // MARK: Do something
+    
+    func fetchRecommandationWebtoons(request: WebtoonHomeRecommandation.RecommandationWebtoonModel.Request) {
+        worker = WebtoonHomeRecommandationWorker()
+        worker?.fetchRecommandationWebtoons(request: request,
+                                            completion: { response in
+            self.presenter?.presentRecommandationWebtoons(response: response)
+        })
+    }
 }
