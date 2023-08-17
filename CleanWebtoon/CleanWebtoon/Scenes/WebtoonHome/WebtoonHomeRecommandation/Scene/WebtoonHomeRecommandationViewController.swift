@@ -20,7 +20,7 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     var interactor: WebtoonHomeRecommandationBusinessLogic?
     var router: (NSObjectProtocol & WebtoonHomeRecommandationRoutingLogic & WebtoonHomeRecommandationDataPassing)?
     
-    private var recommnadWebtoons: [UIImageView]
+    private var recommnadationWebtoons: [RecommandationView]
     private lazy var webtoonTitleCollectionView: UICollectionView = {
         let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: setupCollectionView())
         collectionView.bounces = false
@@ -30,7 +30,7 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     }()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        recommnadWebtoons = []
+        recommnadationWebtoons = []
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
         setupViews()
@@ -76,6 +76,19 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
         return UICollectionViewCompositionalLayout(section: section)
     }
     
+    private func setupRecommandationViews() {
+        self.recommnadationWebtoons.reversed().forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                $0.topAnchor.constraint(equalTo: self.view.topAnchor),
+                $0.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                $0.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                $0.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            ])
+        }
+    }
+    
     // MARK: Routing
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -99,12 +112,23 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     func fetchRecommandationWebtoon() {
         let request = WebtoonHomeRecommandation.RecommandationWebtoonModel.Request(page: 0,
                                                                                    perPage: 10,
-                                                                                   service: .kakao,
-                                                                                   updateDay: .mon)
+                                                                                   service: .naver,
+                                                                                   updateDay: .tue)
         interactor?.fetchRecommandationWebtoons(request: request)
     }
     
     func displayRecommandationWebtoons(viewModels: [WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel]) {
         //TODO: 추천 웹툰 상단 표시, DataSoruce 선언 및 업데이트
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            recommnadationWebtoons = viewModels.map { _ in RecommandationView() }
+            setupRecommandationViews()
+            viewModels.enumerated().forEach { (index, value) in
+                self.recommnadationWebtoons[index].configureView(imageURL: value.img,
+                                                                 title: value.title)
+            }
+        }
     }
 }
