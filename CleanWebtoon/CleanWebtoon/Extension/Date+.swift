@@ -76,23 +76,23 @@ extension Date {
     static func makeUpdateDayToInt(_ updateDay: WebtoonHomeWebtoonList.UpdateDay) -> Int {
         switch updateDay {
         case .everyDayPlus:
-            return 1
+            return 0
         case .mon:
-            return 2
+            return 1
         case .tue:
-            return 3
+            return 2
         case .wed:
-            return 4
+            return 3
         case .thu:
-            return 5
+            return 4
         case .fri:
-            return 6
+            return 5
         case .sat:
-            return 7
+            return 6
         case .sun:
-            return 8
+            return 7
         case .finished:
-            return 9
+            return 8
         }
     }
 }

@@ -66,14 +66,14 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
         NSLayoutConstraint.activate([
             webtoonTitleCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webtoonTitleCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webtoonTitleCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+            webtoonTitleCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             webtoonTitleCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
     }
     
     private func createCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                             heightDimension: .fractionalHeight(0.25)))
+                                                                             heightDimension: .fractionalHeight(0.22)))
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3)
         item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil,
                                                          top: .flexible(1),

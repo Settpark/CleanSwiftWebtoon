@@ -59,6 +59,7 @@
 		ABED13072A8CC68E00307159 /* RecommandationWebtoonFetchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED13062A8CC68E00307159 /* RecommandationWebtoonFetchService.swift */; };
 		ABED130C2A8DB24000307159 /* RecommandationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED130B2A8DB24000307159 /* RecommandationView.swift */; };
 		ABED13102A8DE66000307159 /* RecommandCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED130F2A8DE66000307159 /* RecommandCollectionViewCell.swift */; };
+		ABED13392A8F4D1900307159 /* WeekDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED13382A8F4D1900307159 /* WeekDayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 		ABED13062A8CC68E00307159 /* RecommandationWebtoonFetchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandationWebtoonFetchService.swift; sourceTree = "<group>"; };
 		ABED130B2A8DB24000307159 /* RecommandationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandationView.swift; sourceTree = "<group>"; };
 		ABED130F2A8DE66000307159 /* RecommandCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandCollectionViewCell.swift; sourceTree = "<group>"; };
+		ABED13382A8F4D1900307159 /* WeekDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 		AB5E0EE22A7223D0006805D6 /* WebtoonHome */ = {
 			isa = PBXGroup;
 			children = (
+				ABED13372A8F4D0D00307159 /* View */,
 				ABED13022A8CB80200307159 /* WebtoonHomeViewController.swift */,
 				ABED12DC2A8C8BEB00307159 /* WebtoonHomeRecommandation */,
 				ABED12EB2A8CA12B00307159 /* WebtoonHomeWebtoonList */,
@@ -432,6 +435,14 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		ABED13372A8F4D0D00307159 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ABED13382A8F4D1900307159 /* WeekDayView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -566,6 +577,7 @@
 				AB14F7402A44401D002984B3 /* RecommandedCompletionPresenter.swift in Sources */,
 				ABCFCA852A4BFBA10061F5EE /* UIImage+.swift in Sources */,
 				AB5224572A7B3E8B00EB3403 /* CustomCollectionViewDatasource.swift in Sources */,
+				ABED13392A8F4D1900307159 /* WeekDayView.swift in Sources */,
 				ABED12E32A8C8C0400307159 /* WebtoonHomeRecommandationPresenter.swift in Sources */,
 				ABD088852A56B7E900A28006 /* WebtoonEntity+CoreDataProperties.swift in Sources */,
 				AB6C59412A42B844003BBEAD /* AppRootViewController.swift in Sources */,
