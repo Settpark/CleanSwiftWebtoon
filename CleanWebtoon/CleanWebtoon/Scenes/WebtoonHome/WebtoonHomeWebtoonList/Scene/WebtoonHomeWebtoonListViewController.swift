@@ -26,6 +26,8 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
         collectionView.bounces = false
         collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInsetAdjustmentBehavior = .never
         return collectionView
     }()
     private var dataSource: CustomCollectionViewDatasource<WebtoonListSection,
@@ -89,7 +91,7 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
             webtoonListCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
             webtoonListCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             webtoonListCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
-            webtoonListCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            webtoonListCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     

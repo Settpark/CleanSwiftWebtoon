@@ -22,7 +22,7 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     
     private var recommandationWebtoons: [RecommandationView]
     private lazy var webtoonTitleCollectionView: UICollectionView = {
-        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: setupCollectionView())
+        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
         collectionView.bounces = false
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,20 +66,27 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
         NSLayoutConstraint.activate([
             webtoonTitleCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webtoonTitleCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webtoonTitleCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            webtoonTitleCollectionView.heightAnchor.constraint(equalToConstant: 50)
+            webtoonTitleCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webtoonTitleCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
     }
     
-    private func setupCollectionView() -> UICollectionViewCompositionalLayout {
+    private func createCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                             heightDimension: .fractionalHeight(1.0)))
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
-        let groupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
+                                                                             heightDimension: .fractionalHeight(0.22)))
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3)
+        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil,
+                                                         top: .flexible(1),
+                                                         trailing: nil,
+                                                         bottom: nil)
+        let groupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93),
                                                                        heightDimension: .fractionalHeight(1.0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.visibleItemsInvalidationHandler = { [weak self] (visibleItems, offset, env) in
+            //TODO: collectionView 이동 시 이벤트 처리
+        }
         return UICollectionViewCompositionalLayout(section: section)
     }
     
@@ -131,7 +138,6 @@ class WebtoonHomeRecommandationViewController: UIViewController, WebtoonHomeReco
     }
     
     func displayRecommandationWebtoons(viewModels: [WebtoonHomeRecommandation.RecommandationWebtoonModel.ViewModel]) {
-        //TODO: 추천 웹툰 상단 표시, DataSoruce 선언 및 업데이트
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {
                 return
