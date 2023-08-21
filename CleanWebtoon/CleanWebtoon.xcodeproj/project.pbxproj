@@ -60,6 +60,7 @@
 		ABED130C2A8DB24000307159 /* RecommandationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED130B2A8DB24000307159 /* RecommandationView.swift */; };
 		ABED13102A8DE66000307159 /* RecommandCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED130F2A8DE66000307159 /* RecommandCollectionViewCell.swift */; };
 		ABED13392A8F4D1900307159 /* WeekDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED13382A8F4D1900307159 /* WeekDayView.swift */; };
+		ABED133B2A92FFD700307159 /* WebtoonListCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED133A2A92FFD700307159 /* WebtoonListCollectionViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		ABED130B2A8DB24000307159 /* RecommandationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandationView.swift; sourceTree = "<group>"; };
 		ABED130F2A8DE66000307159 /* RecommandCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandCollectionViewCell.swift; sourceTree = "<group>"; };
 		ABED13382A8F4D1900307159 /* WeekDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayView.swift; sourceTree = "<group>"; };
+		ABED133A2A92FFD700307159 /* WebtoonListCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonListCollectionViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +354,7 @@
 		ABED12EB2A8CA12B00307159 /* WebtoonHomeWebtoonList */ = {
 			isa = PBXGroup;
 			children = (
+				ABED133C2A92FFDB00307159 /* Delegate */,
 				ABED12FF2A8CAF4A00307159 /* Service */,
 				ABED12FD2A8CAB3900307159 /* Scene */,
 				ABED12FC2A8CAB2900307159 /* View */,
@@ -441,6 +444,14 @@
 				ABED13382A8F4D1900307159 /* WeekDayView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		ABED133C2A92FFDB00307159 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				ABED133A2A92FFD700307159 /* WebtoonListCollectionViewDelegate.swift */,
+			);
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -620,6 +631,7 @@
 				ABED12E72A8C8C0400307159 /* WebtoonHomeRecommandationViewController.swift in Sources */,
 				AB6C58F12A4290A3003BBEAD /* SceneDelegate.swift in Sources */,
 				ABED12F82A8CA19C00307159 /* WebtoonHomeWebtoonListViewController.swift in Sources */,
+				ABED133B2A92FFD700307159 /* WebtoonListCollectionViewDelegate.swift in Sources */,
 				ABED12F52A8CA19C00307159 /* WebtoonHomeWebtoonListWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

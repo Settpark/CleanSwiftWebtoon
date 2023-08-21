@@ -34,13 +34,15 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
                                                           WebtoonHomeWebtoonList.WebtoonModels.ViewModel,
                                                           WebtoonListCell>?
     private var targetDay: WebtoonHomeWebtoonList.UpdateDay
+    private let webtoonCollectionViewScrollDelegate: UICollectionViewDelegate
     
     init(targetDay: WebtoonHomeWebtoonList.UpdateDay) {
         self.targetDay = targetDay
+        self.webtoonCollectionViewScrollDelegate = WebtoonListCollectionViewDelegate()
         super.init(nibName: nil, bundle: nil)
         setup()
         setupViews()
-        setupDataSource()
+        setupCollectionView()
     }
     
     required init?(coder: NSCoder) {
@@ -78,10 +80,12 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
         return layout
     }
     
-    private func setupDataSource() {
-        self.dataSource = CustomCollectionViewDatasource(collectionView: webtoonListCollectionView, completion: { cell, IndexPath, itemType in
+    private func setupCollectionView() {
+        self.dataSource = CustomCollectionViewDatasource(collectionView: webtoonListCollectionView,
+                                                         completion: { cell, IndexPath, itemType in
             cell.configureCell(viewModel: itemType)
         })
+        self.webtoonListCollectionView.delegate = webtoonCollectionViewScrollDelegate
     }
     
     private func setupViews() {

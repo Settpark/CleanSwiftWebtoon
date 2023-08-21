@@ -18,6 +18,9 @@ class WebtoonListCell: UICollectionViewCell {
     private let ratingStar: UIImageView
     private let ratingScore: UILabel
     
+    private var imageURL: String
+    private var cacheKey: String
+    
     override init(frame: CGRect) {
         mainImage = {
             let imageView = UIImageView()
@@ -56,6 +59,8 @@ class WebtoonListCell: UICollectionViewCell {
             label.sizeToFit()
             return label
         }()
+        imageURL = ""
+        cacheKey = ""
         super.init(frame: frame)
         setupViews()
     }
@@ -72,6 +77,9 @@ class WebtoonListCell: UICollectionViewCell {
         self.author.text = nil
         self.webtoonTitle.text = nil
         self.ratingScore.text = nil
+        
+        self.imageURL = ""
+        self.cacheKey = ""
     }
     
     private func setupViews() {
@@ -115,19 +123,24 @@ class WebtoonListCell: UICollectionViewCell {
             self?.webtoonTitle.text = viewModel.title
             self?.ratingScore.text = "8.56"
         }
+        imageURL = viewModel.img
+        cacheKey = viewModel.title
     }
     
-    func loadImage(viewModel: WebtoonHomeWebtoonList.WebtoonModels.ViewModel) {
-        imageLoadingTask = UIImage.loadImage(from: viewModel.img) { [weak self] image in
+    func loadImage() {
+        imageLoadingTask = UIImage.loadImage(from: self.imageURL) { [weak self] image in
             guard let image = image else {
                 return
             }
             DispatchQueue.main.async { [weak self] in
-                self?.mainImage.image = image
-                ImageCacheManger.shared.cacheImage(forKey: viewModel.title, image: image)
+                guard let self = self else {
+                    return
+                }
+                self.mainImage.image = image
+                ImageCacheManger.shared.cacheImage(forKey: self.cacheKey, image: image)
             }
         }
-        if let validCacheImage = ImageCacheManger.shared.loadCachedImage(forKey: viewModel.title) {
+        if let validCacheImage = ImageCacheManger.shared.loadCachedImage(forKey: self.cacheKey) {
             DispatchQueue.main.async { [weak self] in
                 self?.mainImage.image = validCacheImage
             }

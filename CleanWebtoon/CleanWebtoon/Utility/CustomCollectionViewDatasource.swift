@@ -15,7 +15,9 @@ enum RecommandWebtoonSection {
     case main
 }
 
-class CustomCollectionViewDatasource<SectionType, ItemType, CellType> where SectionType: Hashable, ItemType: Hashable, CellType: UICollectionViewCell {
+class CustomCollectionViewDatasource<SectionType, ItemType, CellType> where SectionType: Hashable,
+                                                                            ItemType: Hashable,
+                                                                            CellType: UICollectionViewCell {
     
     private let datasource: UICollectionViewDiffableDataSource<SectionType, ItemType>
     
