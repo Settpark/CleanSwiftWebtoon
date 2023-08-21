@@ -21,7 +21,8 @@ class CustomCollectionViewDatasource<SectionType, ItemType, CellType> where Sect
     
     private let datasource: UICollectionViewDiffableDataSource<SectionType, ItemType>
     
-    init(collectionView: UICollectionView, completion: @escaping (CellType, IndexPath, ItemType) -> Void) {
+    init(collectionView: UICollectionView,
+         completion: @escaping (CellType, IndexPath, ItemType) -> Void) {
         let cellRegistration = UICollectionView.CellRegistration<CellType, ItemType> { cell, indexPath, itemIdentifier in
             completion(cell, indexPath, itemIdentifier)
         }

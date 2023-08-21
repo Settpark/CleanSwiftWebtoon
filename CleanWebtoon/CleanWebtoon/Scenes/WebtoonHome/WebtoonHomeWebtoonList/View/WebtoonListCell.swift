@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol DetailListRoutingListener: AnyObject {
+    func routeToDetailWebtoonList(webtoonTitle: String)
+}
+
 class WebtoonListCell: UICollectionViewCell {
+    
+    weak var routingListener: DetailListRoutingListener?
     
     private var imageLoadingTask: URLSessionDataTask?
     static var identifier = "webtoonListCell"
@@ -20,6 +26,7 @@ class WebtoonListCell: UICollectionViewCell {
     
     private var imageURL: String
     private var cacheKey: String
+    private var routingTarget: String
     
     override init(frame: CGRect) {
         mainImage = {
@@ -61,6 +68,7 @@ class WebtoonListCell: UICollectionViewCell {
         }()
         imageURL = ""
         cacheKey = ""
+        routingTarget = ""
         super.init(frame: frame)
         setupViews()
     }
@@ -80,6 +88,7 @@ class WebtoonListCell: UICollectionViewCell {
         
         self.imageURL = ""
         self.cacheKey = ""
+        self.routingTarget = ""
     }
     
     private func setupViews() {
@@ -125,6 +134,7 @@ class WebtoonListCell: UICollectionViewCell {
         }
         imageURL = viewModel.img
         cacheKey = viewModel.title
+        routingTarget = viewModel.title
     }
     
     func loadImage() {
@@ -150,5 +160,9 @@ class WebtoonListCell: UICollectionViewCell {
             return
         }
         imageLoadingTask.resume()
+    }
+    
+    func routeToDetailListView() {
+        routingListener?.routeToDetailWebtoonList(webtoonTitle: routingTarget)
     }
 }

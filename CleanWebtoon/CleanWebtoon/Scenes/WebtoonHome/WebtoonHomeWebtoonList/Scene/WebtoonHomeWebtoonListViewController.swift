@@ -84,6 +84,7 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
         self.dataSource = CustomCollectionViewDatasource(collectionView: webtoonListCollectionView,
                                                          completion: { cell, IndexPath, itemType in
             cell.configureCell(viewModel: itemType)
+            cell.routingListener = self
         })
         self.webtoonListCollectionView.delegate = webtoonCollectionViewScrollDelegate
     }
@@ -130,4 +131,12 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel]) {
         self.dataSource?.updateData(seciton: .main, models: viewModel)
     }
+}
+
+extension WebtoonHomeWebtoonListViewController: DetailListRoutingListener {
+    func routeToDetailWebtoonList(webtoonTitle: String) {
+        router.
+    }
+    
+    
 }
