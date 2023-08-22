@@ -14,7 +14,7 @@ import UIKit
 
 protocol WebtoonDetailListPresentationLogic
 {
-  func presentSomething(response: WebtoonDetailList.Something.Response)
+  func presentSomething(response: WebtoonDetailList.DetailList.Response)
 }
 
 class WebtoonDetailListPresenter: WebtoonDetailListPresentationLogic
@@ -23,9 +23,9 @@ class WebtoonDetailListPresenter: WebtoonDetailListPresentationLogic
   
   // MARK: Do something
   
-  func presentSomething(response: WebtoonDetailList.Something.Response)
+  func presentSomething(response: WebtoonDetailList.DetailList.Response)
   {
-    let viewModel = WebtoonDetailList.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
+//    let viewModel = WebtoonDetailList.DeatilList.ViewModel()
+//    viewController?.displaySomething(viewModel: viewModel)
   }
 }

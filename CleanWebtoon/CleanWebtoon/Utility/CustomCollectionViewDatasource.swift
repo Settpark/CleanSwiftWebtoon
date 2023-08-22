@@ -15,6 +15,11 @@ enum RecommandWebtoonSection {
     case main
 }
 
+enum DetailListSection {
+    case preview
+    case main
+}
+
 class CustomCollectionViewDatasource<SectionType, ItemType, CellType> where SectionType: Hashable,
                                                                             ItemType: Hashable,
                                                                             CellType: UICollectionViewCell {

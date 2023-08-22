@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonDetailListDisplayLogic: AnyObject {
-    func displaySomething(viewModel: WebtoonDetailList.Something.ViewModel)
+    func displaySomething(viewModel: WebtoonDetailList.DetailList.ViewModel)
 }
 
 class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDisplayLogic {
@@ -21,15 +21,79 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
     var router: (NSObjectProtocol & WebtoonDetailListRoutingLogic & WebtoonDetailListDataPassing)?
     
     // MARK: Object lifecycle
+    private let decorationView: UIView
+    private let thumbnailImage: UIImageView
+    
+    private let entireStackView: UIStackView
+    private let webtoonTitle: UILabel
+    private let authorWeekStack: UIStackView
+    private let author: UILabel
+    private let weekDay: UILabel
+    
+    private lazy var detailListView: UICollectionView = {
+        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.bounces = false
+        collectionView.backgroundColor = .white
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInsetAdjustmentBehavior = .never
+        return collectionView
+    }()
+    
+    private var dataSource: CustomCollectionViewDatasource<DetailListSection,
+                                                                     WebtoonDetailList.DetailList.ViewModel,
+                                                                     DetailListCell>?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        decorationView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.backgroundColor = .systemGray6
+            return view
+        }()
+        thumbnailImage = {
+            let imageView = UIImageView()
+            imageView.image = UIImage(named: "default_icon")
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            return imageView
+        }()
+        entireStackView = {
+            let stackView = UIStackView()
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.axis = .vertical
+            return stackView
+        }()
+        webtoonTitle = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
+        authorWeekStack = {
+            let stackView = UIStackView()
+            stackView.distribution = .equalSpacing
+            stackView.spacing = 5
+            stackView.axis = .horizontal
+            stackView.alignment = .leading
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            return stackView
+        }()
+        author = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
+        weekDay = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
+        setupCollectionView()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: Setup
@@ -47,6 +111,63 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
         router.dataStore = interactor
     }
     
+    private func setupViews() {
+        self.navigationController?.navigationBar.isHidden = false
+        let backButton: UIBarButtonItem = {
+            let buttonItem = UIBarButtonItem()
+            buttonItem.title = ""
+            buttonItem.tintColor = .black
+            return buttonItem
+        }()
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        view.backgroundColor = .white
+        
+        self.view.addSubview(decorationView)
+        self.view.addSubview(thumbnailImage)
+        self.view.addSubview(entireStackView)
+        self.entireStackView.addArrangedSubview(webtoonTitle)
+        self.entireStackView.addArrangedSubview(authorWeekStack)
+        self.authorWeekStack.addArrangedSubview(author)
+        self.authorWeekStack.addArrangedSubview(weekDay)
+        self.view.addSubview(detailListView)
+        
+        NSLayoutConstraint.activate([
+            decorationView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            decorationView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            decorationView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            
+            thumbnailImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            thumbnailImage.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            thumbnailImage.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            thumbnailImage.heightAnchor.constraint(equalToConstant: 210),
+            
+            decorationView.bottomAnchor.constraint(equalTo: thumbnailImage.centerYAnchor, constant: -10),
+            entireStackView.topAnchor.constraint(equalTo: thumbnailImage.bottomAnchor, constant: 5),
+            entireStackView.leadingAnchor.constraint(equalTo: thumbnailImage.leadingAnchor),
+            entireStackView.trailingAnchor.constraint(equalTo: thumbnailImage.trailingAnchor),
+            
+            detailListView.topAnchor.constraint(equalTo: entireStackView.bottomAnchor, constant: 10),
+            detailListView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            detailListView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            detailListView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { section, layoutEnvironment in
+            var config = UICollectionLayoutListConfiguration(appearance: UICollectionLayoutListConfiguration.Appearance.plain)
+            config.headerMode = .firstItemInSection
+            return NSCollectionLayoutSection.list(using: config, layoutEnvironment: layoutEnvironment)
+        }
+    }
+    
+    private func setupCollectionView() {
+        self.dataSource = CustomCollectionViewDatasource(collectionView: detailListView,
+                                                         completion: { cell, IndexPath, itemType in
+            cell.configureView(viewModel: itemType)
+        })
+    }
+    
     // MARK: Routing
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -62,19 +183,32 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
         doSomething()
     }
     
     // MARK: Do something
     
-    //@IBOutlet weak var nameTextField: UITextField!
-    
-    func doSomething() {
-        let request = WebtoonDetailList.Something.Request()
-        interactor?.doSomething(request: request)
+    private func hiddenDecorationView() {
+        decorationView.isHidden = true
     }
     
-    func displaySomething(viewModel: WebtoonDetailList.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    private func showDecorationView() {
+        decorationView.isHidden = false
+    }
+    
+    func doSomething() {
+        let request = WebtoonDetailList.DetailList.Request()
+        interactor?.doSomething(request: request)
+        
+        let viewModels: [WebtoonDetailList.DetailList.ViewModel] = (0...100).map({
+            return WebtoonDetailList.DetailList.ViewModel(title: "웹툰 제목 \($0)")
+        })
+        
+        dataSource?.updateData(seciton: .main, models: viewModels)
+    }
+    
+    func displaySomething(viewModel: WebtoonDetailList.DetailList.ViewModel) {
+        
     }
 }

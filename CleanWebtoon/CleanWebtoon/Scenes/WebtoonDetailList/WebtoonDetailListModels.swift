@@ -12,20 +12,16 @@
 
 import UIKit
 
-enum WebtoonDetailList
-{
-  // MARK: Use cases
-  
-  enum Something
-  {
-    struct Request
-    {
+enum WebtoonDetailList {
+    // MARK: Use cases
+    
+    enum DetailList {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel: Hashable {
+            var title: String
+        }
     }
-    struct Response
-    {
-    }
-    struct ViewModel
-    {
-    }
-  }
 }

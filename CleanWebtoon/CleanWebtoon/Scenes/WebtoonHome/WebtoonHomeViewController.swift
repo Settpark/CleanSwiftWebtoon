@@ -70,11 +70,6 @@ class WebtoonHomeViewController: UIViewController {
         router.viewController = viewController
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViews()
-    }
-    
     private func setupViews() {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.isHidden = true
@@ -114,6 +109,12 @@ class WebtoonHomeViewController: UIViewController {
             weekDayStackView.heightAnchor.constraint(equalTo: weekDayScrollView.frameLayoutGuide.heightAnchor),
             webtoonListViewController.view.heightAnchor.constraint(equalToConstant: 625)
         ])
+    }
+    
+    //MARK: View lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
     }
     
     private func setupChildViewController() {

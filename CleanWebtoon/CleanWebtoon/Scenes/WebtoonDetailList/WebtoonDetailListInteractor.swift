@@ -14,7 +14,7 @@ import UIKit
 
 protocol WebtoonDetailListBusinessLogic
 {
-    func doSomething(request: WebtoonDetailList.Something.Request)
+    func doSomething(request: WebtoonDetailList.DetailList.Request)
 }
 
 protocol WebtoonDetailListDataStore {
@@ -28,11 +28,11 @@ class WebtoonDetailListInteractor: WebtoonDetailListBusinessLogic, WebtoonDetail
     
     // MARK: Do something
     
-    func doSomething(request: WebtoonDetailList.Something.Request) {
+    func doSomething(request: WebtoonDetailList.DetailList.Request) {
         worker = WebtoonDetailListWorker()
         worker?.doSomeWork()
         
-        let response = WebtoonDetailList.Something.Response()
+        let response = WebtoonDetailList.DetailList.Response()
         presenter?.presentSomething(response: response)
     }
 }
