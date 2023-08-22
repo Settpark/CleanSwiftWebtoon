@@ -17,13 +17,12 @@ protocol WebtoonHomeWebtoonListBusinessLogic {
 }
 
 protocol WebtoonHomeWebtoonListDataStore {
-    //var name: String { get set }
+    
 }
 
 class WebtoonHomeWebtoonListInteractor: WebtoonHomeWebtoonListBusinessLogic, WebtoonHomeWebtoonListDataStore {
     var presenter: WebtoonHomeWebtoonListPresentationLogic?
     var worker: WebtoonHomeWebtoonListWorker?
-    //var name: String = ""
     
     // MARK: Do something
     

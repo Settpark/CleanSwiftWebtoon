@@ -9,6 +9,8 @@ import UIKit
 
 class WebtoonHomeViewController: UIViewController {
     
+    var router: (NSObjectProtocol & WebtoonHomeRoutingLogic)?
+    
     private let mainScrollView: UIScrollView
     private let scrollInnerView: UIStackView
     private let weekDayScrollView: UIScrollView
@@ -51,17 +53,31 @@ class WebtoonHomeViewController: UIViewController {
         recommandSectionViewController = .init()
         webtoonListViewController = .init(today: Date.makeUpdateDayToInt(Date.makeTodayWeekday()))
         super.init(nibName: nil, bundle: nil)
+        setup()
         setupChildViewController()
-        setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: setup
+    
+    private func setup() {
+        let viewController = self
+        let router = WebtoonHomeRouter()
+        viewController.router = router
+        router.viewController = viewController
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+    }
+    
     private func setupViews() {
         self.view.backgroundColor = .white
-        title = "웹툰"
+        self.navigationController?.navigationBar.isHidden = true
         tabBarItem = UITabBarItem(title: "웹툰", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         
         self.view.addSubview(mainScrollView)
@@ -106,5 +122,13 @@ class WebtoonHomeViewController: UIViewController {
         
         webtoonListViewController.didMove(toParent: self)
         addChild(webtoonListViewController)
+        
+        webtoonListViewController.setListener()
+    }
+}
+
+extension WebtoonHomeViewController: DetailListRoutingListener {
+    func routeToDetailWebtoonList(webtoonTitle: String) {
+        router?.routeToDeatilListViewController(target: webtoonTitle)
     }
 }

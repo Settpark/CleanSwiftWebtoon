@@ -31,6 +31,12 @@ class WebtoonListParentViewController: UIPageViewController {
     private func findCurrentViewController() -> UICollectionView? {
         return listViewControllers[contentViewControllerIdx].view.subviews.compactMap({ return $0 as? UICollectionView }).first
     }
+    
+    func setListener() {
+        if let parentViewController = self.parent as? DetailListRoutingListener {
+            listViewControllers.forEach { $0.detailListRouter = parentViewController }
+        }
+    }
 }
 
 extension WebtoonListParentViewController: UIPageViewControllerDataSource {

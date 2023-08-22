@@ -17,21 +17,18 @@ protocol WebtoonDetailListBusinessLogic
     func doSomething(request: WebtoonDetailList.Something.Request)
 }
 
-protocol WebtoonDetailListDataStore
-{
-    //var name: String { get set }
+protocol WebtoonDetailListDataStore {
+    var fetchTarget: String { get set }
 }
 
-class WebtoonDetailListInteractor: WebtoonDetailListBusinessLogic, WebtoonDetailListDataStore
-{
+class WebtoonDetailListInteractor: WebtoonDetailListBusinessLogic, WebtoonDetailListDataStore {
     var presenter: WebtoonDetailListPresentationLogic?
     var worker: WebtoonDetailListWorker?
-    //var name: String = ""
+    var fetchTarget: String = ""
     
     // MARK: Do something
     
-    func doSomething(request: WebtoonDetailList.Something.Request)
-    {
+    func doSomething(request: WebtoonDetailList.Something.Request) {
         worker = WebtoonDetailListWorker()
         worker?.doSomeWork()
         

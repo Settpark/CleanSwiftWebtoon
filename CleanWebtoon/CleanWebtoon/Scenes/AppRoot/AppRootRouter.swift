@@ -12,18 +12,15 @@
 
 import UIKit
 
-@objc protocol AppRootRoutingLogic
-{
+@objc protocol AppRootRoutingLogic {
   func setupViewControllers()
 }
 
-protocol AppRootDataPassing
-{
+protocol AppRootDataPassing {
   var dataStore: AppRootDataStore? { get }
 }
 
-class AppRootRouter: NSObject, AppRootRoutingLogic, AppRootDataPassing
-{
+class AppRootRouter: NSObject, AppRootRoutingLogic, AppRootDataPassing {
     
   weak var viewController: AppRootViewController?
   var dataStore: AppRootDataStore?
@@ -46,7 +43,7 @@ class AppRootRouter: NSObject, AppRootRoutingLogic, AppRootDataPassing
   //}
     
     func setupViewControllers() {
-        let webtoonHomeViewController = WebtoonHomeViewController()
+        let webtoonHomeViewController = UINavigationController(rootViewController: WebtoonHomeViewController())
 //        let webtoonHomeViewController = WebtoonHomeViewController()
         let recommandedCompletionViewController = RecommandedCompletionViewController()
         

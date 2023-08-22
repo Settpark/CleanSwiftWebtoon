@@ -12,11 +12,16 @@
 
 import UIKit
 
+protocol DetailListRoutingListenerDependency {
+    func routeToDetailListViewController(target: String)
+}
+
 protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
     func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel])
 }
 
 class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoonListDisplayLogic {
+    weak var detailListRouter: DetailListRoutingListener?
     var interactor: WebtoonHomeWebtoonListBusinessLogic?
     var router: (NSObjectProtocol & WebtoonHomeWebtoonListRoutingLogic & WebtoonHomeWebtoonListDataPassing)?
     
@@ -135,8 +140,6 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
 
 extension WebtoonHomeWebtoonListViewController: DetailListRoutingListener {
     func routeToDetailWebtoonList(webtoonTitle: String) {
-        router.
+        detailListRouter?.routeToDetailWebtoonList(webtoonTitle: webtoonTitle)
     }
-    
-    
 }

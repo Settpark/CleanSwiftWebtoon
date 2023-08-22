@@ -12,8 +12,9 @@
 
 import UIKit
 
-@objc protocol WebtoonHomeWebtoonListRoutingLogic {
-    func routeToDetailList()
+@objc protocol WebtoonHomeWebtoonListRoutingLogic
+{
+  //func routeToSomewhere(segue: UIStoryboardSegue?)
 }
 
 protocol WebtoonHomeWebtoonListDataPassing
