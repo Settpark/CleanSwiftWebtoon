@@ -24,7 +24,11 @@ protocol WebtoonDetailListDataStore {
 class WebtoonDetailListInteractor: WebtoonDetailListBusinessLogic, WebtoonDetailListDataStore {
     var presenter: WebtoonDetailListPresentationLogic?
     var worker: WebtoonDetailListWorker?
-    var fetchTarget: String = ""
+    var fetchTarget: String
+    
+    init() {
+        fetchTarget = ""
+    }
     
     // MARK: Do something
     

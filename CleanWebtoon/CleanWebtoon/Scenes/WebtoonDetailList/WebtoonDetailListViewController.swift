@@ -172,6 +172,7 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
         self.dataSource = CustomCollectionViewDatasource(collectionView: detailListView,
                                                          completion: { cell, IndexPath, itemType in
             cell.configureView(viewModel: itemType)
+            cell.listener = self
         })
     }
     
@@ -211,5 +212,11 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
     func displayDetailWebtoonList(viewModel: [WebtoonDetailList.DetailList.ViewModel]) {
         dataSource?.updateData(seciton: .main,
                                models: viewModel)
+    }
+}
+
+extension WebtoonDetailListViewController: WebtoonBodyRoutingEventListener {
+    func routeToBody(webtoonListIndex: Int) {
+        router?.routeToWebtoonBody(webtoonIndex: webtoonListIndex)
     }
 }

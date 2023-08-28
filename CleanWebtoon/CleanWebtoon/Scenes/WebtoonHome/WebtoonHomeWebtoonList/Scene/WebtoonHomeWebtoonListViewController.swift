@@ -23,7 +23,6 @@ protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
 class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoonListDisplayLogic {
     weak var detailListRouter: DetailListRoutingListener?
     var interactor: WebtoonHomeWebtoonListBusinessLogic?
-    var router: (NSObjectProtocol & WebtoonHomeWebtoonListRoutingLogic & WebtoonHomeWebtoonListDataPassing)?
     
     // MARK: Object lifecycle
     private lazy var webtoonListCollectionView: UICollectionView = {
@@ -60,13 +59,9 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
         let viewController = self
         let interactor = WebtoonHomeWebtoonListInteractor()
         let presenter = WebtoonHomeWebtoonListPresenter()
-        let router = WebtoonHomeWebtoonListRouter()
         viewController.interactor = interactor
-        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -103,17 +98,6 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
             webtoonListCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             webtoonListCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-    }
-    
-    // MARK: Routing
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
     }
     
     // MARK: View lifecycle

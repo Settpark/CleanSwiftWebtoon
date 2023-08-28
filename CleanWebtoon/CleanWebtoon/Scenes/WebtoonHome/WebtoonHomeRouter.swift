@@ -21,16 +21,22 @@ protocol WebtoonHomeDataPassing {
 
 class WebtoonHomeRouter: NSObject, WebtoonHomeRoutingLogic, WebtoonHomeDataPassing {
     weak var viewController: WebtoonHomeViewController?
+    
+    // MARK: Routing
     func routeToDeatilListViewController(target: String) {
         let destinationViewController = WebtoonDetailListViewController()
         var destinationDataStore = destinationViewController.router!.dataStore!
-        destinationDataStore.fetchTarget = target
-        viewController?.navigationController?.pushViewController(destinationViewController, animated: true)
+        passToData(source: target, destination: &destinationDataStore)
+        pushToDestinationViewController(destinationViewController)
     }
     
-    // MARK: Routing
-    
     // MARK: Navigation
+    func pushToDestinationViewController(_ viewcontroller: WebtoonDetailListViewController) {
+        viewController?.navigationController?.pushViewController(viewcontroller, animated: true)
+    }
     
     // MARK: Passing data
+    func passToData(source: String, destination: inout WebtoonDetailListDataStore) {
+        destination.fetchTarget = source
+    }
 }

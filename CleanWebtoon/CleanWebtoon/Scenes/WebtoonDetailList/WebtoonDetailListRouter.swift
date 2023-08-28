@@ -12,9 +12,8 @@
 
 import UIKit
 
-@objc protocol WebtoonDetailListRoutingLogic
-{
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+@objc protocol WebtoonDetailListRoutingLogic {
+    func routeToWebtoonBody(webtoonIndex: Int)
 }
 
 protocol WebtoonDetailListDataPassing
@@ -22,30 +21,19 @@ protocol WebtoonDetailListDataPassing
   var dataStore: WebtoonDetailListDataStore? { get }
 }
 
-class WebtoonDetailListRouter: NSObject, WebtoonDetailListRoutingLogic, WebtoonDetailListDataPassing
-{
-  weak var viewController: WebtoonDetailListViewController?
-  var dataStore: WebtoonDetailListDataStore?
+class WebtoonDetailListRouter: NSObject, WebtoonDetailListRoutingLogic, WebtoonDetailListDataPassing {
+    
+    weak var viewController: WebtoonDetailListViewController?
+    var dataStore: WebtoonDetailListDataStore?
   
   // MARK: Routing
-  
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
+    func routeToWebtoonBody(webtoonIndex: Int) {
+        
+    }
 
   // MARK: Navigation
-  
+//    func navigationToWebtoonBody(source: WebtoonDetailListViewController)
+    
   //func navigateToSomewhere(source: WebtoonDetailListViewController, destination: SomewhereViewController)
   //{
   //  source.show(destination, sender: nil)

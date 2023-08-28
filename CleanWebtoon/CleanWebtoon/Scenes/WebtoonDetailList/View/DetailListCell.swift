@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol WebtoonBodyRoutingEventListener: AnyObject {
+    func routeToBody(webtoonListIndex: Int)
+}
+
 class DetailListCell: UICollectionViewCell {
+    
+    weak var listener: WebtoonBodyRoutingEventListener?
     
     //TODO: setRoutingListener
     private func defaultListContentConfiguration() -> UIListContentConfiguration { return .subtitleCell() }
@@ -114,5 +120,9 @@ class DetailListCell: UICollectionViewCell {
             }()
             titleStackView.addArrangedSubview(subTitle)
         }
+    }
+    
+    func routeToBody(index: Int) {
+        listener?.routeToBody(webtoonListIndex: index)
     }
 }
