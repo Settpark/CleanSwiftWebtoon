@@ -23,12 +23,14 @@ class DetailListCell: UICollectionViewCell {
         previewImage = {
             let imageView = UIImageView(image: UIImage(named: "default_icon"))
             imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.clipsToBounds = true
+            imageView.layer.cornerRadius = 7
             return imageView
         }()
         title = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
-            label.font = .systemFont(ofSize: 12)
+            label.font = .systemFont(ofSize: 14)
             return label
         }()
         infoStackView = {
@@ -42,13 +44,13 @@ class DetailListCell: UICollectionViewCell {
         rating = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
-            label.font = .systemFont(ofSize: 9)
+            label.font = .systemFont(ofSize: 10)
             return label
         }()
         updateDate = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
-            label.font = .systemFont(ofSize: 9)
+            label.font = .systemFont(ofSize: 10)
             return label
         }()
         super.init(frame: frame)
@@ -69,14 +71,14 @@ class DetailListCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             previewImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             previewImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            previewImage.widthAnchor.constraint(equalToConstant: 40),
-            previewImage.heightAnchor.constraint(equalToConstant: 30),
+            previewImage.widthAnchor.constraint(equalToConstant: 90),
+            previewImage.heightAnchor.constraint(equalToConstant: 60),
             
-            title.topAnchor.constraint(equalTo: previewImage.topAnchor, constant: 10),
+            title.bottomAnchor.constraint(equalTo: previewImage.centerYAnchor, constant: -2.5),
             title.leadingAnchor.constraint(equalTo: previewImage.trailingAnchor, constant: 10),
             
-            infoStackView.topAnchor.constraint(equalTo: previewImage.bottomAnchor, constant: 10),
-            infoStackView.leadingAnchor.constraint(equalTo: previewImage.trailingAnchor, constant: 10),
+            infoStackView.topAnchor.constraint(equalTo: previewImage.centerYAnchor, constant: 2.5),
+            infoStackView.leadingAnchor.constraint(equalTo: title.leadingAnchor),
         ])
     }
     
