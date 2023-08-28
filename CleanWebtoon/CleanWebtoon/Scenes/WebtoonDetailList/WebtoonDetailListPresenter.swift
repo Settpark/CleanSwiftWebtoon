@@ -12,20 +12,22 @@
 
 import UIKit
 
-protocol WebtoonDetailListPresentationLogic
-{
-  func presentSomething(response: WebtoonDetailList.DetailList.Response)
+protocol WebtoonDetailListPresentationLogic {
+    func presentWebtoonDetailList(response: WebtoonDetailList.DetailList.Response)
 }
 
-class WebtoonDetailListPresenter: WebtoonDetailListPresentationLogic
-{
-  weak var viewController: WebtoonDetailListDisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentSomething(response: WebtoonDetailList.DetailList.Response)
-  {
-//    let viewModel = WebtoonDetailList.DeatilList.ViewModel()
-//    viewController?.displaySomething(viewModel: viewModel)
-  }
+class WebtoonDetailListPresenter: WebtoonDetailListPresentationLogic {
+    weak var viewController: WebtoonDetailListDisplayLogic?
+    
+    // MARK: Do something
+    
+    func presentWebtoonDetailList(response: WebtoonDetailList.DetailList.Response) {
+        let viewModels = response.webtoonList.map({
+            return WebtoonDetailList.DetailList.ViewModel(title: $0.title,
+                                                          subTitle: $0.subTitle,
+                                                          rating: $0.rating,
+                                                          date: $0.date)
+        })
+        viewController?.displayDetailWebtoonList(viewModel: viewModels)
+    }
 }

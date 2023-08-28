@@ -13,7 +13,7 @@
 import UIKit
 
 protocol WebtoonDetailListDisplayLogic: AnyObject {
-    func displaySomething(viewModel: WebtoonDetailList.DetailList.ViewModel)
+    func displayDetailWebtoonList(viewModel: [WebtoonDetailList.DetailList.ViewModel])
 }
 
 class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDisplayLogic {
@@ -41,8 +41,8 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
     }()
     
     private var dataSource: CustomCollectionViewDatasource<DetailListSection,
-                                                                     WebtoonDetailList.DetailList.ViewModel,
-                                                                     DetailListCell>?
+                                                           WebtoonDetailList.DetailList.ViewModel,
+                                                           DetailListCell>?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         decorationView = {
@@ -191,7 +191,7 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        doSomething()
+        fetchWebtoonDetailList()
     }
     
     // MARK: Do something
@@ -204,18 +204,12 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
         decorationView.isHidden = false
     }
     
-    func doSomething() {
-        let request = WebtoonDetailList.DetailList.Request()
-        interactor?.doSomething(request: request)
-        
-        let viewModels: [WebtoonDetailList.DetailList.ViewModel] = (0...100).map({
-            return WebtoonDetailList.DetailList.ViewModel(title: "웹툰 제목 \($0)")
-        })
-        
-        dataSource?.updateData(seciton: .main, models: viewModels)
+    func fetchWebtoonDetailList() {
+        interactor?.fetchWebtoonDetailList()
     }
     
-    func displaySomething(viewModel: WebtoonDetailList.DetailList.ViewModel) {
-        
+    func displayDetailWebtoonList(viewModel: [WebtoonDetailList.DetailList.ViewModel]) {
+        dataSource?.updateData(seciton: .main,
+                               models: viewModel)
     }
 }

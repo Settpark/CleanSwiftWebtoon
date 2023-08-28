@@ -16,12 +16,24 @@ enum WebtoonDetailList {
     // MARK: Use cases
     
     enum DetailList {
-        struct Request {
+        struct Request: Decodable {
+            var webtoonTitle: String
         }
-        struct Response {
+        struct Response: Decodable {
+            var webtoonList: [ResponseDetailModel]
+        }
+        
+        struct ResponseDetailModel: Decodable {
+            var title: String
+            var subTitle: String?
+            var rating: String
+            var date: String
         }
         struct ViewModel: Hashable {
             var title: String
+            var subTitle: String?
+            var rating: String
+            var date: String
         }
     }
 }

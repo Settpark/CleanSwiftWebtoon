@@ -14,6 +14,7 @@ class DetailListCell: UICollectionViewCell {
     private lazy var listContentView = UIListContentView(configuration: defaultListContentConfiguration())
     
     private let previewImage: UIImageView
+    private let titleStackView: UIStackView
     private let title: UILabel
     private let infoStackView: UIStackView
     private let rating: UILabel
@@ -26,6 +27,14 @@ class DetailListCell: UICollectionViewCell {
             imageView.clipsToBounds = true
             imageView.layer.cornerRadius = 7
             return imageView
+        }()
+        titleStackView = {
+            let stackView = UIStackView()
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.axis = .horizontal
+            stackView.spacing = 5
+            stackView.distribution = .equalSpacing
+            return stackView
         }()
         title = {
             let label = UILabel()
@@ -63,8 +72,9 @@ class DetailListCell: UICollectionViewCell {
     
     private func setupViews() {
         addSubview(previewImage)
-        addSubview(title)
+        addSubview(titleStackView)
         addSubview(infoStackView)
+        titleStackView.addArrangedSubview(title)
         infoStackView.addArrangedSubview(rating)
         infoStackView.addArrangedSubview(updateDate)
         
@@ -74,17 +84,35 @@ class DetailListCell: UICollectionViewCell {
             previewImage.widthAnchor.constraint(equalToConstant: 90),
             previewImage.heightAnchor.constraint(equalToConstant: 60),
             
-            title.bottomAnchor.constraint(equalTo: previewImage.centerYAnchor, constant: -2.5),
-            title.leadingAnchor.constraint(equalTo: previewImage.trailingAnchor, constant: 10),
+            titleStackView.bottomAnchor.constraint(equalTo: previewImage.centerYAnchor, constant: -2.5),
+            titleStackView.leadingAnchor.constraint(equalTo: previewImage.trailingAnchor, constant: 10),
             
             infoStackView.topAnchor.constraint(equalTo: previewImage.centerYAnchor, constant: 2.5),
             infoStackView.leadingAnchor.constraint(equalTo: title.leadingAnchor),
         ])
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        previewImage.image = UIImage(named: "default_icon")
+        title.text = ""
+        rating.text = ""
+        updateDate.text = ""
+    }
+    
     func configureView(viewModel: WebtoonDetailList.DetailList.ViewModel) {
         title.text = viewModel.title
-        rating.text = viewModel.title
-        updateDate.text = viewModel.title
+        rating.text = viewModel.rating
+        updateDate.text = viewModel.date
+        
+        if let subTitle = viewModel.subTitle {
+            let subTitle: UILabel = {
+                let label = UILabel()
+                label.text = subTitle
+                label.font = .systemFont(ofSize: 14)
+                return label
+            }()
+            titleStackView.addArrangedSubview(subTitle)
+        }
     }
 }

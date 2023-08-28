@@ -12,9 +12,19 @@
 
 import UIKit
 
-class WebtoonDetailListWorker
-{
-  func doSomeWork()
-  {
-  }
+class WebtoonDetailListWorker {
+    //TODO: 에러 핸들러 설정
+    
+    func fetchDetailList(target: WebtoonDetailList.DetailList.Request,
+                         completion: @escaping (WebtoonDetailList.DetailList.Response) -> Void) {
+        WebtoonDetailListFetchService().requestWebtoonDetailList(request: target) { result in
+            switch result {
+            case .success(let success):
+                completion(success)
+            case .failure(let failure):
+                //TODO: 에러 던지기
+                print(failure)
+            }
+        }
+    }
 }
