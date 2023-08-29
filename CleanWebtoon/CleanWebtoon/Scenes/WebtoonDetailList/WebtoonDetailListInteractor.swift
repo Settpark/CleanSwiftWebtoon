@@ -19,15 +19,18 @@ protocol WebtoonDetailListBusinessLogic
 
 protocol WebtoonDetailListDataStore {
     var fetchTarget: String { get set }
+    var index: Int { get set }
 }
 
 class WebtoonDetailListInteractor: WebtoonDetailListBusinessLogic, WebtoonDetailListDataStore {
     var presenter: WebtoonDetailListPresentationLogic?
     var worker: WebtoonDetailListWorker?
     var fetchTarget: String
+    var index: Int
     
     init() {
         fetchTarget = ""
+        index = 0
     }
     
     // MARK: Do something

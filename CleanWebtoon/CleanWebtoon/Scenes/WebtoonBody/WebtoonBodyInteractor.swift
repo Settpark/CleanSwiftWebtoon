@@ -18,15 +18,18 @@ protocol WebtoonBodyBusinessLogic {
 
 protocol WebtoonBodyDataStore {
     var webtoonTitle: String { get set }
+    var webtoonIndex: Int { get set }
 }
 
 class WebtoonBodyInteractor: WebtoonBodyBusinessLogic, WebtoonBodyDataStore {
     var presenter: WebtoonBodyPresentationLogic?
     var worker: WebtoonBodyWorker?
     var webtoonTitle: String
+    var webtoonIndex: Int
     
     init() {
         webtoonTitle = ""
+        webtoonIndex = 0
     }
     
     // MARK: Do something

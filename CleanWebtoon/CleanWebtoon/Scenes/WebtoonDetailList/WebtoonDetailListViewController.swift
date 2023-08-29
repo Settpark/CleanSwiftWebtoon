@@ -39,10 +39,10 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
         collectionView.contentInsetAdjustmentBehavior = .never
         return collectionView
     }()
-    
     private var dataSource: CustomCollectionViewDatasource<DetailListSection,
                                                            WebtoonDetailList.DetailList.ViewModel,
                                                            DetailListCell>?
+    private let collectionViewDelegate: UICollectionViewDelegate
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         decorationView = {
@@ -87,6 +87,7 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
         }()
+        collectionViewDelegate = WebtoonDetailListCollectionViewDelegate()
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
         setupCollectionView()
@@ -172,19 +173,9 @@ class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDispla
         self.dataSource = CustomCollectionViewDatasource(collectionView: detailListView,
                                                          completion: { cell, IndexPath, itemType in
             cell.configureView(viewModel: itemType)
-            cell.listener = self
+            cell.routingEventlistener = self
         })
-    }
-    
-    // MARK: Routing
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
+        detailListView.delegate = collectionViewDelegate
     }
     
     // MARK: View lifecycle

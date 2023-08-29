@@ -13,7 +13,7 @@ protocol WebtoonBodyRoutingEventListener: AnyObject {
 
 class DetailListCell: UICollectionViewCell {
     
-    weak var listener: WebtoonBodyRoutingEventListener?
+    weak var routingEventlistener: WebtoonBodyRoutingEventListener?
     
     //TODO: setRoutingListener
     private func defaultListContentConfiguration() -> UIListContentConfiguration { return .subtitleCell() }
@@ -123,6 +123,6 @@ class DetailListCell: UICollectionViewCell {
     }
     
     func routeToBody(index: Int) {
-        listener?.routeToBody(webtoonListIndex: index)
+        routingEventlistener?.routeToBody(webtoonListIndex: index)
     }
 }

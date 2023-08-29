@@ -16,33 +16,33 @@ import UIKit
     func routeToWebtoonBody(webtoonIndex: Int)
 }
 
-protocol WebtoonDetailListDataPassing
-{
-  var dataStore: WebtoonDetailListDataStore? { get }
+protocol WebtoonDetailListDataPassing {
+    var dataStore: WebtoonDetailListDataStore? { get }
 }
 
 class WebtoonDetailListRouter: NSObject, WebtoonDetailListRoutingLogic, WebtoonDetailListDataPassing {
     
     weak var viewController: WebtoonDetailListViewController?
     var dataStore: WebtoonDetailListDataStore?
-  
-  // MARK: Routing
-    func routeToWebtoonBody(webtoonIndex: Int) {
-        
-    }
-
-  // MARK: Navigation
-//    func navigationToWebtoonBody(source: WebtoonDetailListViewController)
     
-  //func navigateToSomewhere(source: WebtoonDetailListViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
-  // MARK: Passing data
-  
-  //func passDataToSomewhere(source: WebtoonDetailListDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+    // MARK: Routing
+    func routeToWebtoonBody(webtoonIndex: Int) {
+        let nxtViewController: WebtoonBodyViewController = WebtoonBodyViewController()
+        var dataStore = nxtViewController.router!.dataStore!
+        self.dataStore?.index = webtoonIndex
+        passDataToWebtoonBody(source: self.dataStore!, destination: &dataStore)
+        navigationToWebtoonBody(source: self.viewController!, destination: nxtViewController)
+    }
+    
+    // MARK: Navigation
+    func navigationToWebtoonBody(source: WebtoonDetailListViewController, destination: WebtoonBodyViewController) {
+        source.navigationController?.pushViewController(destination, animated: true)
+    }
+    
+    // MARK: Passing data
+    
+    func passDataToWebtoonBody(source: WebtoonDetailListDataStore, destination: inout WebtoonBodyDataStore) {
+        destination.webtoonTitle = source.fetchTarget
+        destination.webtoonIndex = source.index
+    }
 }
