@@ -13,7 +13,10 @@ class WebtoonListParentViewController: UIPageViewController {
     
     init(today: Int, pageChangeEventListener: PageChangeEventListener? = nil) {
         self.contentViewControllerIdx = today
-        listViewControllers = UpdateDay.allCases.map({ WebtoonHomeWebtoonListViewController(targetDay: $0) })
+        listViewControllers = UpdateDay.allCases.map({
+            WebtoonHomeWebtoonListViewController(targetDay: $0,
+                                                 interactor: WebtoonHomeWebtoonListInteractor(worker: WebtoonHomeWebtoonListWorker()))
+        })
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         setupViewController()
     }

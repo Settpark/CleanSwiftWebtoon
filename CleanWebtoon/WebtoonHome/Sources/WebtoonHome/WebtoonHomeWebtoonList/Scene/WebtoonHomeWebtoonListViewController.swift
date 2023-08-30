@@ -22,7 +22,7 @@ public protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
     func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel])
 }
 
-class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoonListDisplayLogic {
+public class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoonListDisplayLogic {
     weak var detailListRouter: DetailListRoutingListener?
     var interactor: WebtoonHomeWebtoonListBusinessLogic?
     
@@ -42,9 +42,10 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     private var targetDay: UpdateDay
     private let webtoonCollectionViewScrollDelegate: UICollectionViewDelegate
     
-    init(targetDay: UpdateDay) {
+    public init(targetDay: UpdateDay, interactor: WebtoonHomeWebtoonListBusinessLogic) {
         self.targetDay = targetDay
         self.webtoonCollectionViewScrollDelegate = WebtoonListCollectionViewDelegate()
+        self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
         setup()
         setupViews()
@@ -59,24 +60,24 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     
     private func setup() {
         let viewController = self
-        let interactor = WebtoonHomeWebtoonListInteractor(worker: WebtoonHomeWebtoonListWorker())
         let presenter = WebtoonHomeWebtoonListPresenter()
-        viewController.interactor = interactor
-        interactor.presenter = presenter
+        if let interactor = interactor as? WebtoonHomeWebtoonListInteractor {
+            interactor.presenter = presenter
+        }
         presenter.viewController = viewController
     }
     
     private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.333),
-                                             heightDimension: .fractionalHeight(1.0))
+                                              heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                heightDimension: .fractionalWidth(0.55))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitems: [item])
-
+        
         let section = NSCollectionLayoutSection(group: group)
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
@@ -103,7 +104,7 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     
     // MARK: View lifecycle
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         fetchWebtoonList()
     }
@@ -118,7 +119,7 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
         interactor?.fetchWebtoonList(request: request)
     }
     
-    func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel]) {
+    public func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel]) {
         self.dataSource?.updateData(seciton: .main, models: viewModel)
     }
 }
