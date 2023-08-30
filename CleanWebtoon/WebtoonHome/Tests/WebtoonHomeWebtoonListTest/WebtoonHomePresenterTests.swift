@@ -10,59 +10,49 @@
 //  see http://clean-swift.com
 //
 
-//import XCTest
-//
-//class WebtoonHomePresenterTests: XCTestCase
-//{
-//  // MARK: Subject under test
-//  
-//  var sut: WebtoonHomePresenter!
-//  
-//  // MARK: Test lifecycle
-//  
-//  override func setUp()
-//  {
-//    super.setUp()
-//    setupWebtoonHomePresenter()
-//  }
-//  
-//  override func tearDown()
-//  {
-//    super.tearDown()
-//  }
-//  
-//  // MARK: Test setup
-//  
-//  func setupWebtoonHomePresenter()
-//  {
-//    sut = WebtoonHomePresenter()
-//  }
-//  
-//  // MARK: Test doubles
-//  
-//  class WebtoonHomeDisplayLogicSpy: WebtoonHomeDisplayLogic
-//  {
-//    var displaySomethingCalled = false
-//    
-//    func displaySomething(viewModel: WebtoonHome.Something.ViewModel)
-//    {
-//      displaySomethingCalled = true
-//    }
-//  }
-//  
-//  // MARK: Tests
-//  
-//  func testPresentSomething()
-//  {
-//    // Given
-//    let spy = WebtoonHomeDisplayLogicSpy()
-//    sut.viewController = spy
-//    let response = WebtoonHome.Something.Response()
-//    
-//    // When
-//    sut.presentSomething(response: response)
-//    
-//    // Then
-//    XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
-//  }
-//}
+import XCTest
+import WebtoonHome
+
+class WebtoonHomePresenterTests: XCTestCase {
+    // MARK: Subject under test
+    
+    var sut: WebtoonHomeWebtoonListPresenter!
+    
+    // MARK: Test lifecycle
+    
+    override func setUp() {
+        super.setUp()
+        setupWebtoonHomePresenter()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    // MARK: Test setup
+    func setupWebtoonHomePresenter() {
+        sut = WebtoonHomeWebtoonListPresenter()
+    }
+    
+    // MARK: Test doubles
+    class WebtoonHomeDisplayLogicSpy: WebtoonHomeWebtoonListDisplayLogic {
+        var displaySomethingCalled = false
+        func displayWebtoonList(viewModel: [WebtoonHome.WebtoonHomeWebtoonList.WebtoonModels.ViewModel]) {
+            displaySomethingCalled = true
+        }
+    }
+    
+    // MARK: Tests
+    func testPresentWebtoons() {
+        // Given
+        let spy = WebtoonHomeDisplayLogicSpy()
+        sut.viewController = spy
+        let response = WebtoonHomeWebtoonList.WebtoonModels.Response()
+        
+        // When
+        sut.presentWebtoons(response: response)
+        
+        // Then
+        XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
+    }
+}

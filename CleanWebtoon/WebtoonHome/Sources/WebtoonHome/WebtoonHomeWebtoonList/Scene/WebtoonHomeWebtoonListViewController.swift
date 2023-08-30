@@ -18,7 +18,7 @@ protocol DetailListRoutingListenerDependency {
     func routeToDetailListViewController(target: String)
 }
 
-protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
+public protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
     func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel])
 }
 

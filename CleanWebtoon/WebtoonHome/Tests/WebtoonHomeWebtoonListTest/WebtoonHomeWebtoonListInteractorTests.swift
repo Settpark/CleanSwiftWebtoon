@@ -32,7 +32,7 @@ class WebtoonHomeWebtoonListInteractorTests: XCTestCase {
     // MARK: Test setup
     
     func setupWebtoonHomeInteractor() {
-        let workerStub: WebtoonHomeWebtoonListWorkerStub = WebtoonHomeWebtoonListWorkerStub()
+        let workerStub: WebtoonHomeWebtoonListWorkerSpy = WebtoonHomeWebtoonListWorkerSpy()
         sut = WebtoonHomeWebtoonListInteractor(worker: workerStub)
     }
     
@@ -46,7 +46,7 @@ class WebtoonHomeWebtoonListInteractorTests: XCTestCase {
         }
     }
     
-    class WebtoonHomeWebtoonListWorkerStub: WebtoonListWorker {
+    class WebtoonHomeWebtoonListWorkerSpy: WebtoonListWorker {
         var isWorkerMethodCalling: Bool = false
         func requestWetoons(request: WebtoonHome.WebtoonHomeWebtoonList.WebtoonModels.Request,
                             completion: @escaping (WebtoonHome.WebtoonHomeWebtoonList.WebtoonModels.Response) -> (Void)) {
@@ -74,7 +74,7 @@ class WebtoonHomeWebtoonListInteractorTests: XCTestCase {
     
     func test_인터렉터가_워커의_함수를_잘_호출하는가() {
         // Given
-        let workerStub = WebtoonHomeWebtoonListWorkerStub()
+        let workerStub = WebtoonHomeWebtoonListWorkerSpy()
         sut = WebtoonHomeWebtoonListInteractor(worker: workerStub)
         let request = WebtoonHomeWebtoonList.WebtoonModels.Request.init(page: 0,
                                                                         perPage: 65536,
