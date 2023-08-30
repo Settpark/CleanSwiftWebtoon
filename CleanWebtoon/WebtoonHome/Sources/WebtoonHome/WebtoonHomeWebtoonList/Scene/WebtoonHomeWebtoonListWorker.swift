@@ -16,12 +16,20 @@ protocol WebtoonHomeServiceErrorHandler: AnyObject {
     func errorHandling(error: Error)
 }
 
-class WebtoonHomeWebtoonListWorker
-{
+public protocol WebtoonListWorker {
+    func requestWetoons(request: WebtoonHomeWebtoonList.WebtoonModels.Request,
+                               completion: @escaping (WebtoonHomeWebtoonList.WebtoonModels.Response) -> (Void))
+}
+
+public class WebtoonHomeWebtoonListWorker: WebtoonListWorker {
     weak var webtoonHomeServiceErrorHandler: WebtoonHomeServiceErrorHandler?
     
-    func requestWetoons(request: WebtoonHomeWebtoonList.WebtoonModels.Request,
-                        completion: @escaping (WebtoonHomeWebtoonList.WebtoonModels.Response) -> (Void)) {
+    public init() {
+        
+    }
+    
+    public func requestWetoons(request: WebtoonHomeWebtoonList.WebtoonModels.Request,
+                               completion: @escaping (WebtoonHomeWebtoonList.WebtoonModels.Response) -> (Void)) {
         WebtoonListFetchService().fetchSpecificDayWebtoons(request: request) { [weak self] result in
             guard let self = self else { return }
             switch result {

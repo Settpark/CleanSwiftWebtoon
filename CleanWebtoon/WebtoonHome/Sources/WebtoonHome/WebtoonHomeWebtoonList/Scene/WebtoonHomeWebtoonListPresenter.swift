@@ -12,7 +12,7 @@
 
 import UIKit
 
-protocol WebtoonHomeWebtoonListPresentationLogic {
+public protocol WebtoonHomeWebtoonListPresentationLogic {
     func presentWebtoons(response: WebtoonHomeWebtoonList.WebtoonModels.Response)
 }
 

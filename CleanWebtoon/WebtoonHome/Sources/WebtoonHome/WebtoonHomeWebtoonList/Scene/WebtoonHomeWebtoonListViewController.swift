@@ -59,7 +59,7 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
     
     private func setup() {
         let viewController = self
-        let interactor = WebtoonHomeWebtoonListInteractor()
+        let interactor = WebtoonHomeWebtoonListInteractor(worker: WebtoonHomeWebtoonListWorker())
         let presenter = WebtoonHomeWebtoonListPresenter()
         viewController.interactor = interactor
         interactor.presenter = presenter
@@ -115,7 +115,7 @@ class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoon
                                                                    perPage: 300,
                                                                    service: .naver,
                                                                    updateDay: targetDay)
-        interactor?.doSomething(request: request)
+        interactor?.fetchWebtoonList(request: request)
     }
     
     func displayWebtoonList(viewModel: [WebtoonHomeWebtoonList.WebtoonModels.ViewModel]) {

@@ -15,45 +15,49 @@ import WebtoonService
 
 public enum WebtoonHomeWebtoonList {
     // MARK: Use case
-    enum WebtoonModels {
-        struct Request: WebtoonRequestable {
-            var page: Int
-            var perPage: Int
-            var service: WebtoonSupplier
-            var updateDay: UpdateDay
+    public enum WebtoonModels {
+        public struct Request: WebtoonRequestable {
+            public var page: Int
+            public var perPage: Int
+            public var service: WebtoonSupplier
+            public var updateDay: UpdateDay
             
             static var empty = Self.init()
             
-            init(page: Int, perPage: Int, service: WebtoonSupplier, updateDay: UpdateDay) {
+            public init(page: Int, perPage: Int, service: WebtoonSupplier, updateDay: UpdateDay) {
                 self.page = page
                 self.perPage = perPage
                 self.service = service
                 self.updateDay = updateDay
             }
             
-            init() {
+            public init() {
                 page = 0
                 perPage = 0
                 service = .naver
                 updateDay = .everyDayPlus
             }
         }
-        struct Response: Decodable {
-            var webtoons: [WebtoonModel]
+        public struct Response: Decodable {
+            public var webtoons: [WebtoonModel]
+            
+            public init() {
+                webtoons = []
+            }
         }
         
-        struct WebtoonModel: Decodable {
-            var title: String
-            var author: String
-            var url: String
-            var img: String
-            var service: String
-            var updateDays: [String]
-            var additional: ResponseAdditional
+        public struct WebtoonModel: Decodable {
+            public var title: String
+            public var author: String
+            public var url: String
+            public var img: String
+            public var service: String
+            public var updateDays: [String]
+            public var additional: ResponseAdditional
             
-            static var empty = Self.init()
+            public static var empty = Self.init()
             
-            init() {
+            public init() {
                 self.title = ""
                 self.author = ""
                 self.url = ""
@@ -63,12 +67,12 @@ public enum WebtoonHomeWebtoonList {
                 self.additional = ResponseAdditional.empty
             }
         }
-        struct ResponseAdditional: Decodable {
-            var new: Bool
-            var adult: Bool
-            var rest: Bool
-            var up: Bool
-            var singularityList: [String]
+        public struct ResponseAdditional: Decodable {
+            public var new: Bool
+            public var adult: Bool
+            public var rest: Bool
+            public var up: Bool
+            public var singularityList: [String]
             
             static var empty = Self.init()
             
@@ -80,7 +84,7 @@ public enum WebtoonHomeWebtoonList {
                 singularityList = []
             }
         }
-        struct ViewModel: Hashable {
+        public struct ViewModel: Hashable {
             var title: String
             var author: String
             var img: String

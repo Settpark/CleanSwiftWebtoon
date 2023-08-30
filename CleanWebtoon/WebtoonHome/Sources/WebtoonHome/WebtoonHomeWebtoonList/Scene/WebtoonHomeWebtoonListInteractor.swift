@@ -12,22 +12,25 @@
 
 import UIKit
 
-protocol WebtoonHomeWebtoonListBusinessLogic {
-    func doSomething(request: WebtoonHomeWebtoonList.WebtoonModels.Request)
+public protocol WebtoonHomeWebtoonListBusinessLogic {
+    func fetchWebtoonList(request: WebtoonHomeWebtoonList.WebtoonModels.Request)
 }
 
 protocol WebtoonHomeWebtoonListDataStore {
     
 }
 
-class WebtoonHomeWebtoonListInteractor: WebtoonHomeWebtoonListBusinessLogic, WebtoonHomeWebtoonListDataStore {
-    var presenter: WebtoonHomeWebtoonListPresentationLogic?
-    var worker: WebtoonHomeWebtoonListWorker?
+public class WebtoonHomeWebtoonListInteractor: WebtoonHomeWebtoonListBusinessLogic, WebtoonHomeWebtoonListDataStore {
+    public var presenter: WebtoonHomeWebtoonListPresentationLogic?
+    private let worker: WebtoonListWorker?
     
     // MARK: Do something
     
-    func doSomething(request: WebtoonHomeWebtoonList.WebtoonModels.Request) {
-        worker = WebtoonHomeWebtoonListWorker()
+    public init(worker: WebtoonListWorker) {
+        self.worker = worker
+    }
+    
+    public func fetchWebtoonList(request: WebtoonHomeWebtoonList.WebtoonModels.Request) {
         worker?.requestWetoons(request: request,
                                completion: { response in
             self.presenter?.presentWebtoons(response: response)

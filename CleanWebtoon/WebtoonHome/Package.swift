@@ -33,5 +33,11 @@ let package = Package(
             dependencies: [
                 .product(name: "WebtoonService", package: "platform"),
             ]),
+        .testTarget(
+            name: "WebtoonHomeWebtoonListTest",
+            dependencies: [
+                "WebtoonHome"
+            ]
+        )
     ]
 )
