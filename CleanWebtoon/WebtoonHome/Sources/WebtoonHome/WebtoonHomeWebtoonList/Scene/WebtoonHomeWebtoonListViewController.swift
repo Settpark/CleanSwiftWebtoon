@@ -23,7 +23,7 @@ public protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
 }
 
 public class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoonListDisplayLogic {
-    weak var detailListRouter: DetailListRoutingListener?
+    public weak var detailListRouter: DetailListRoutingListener?
     var interactor: WebtoonHomeWebtoonListBusinessLogic?
     
     // MARK: Object lifecycle
@@ -125,7 +125,7 @@ public class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHome
 }
 
 extension WebtoonHomeWebtoonListViewController: DetailListRoutingListener {
-    func routeToDetailWebtoonList(webtoonTitle: String) {
+    public func routeToDetailWebtoonList(webtoonTitle: String) {
         detailListRouter?.routeToDetailWebtoonList(webtoonTitle: webtoonTitle)
     }
 }

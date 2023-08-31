@@ -48,9 +48,16 @@ class WebtoonHomeViewControllerTests: XCTestCase {
     // MARK: Test doubles
     
     class WebtoonHomeBusinessLogicSpy: WebtoonHomeWebtoonListBusinessLogic {
-        var doSomethingCalled = false
+        var interactorMethodCalled = false
         func fetchWebtoonList(request: WebtoonHome.WebtoonHomeWebtoonList.WebtoonModels.Request) {
-            doSomethingCalled = true
+            interactorMethodCalled = true
+        }
+    }
+    
+    class ParentDetailRouterSpy: NSObject, WebtoonHomeRoutingLogic {
+        var isRoutingMethodCalled = false
+        func routeToDeatilListViewController(target: String) {
+            isRoutingMethodCalled = true
         }
     }
     
@@ -66,10 +73,19 @@ class WebtoonHomeViewControllerTests: XCTestCase {
         sut.viewDidLoad()
         
         // Then
-        XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
+        XCTAssertTrue(spy.interactorMethodCalled, "viewDidLoad() should ask the interactor to do something")
     }
     
-    func test_라우터의_함수를_잘_호출하는가() {
+    func test_상세리스트보기뷰로_전환하는_라우터의_함수를_잘_호출하는가() {
+        // Given
+        let spy = ParentDetailRouterSpy()
+        let parentViewController = WebtoonHomeViewController(router: spy)
+        sut.detailListRouter = parentViewController
         
+        //when
+        sut.routeToDetailWebtoonList(webtoonTitle: "Anything")
+        
+        //Then
+        XCTAssertTrue(spy.isRoutingMethodCalled)
     }
 }

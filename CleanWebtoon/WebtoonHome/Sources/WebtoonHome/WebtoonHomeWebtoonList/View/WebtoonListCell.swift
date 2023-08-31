@@ -8,7 +8,7 @@
 import UIKit
 import CustomUtility
 
-protocol DetailListRoutingListener: AnyObject {
+public protocol DetailListRoutingListener: AnyObject {
     func routeToDetailWebtoonList(webtoonTitle: String)
 }
 

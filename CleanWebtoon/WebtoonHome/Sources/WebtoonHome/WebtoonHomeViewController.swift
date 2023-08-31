@@ -10,7 +10,7 @@ import WebtoonService
 
 public class WebtoonHomeViewController: UIViewController {
     
-    var router: (NSObjectProtocol & WebtoonHomeRoutingLogic)?
+    private var router: (NSObjectProtocol & WebtoonHomeRoutingLogic)?
     
     private let mainScrollView: UIScrollView
     private let scrollInnerView: UIStackView
@@ -20,7 +20,8 @@ public class WebtoonHomeViewController: UIViewController {
     private let recommandSectionViewController: WebtoonHomeRecommandationViewController
     private let webtoonListViewController: WebtoonListParentViewController
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    public init(router: (WebtoonHomeRoutingLogic & NSObjectProtocol)) {
+        self.router = router
         mainScrollView = {
             let scrollView = UIScrollView()
             scrollView.contentInsetAdjustmentBehavior = .never
@@ -54,7 +55,7 @@ public class WebtoonHomeViewController: UIViewController {
         recommandSectionViewController = .init()
         webtoonListViewController = .init(today: Date.makeUpdateDayToInt(Date.makeTodayWeekday()))
         super.init(nibName: nil, bundle: nil)
-        setup()
+//        setup()
         setupChildViewController()
     }
     
@@ -130,7 +131,7 @@ public class WebtoonHomeViewController: UIViewController {
 }
 
 extension WebtoonHomeViewController: DetailListRoutingListener {
-    func routeToDetailWebtoonList(webtoonTitle: String) {
+    public func routeToDetailWebtoonList(webtoonTitle: String) {
         router?.routeToDeatilListViewController(target: webtoonTitle)
     }
 }

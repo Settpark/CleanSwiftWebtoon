@@ -12,18 +12,18 @@
 
 import UIKit
 
-@objc protocol WebtoonHomeRoutingLogic {
+@objc public protocol WebtoonHomeRoutingLogic {
     func routeToDeatilListViewController(target: String)
 }
 
 protocol WebtoonHomeDataPassing {
 }
 
-class WebtoonHomeRouter: NSObject, WebtoonHomeRoutingLogic, WebtoonHomeDataPassing {
+public class WebtoonHomeRouter: NSObject, WebtoonHomeRoutingLogic, WebtoonHomeDataPassing {
     weak var viewController: WebtoonHomeViewController?
     
     // MARK: Routing
-    func routeToDeatilListViewController(target: String) {
+    public func routeToDeatilListViewController(target: String) {
         let destinationViewController = WebtoonDetailListViewController()
         var destinationDataStore = destinationViewController.router!.dataStore!
         passToData(source: target, destination: &destinationDataStore)
