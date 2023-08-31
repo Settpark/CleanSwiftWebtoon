@@ -15,21 +15,20 @@ import CustomUtility
 
 protocol WebtoonDetailListDisplayLogic: AnyObject {
     func displayDetailWebtoonList(viewModel: [WebtoonDetailList.DetailList.ViewModel])
+    func displayDetailWebtoonView(viewModel: WebtoonDetailList.DetailTitlePart.ViewModel)
 }
 
 public class WebtoonDetailListViewController: UIViewController, WebtoonDetailListDisplayLogic {
+        
     var interactor: WebtoonDetailListBusinessLogic?
     var router: (NSObjectProtocol & WebtoonDetailListRoutingLogic & WebtoonDetailListDataPassing)?
     
     // MARK: Object lifecycle
     private let decorationView: UIView
     private let thumbnailImage: UIImageView
-    
-    private let entireStackView: UIStackView
+    private let detailDescriptionView: DetailDescriptionView
     private let webtoonTitle: UILabel
-    private let authorWeekStack: UIStackView
     private let author: UILabel
-    private let weekDay: UILabel
     
     private lazy var detailListView: UICollectionView = {
         let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -49,6 +48,7 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
         decorationView = {
             let view = UIView()
             view.translatesAutoresizingMaskIntoConstraints = false
+            view.backgroundColor = .red
             view.backgroundColor = .systemGray6
             return view
         }()
@@ -58,33 +58,20 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
             imageView.translatesAutoresizingMaskIntoConstraints = false
             return imageView
         }()
-        entireStackView = {
-            let stackView = UIStackView()
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.axis = .vertical
-            return stackView
+        detailDescriptionView = {
+            let view = DetailDescriptionView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
         }()
         webtoonTitle = {
             let label = UILabel()
+            label.font = .systemFont(ofSize: 16, weight: .semibold)
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
-        }()
-        authorWeekStack = {
-            let stackView = UIStackView()
-            stackView.distribution = .equalSpacing
-            stackView.spacing = 5
-            stackView.axis = .horizontal
-            stackView.alignment = .leading
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            return stackView
         }()
         author = {
             let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
-        weekDay = {
-            let label = UILabel()
+            label.font = .systemFont(ofSize: 14)
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
         }()
@@ -126,29 +113,33 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
         
         self.view.addSubview(decorationView)
         self.view.addSubview(thumbnailImage)
-        self.view.addSubview(entireStackView)
-        self.entireStackView.addArrangedSubview(webtoonTitle)
-        self.entireStackView.addArrangedSubview(authorWeekStack)
-        self.authorWeekStack.addArrangedSubview(author)
-        self.authorWeekStack.addArrangedSubview(weekDay)
+        self.view.addSubview(webtoonTitle)
+        self.view.addSubview(author)
+        self.view.addSubview(detailDescriptionView)
         self.view.addSubview(detailListView)
-        
+
         NSLayoutConstraint.activate([
             decorationView.topAnchor.constraint(equalTo: self.view.topAnchor),
             decorationView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             decorationView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            
-            thumbnailImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            thumbnailImage.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            thumbnailImage.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            thumbnailImage.heightAnchor.constraint(equalToConstant: 210),
-            
+
+            thumbnailImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            thumbnailImage.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            thumbnailImage.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            thumbnailImage.heightAnchor.constraint(equalToConstant: 175),
+
+            webtoonTitle.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+            webtoonTitle.topAnchor.constraint(equalTo: self.thumbnailImage.bottomAnchor, constant: 5),
+            author.leadingAnchor.constraint(equalTo: self.webtoonTitle.leadingAnchor),
+            author.topAnchor.constraint(equalTo: self.webtoonTitle.bottomAnchor, constant: 5),
+            detailDescriptionView.leadingAnchor.constraint(equalTo: webtoonTitle.leadingAnchor),
+            detailDescriptionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -5),
+            detailDescriptionView.topAnchor.constraint(equalTo: author.bottomAnchor, constant: 10),
+            detailDescriptionView.heightAnchor.constraint(equalToConstant: 180),
+
             decorationView.bottomAnchor.constraint(equalTo: thumbnailImage.centerYAnchor, constant: -10),
-            entireStackView.topAnchor.constraint(equalTo: thumbnailImage.bottomAnchor, constant: 5),
-            entireStackView.leadingAnchor.constraint(equalTo: thumbnailImage.leadingAnchor),
-            entireStackView.trailingAnchor.constraint(equalTo: thumbnailImage.trailingAnchor),
-            
-            detailListView.topAnchor.constraint(equalTo: entireStackView.bottomAnchor, constant: 10),
+
+            detailListView.topAnchor.constraint(equalTo: detailDescriptionView.bottomAnchor, constant: 10),
             detailListView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             detailListView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             detailListView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
@@ -161,7 +152,7 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .fractionalHeight(0.15))
+                                               heightDimension: .absolute(65))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitems: [item])
         
@@ -204,6 +195,38 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
     func displayDetailWebtoonList(viewModel: [WebtoonDetailList.DetailList.ViewModel]) {
         dataSource?.updateData(seciton: .main,
                                models: viewModel)
+    }
+    
+    private var task: URLSessionDataTask?
+    
+    func displayDetailWebtoonView(viewModel: WebtoonDetailList.DetailTitlePart.ViewModel) {
+        task = UIImage.loadImage(from: viewModel.thumbnailImage) { [weak self] image in
+            guard let self = self,
+                  let image = image else {
+                return
+            }
+            task = nil
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.thumbnailImage.image = image
+                ImageCacheManger.shared.cacheImage(forKey: viewModel.imageCacheKey, image: image) //MARK: memory leak의 원인
+            }
+        }
+        webtoonTitle.text = viewModel.title
+        author.text = viewModel.author
+        detailDescriptionView.configureView(viewModel: viewModel)
+        if let validCacheImage = ImageCacheManger.shared.loadCachedImage(forKey: viewModel.imageCacheKey) {
+            DispatchQueue.main.async { [weak self] in
+                self?.thumbnailImage.image = validCacheImage
+            }
+            return
+        }
+        task?.resume()
+    }
+    deinit {
+        print("해제 됨")
     }
 }
 

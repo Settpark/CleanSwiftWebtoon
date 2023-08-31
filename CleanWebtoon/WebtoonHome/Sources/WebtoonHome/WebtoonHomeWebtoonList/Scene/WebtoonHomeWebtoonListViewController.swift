@@ -24,7 +24,7 @@ public protocol WebtoonHomeWebtoonListDisplayLogic: AnyObject {
 
 public class WebtoonHomeWebtoonListViewController: UIViewController, WebtoonHomeWebtoonListDisplayLogic {
     public weak var detailListRouter: DetailListRoutingListener?
-    var interactor: WebtoonHomeWebtoonListBusinessLogic?
+    private var interactor: WebtoonHomeWebtoonListBusinessLogic?
     
     // MARK: Object lifecycle
     private lazy var webtoonListCollectionView: UICollectionView = {

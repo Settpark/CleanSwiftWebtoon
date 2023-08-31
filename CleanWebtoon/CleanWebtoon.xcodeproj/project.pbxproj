@@ -149,8 +149,7 @@
 		AB6C58ED2A4290A3003BBEAD /* CleanWebtoon */ = {
 			isa = PBXGroup;
 			children = (
-				ABD0887F2A56A0DE00A28006 /* ServiceDummy */,
-				ABD088582A5561CA00A28006 /* Cache */,
+				ABD0887F2A56A0DE00A28006 /* ServiceStub */,
 				AB4DE8632A4EC02F00FE1EC2 /* Fonts */,
 				AB6C59352A42B7A6003BBEAD /* App */,
 				AB6C59342A42B641003BBEAD /* Scenes */,
@@ -208,20 +207,13 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		ABD088582A5561CA00A28006 /* Cache */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cache;
-			sourceTree = "<group>";
-		};
-		ABD0887F2A56A0DE00A28006 /* ServiceDummy */ = {
+		ABD0887F2A56A0DE00A28006 /* ServiceStub */ = {
 			isa = PBXGroup;
 			children = (
 				ABD088802A56A12800A28006 /* LastUpdate.json */,
 				AB6599522A9C6F4500F06605 /* DetailList.json */,
 			);
-			path = ServiceDummy;
+			path = ServiceStub;
 			sourceTree = "<group>";
 		};
 		ABF024652A9DABCF003F2440 /* RecommandedCompletion */ = {

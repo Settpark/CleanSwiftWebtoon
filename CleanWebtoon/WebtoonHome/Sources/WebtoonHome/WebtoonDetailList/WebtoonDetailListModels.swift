@@ -20,20 +20,42 @@ enum WebtoonDetailList {
             var webtoonTitle: String
         }
         struct Response: Decodable {
+            var id: String
+            var title: String
+            var thumbnailImage: String
+            var author: String
+            var detailDescription: String
+            var age: String
+            var tags: [String]
             var webtoonList: [ResponseDetailModel]
         }
-        
         struct ResponseDetailModel: Decodable {
+            var id: String
             var title: String
             var subTitle: String?
             var rating: String
             var date: String
+            var img: String
         }
         struct ViewModel: Hashable {
             var title: String
             var subTitle: String?
             var rating: String
             var date: String
+            var img: String
+            var cacheKey: String
+        }
+    }
+    
+    enum DetailTitlePart {
+        struct ViewModel {
+            var title: String
+            var imageCacheKey: String
+            var thumbnailImage: String
+            var author: String
+            var detailDescription: String
+            var age: String
+            var tags: [String]
         }
     }
 }

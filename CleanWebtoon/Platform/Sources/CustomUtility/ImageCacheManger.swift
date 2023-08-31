@@ -29,4 +29,7 @@ public class ImageCacheManger {
         let key = NSString(string: forKey)
         cache.setObject(image, forKey: key)
     }
+    
+    deinit {
+    }
 }

@@ -26,8 +26,18 @@ class WebtoonDetailListPresenter: WebtoonDetailListPresentationLogic {
             return WebtoonDetailList.DetailList.ViewModel(title: $0.title,
                                                           subTitle: $0.subTitle,
                                                           rating: $0.rating,
-                                                          date: $0.date)
+                                                          date: $0.date,
+                                                          img: $0.img,
+                                                          cacheKey: $0.id)
         })
+        let thumbnailViewModel: WebtoonDetailList.DetailTitlePart.ViewModel = .init(title: response.title,
+                                                                                    imageCacheKey: response.id,
+                                                                                    thumbnailImage: response.thumbnailImage,
+                                                                                    author: response.author,
+                                                                                    detailDescription: response.detailDescription,
+                                                                                    age: response.age,
+                                                                                    tags: response.tags)
+        viewController?.displayDetailWebtoonView(viewModel: thumbnailViewModel)
         viewController?.displayDetailWebtoonList(viewModel: viewModels)
     }
 }

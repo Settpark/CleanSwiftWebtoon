@@ -6,4 +6,10 @@ class WebtoonDetailListCollectionViewDelegate: NSObject, UICollectionViewDelegat
             cell.routeToBody(index: indexPath.item)
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? DetailListCell {
+            cell.loadImage()
+        }
+    }
 }

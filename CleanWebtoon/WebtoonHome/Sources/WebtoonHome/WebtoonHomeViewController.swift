@@ -55,7 +55,7 @@ public class WebtoonHomeViewController: UIViewController {
         recommandSectionViewController = .init()
         webtoonListViewController = .init(today: Date.makeUpdateDayToInt(Date.makeTodayWeekday()))
         super.init(nibName: nil, bundle: nil)
-//        setup()
+        setup()
         setupChildViewController()
     }
     
@@ -67,9 +67,10 @@ public class WebtoonHomeViewController: UIViewController {
     
     private func setup() {
         let viewController = self
-        let router = WebtoonHomeRouter()
-        viewController.router = router
-        router.viewController = viewController
+        viewController.router = self.router
+        if let router = router as? WebtoonHomeRouter {
+            router.viewController = viewController
+        }
     }
     
     private func setupViews() {

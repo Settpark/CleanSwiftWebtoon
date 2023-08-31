@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CustomUtility
 
 protocol WebtoonBodyRoutingEventListener: AnyObject {
     func routeToBody(webtoonListIndex: Int)
@@ -18,6 +19,7 @@ class DetailListCell: UICollectionViewCell {
     //TODO: setRoutingListener
     private func defaultListContentConfiguration() -> UIListContentConfiguration { return .subtitleCell() }
     private lazy var listContentView = UIListContentView(configuration: defaultListContentConfiguration())
+    private var imageLoadingTask: URLSessionDataTask?
     
     private let previewImage: UIImageView
     private let titleStackView: UIStackView
@@ -25,6 +27,8 @@ class DetailListCell: UICollectionViewCell {
     private let infoStackView: UIStackView
     private let rating: UILabel
     private let updateDate: UILabel
+    private var imageURL: String
+    private var cacheKey: String
     
     override init(frame: CGRect) {
         previewImage = {
@@ -68,8 +72,14 @@ class DetailListCell: UICollectionViewCell {
             label.font = .systemFont(ofSize: 10)
             return label
         }()
+        imageURL = ""
+        cacheKey = ""
         super.init(frame: frame)
         setupViews()
+    }
+    
+    deinit {
+        imageLoadingTask = nil
     }
     
     required init?(coder: NSCoder) {
@@ -80,7 +90,6 @@ class DetailListCell: UICollectionViewCell {
         addSubview(previewImage)
         addSubview(titleStackView)
         addSubview(infoStackView)
-        titleStackView.addArrangedSubview(title)
         infoStackView.addArrangedSubview(rating)
         infoStackView.addArrangedSubview(updateDate)
         
@@ -94,7 +103,7 @@ class DetailListCell: UICollectionViewCell {
             titleStackView.leadingAnchor.constraint(equalTo: previewImage.trailingAnchor, constant: 10),
             
             infoStackView.topAnchor.constraint(equalTo: previewImage.centerYAnchor, constant: 2.5),
-            infoStackView.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            infoStackView.leadingAnchor.constraint(equalTo: previewImage.trailingAnchor, constant: 10) ,
         ])
     }
     
@@ -104,13 +113,20 @@ class DetailListCell: UICollectionViewCell {
         title.text = ""
         rating.text = ""
         updateDate.text = ""
+        cacheKey = ""
+        imageURL = ""
+        titleStackView.subviews.forEach { $0.removeFromSuperview() }
     }
     
     func configureView(viewModel: WebtoonDetailList.DetailList.ViewModel) {
+        previewImage.image = UIImage(named: "default_icon")
         title.text = viewModel.title
         rating.text = viewModel.rating
         updateDate.text = viewModel.date
+        imageURL = viewModel.img
+        cacheKey = viewModel.cacheKey
         
+        titleStackView.addArrangedSubview(title)
         if let subTitle = viewModel.subTitle {
             let subTitle: UILabel = {
                 let label = UILabel()
@@ -124,5 +140,31 @@ class DetailListCell: UICollectionViewCell {
     
     func routeToBody(index: Int) {
         routingEventlistener?.routeToBody(webtoonListIndex: index)
+    }
+    
+    func loadImage() {
+        imageLoadingTask = UIImage.loadImage(from: self.imageURL) { [weak self] image in
+            guard let self = self, let image = image else {
+                return
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.previewImage.image = image
+                ImageCacheManger.shared.cacheImage(forKey: self.cacheKey, image: image)
+            }
+            self.imageLoadingTask = nil
+        }
+        if let validCacheImage = ImageCacheManger.shared.loadCachedImage(forKey: self.cacheKey) {
+            DispatchQueue.main.async { [weak self] in
+                self?.previewImage.image = validCacheImage
+            }
+            return
+        }
+        guard let imageLoadingTask = imageLoadingTask else {
+            return
+        }
+        imageLoadingTask.resume()
     }
 }
