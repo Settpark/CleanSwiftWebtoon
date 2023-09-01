@@ -58,6 +58,15 @@ class WebtoonBodyViewController: UIViewController, WebtoonBodyDisplayLogic {
         doSomething()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideTabBarViewController()
+    }
+    
+    func hideTabBarViewController() {
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
     // MARK: Do something
     
     //@IBOutlet weak var nameTextField: UITextField!

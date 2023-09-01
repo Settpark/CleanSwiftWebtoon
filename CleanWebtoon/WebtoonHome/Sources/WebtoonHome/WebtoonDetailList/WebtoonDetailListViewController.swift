@@ -49,7 +49,6 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
             let view = UIView()
             view.translatesAutoresizingMaskIntoConstraints = false
             view.backgroundColor = .red
-            view.backgroundColor = .systemGray6
             return view
         }()
         thumbnailImage = {
@@ -163,7 +162,7 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
     
     private func setupCollectionView() {
         self.dataSource = CustomCollectionViewDatasource(collectionView: detailListView,
-                                                         completion: { cell, IndexPath, itemType in
+                                                         completion: { [weak self] cell, IndexPath, itemType in
             cell.configureView(viewModel: itemType)
             cell.routingEventlistener = self
         })
@@ -178,7 +177,16 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
         fetchWebtoonDetailList()
     }
     
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showTabBarViewController()
+    }
+    
     // MARK: Do something
+    
+    private func showTabBarViewController() {
+        self.tabBarController?.tabBar.isHidden = false
+    }
     
     private func hiddenDecorationView() {
         decorationView.isHidden = true
@@ -197,15 +205,12 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
                                models: viewModel)
     }
     
-    private var task: URLSessionDataTask?
-    
     func displayDetailWebtoonView(viewModel: WebtoonDetailList.DetailTitlePart.ViewModel) {
-        task = UIImage.loadImage(from: viewModel.thumbnailImage) { [weak self] image in
+        let task = UIImage.loadImage(from: viewModel.thumbnailImage) { [weak self] image in
             guard let self = self,
                   let image = image else {
                 return
             }
-            task = nil
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {
                     return
@@ -224,9 +229,6 @@ public class WebtoonDetailListViewController: UIViewController, WebtoonDetailLis
             return
         }
         task?.resume()
-    }
-    deinit {
-        print("해제 됨")
     }
 }
 
