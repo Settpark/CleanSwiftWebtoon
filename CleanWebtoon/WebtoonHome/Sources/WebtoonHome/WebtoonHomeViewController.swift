@@ -73,9 +73,12 @@ public class WebtoonHomeViewController: UIViewController {
         }
     }
     
+    private func hideNavigationBar() {
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     private func setupViews() {
         self.view.backgroundColor = .white
-        self.navigationController?.navigationBar.isHidden = true
         tabBarItem = UITabBarItem(title: "웹툰", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         
         self.view.addSubview(mainScrollView)
@@ -118,6 +121,11 @@ public class WebtoonHomeViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideNavigationBar()
     }
     
     private func setupChildViewController() {
